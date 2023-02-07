@@ -30,6 +30,7 @@ from datetime import date
 from wp_post_api_bot import wp_post
 
 
+
 global csv_data
 csv_f = "venasbet_acca_data.csv"
 
