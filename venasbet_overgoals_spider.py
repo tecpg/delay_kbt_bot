@@ -26,6 +26,7 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import date
 from wp_post_api_bot import wp_post
+import kdb_config
 
 
 global csv_data
@@ -230,10 +231,10 @@ get_previous_over_1_5_prediction(soup,x_date)
 #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
 #and paste here as my host ip address
 try:
-    connection = mysql.connector.connect(host='131.226.5.3',
-                                         database='kingsbet_KBTdb',
-                                         user='kingsbet_mycomp',
-                                         password='mycomp007')
+    connection = mysql.connector.connect(host=kdb_config.db_host,
+                                         database=kdb_config.db_dbname,
+                                         user=kdb_config.db_user,
+                                         password=kdb_config.db_pwd)
     if connection.is_connected():
         db_Info = connection.get_server_info()
         print("Connected to MySQL Server version ", db_Info)

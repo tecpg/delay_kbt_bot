@@ -16,6 +16,7 @@ from mysql.connector import errorcode
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
+import kdb_config
 
 
 local_url = 'http://localhost:8080/wordpress/wp-json/wp/v2/posts/?post_type=predictions'
@@ -100,10 +101,10 @@ def wp_post(**post_dict):
 
 
     try:
-        connection = mysql.connector.connect(host='131.226.5.7',
-                                            database='kingsbet_KBTdb',
-                                            user='kingsbet_mycomp',
-                                            password='mycomp007')
+        connection = mysql.connector.connect(host=kdb_config.db_host,
+                                         database=kdb_config.db_dbname,
+                                         user=kdb_config.db_user,
+                                         password=kdb_config.db_pwd)
 
         # connection = mysql.connector.connect(host='localhost',
         #                                  database='kingsbet_KBTdb',
