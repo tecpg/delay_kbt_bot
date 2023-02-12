@@ -70,9 +70,6 @@ We would love to hear your thoughts and opinions on it. Please feel free to leav
 Your feedback is always valuable to us. Thank you!</p> """
 
 
-
-
-    
 csv_f = "1x2bet-code.csv"
 try:
     connection = mysql.connector.connect(host=kdb_config.db_host,
