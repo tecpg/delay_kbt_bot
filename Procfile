@@ -1,1 +1,1 @@
-worker: python twitter_api.py
+worker: python oddslot_spider.py
