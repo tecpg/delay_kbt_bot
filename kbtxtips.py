@@ -47,13 +47,15 @@ sql_date = date.today().strftime('%Y-%m-%d')
 # sql_date = '2022-10-28'
 print(sql_date)
 
+
+post_title = '1x2 Betting Tips For Today - Daily Free Betting Tips'
 previous_post_title = '1x2 Betting Tips Results - Daily Free Betting Tips'
 tip_category = 'Over 1.5 goals'
 category_note = """  """
 source_name = ''
 
-previous_tips_link = 'category/1x2-betting-tips-results/'
-tips_link = 'https://kingsbettingtips.com/category/1x2-betting-tips-for-today/'
+tips_link = 'category/1x2-betting-tips-for-today/'
+previous_tips_link = 'https://kingsbettingtips.com/category/1x2-betting-tips-for-today/'
 
 
 welcome_note = """ <blockquote>
@@ -69,6 +71,9 @@ comment_note = """ <p>
 We would love to hear your thoughts and opinions on it. Please feel free to leave a comment below and let us know what you think. 
 Your feedback is always valuable to us. Thank you!</p> """
 
+
+
+
 def connect_server():
   csv_f = "1x2bet-code.csv"
   try:
@@ -80,7 +85,7 @@ def connect_server():
       # connection = mysql.connector.connect(host='localhost',
       #                                     database='kingsbet_KBTdb',
       #                                     user='root',
-      #                                  password='')
+      #                                     password='')
       if connection.is_connected():
           db_Info = connection.get_server_info()
           print("Connected to MySQL Server version ", db_Info)
@@ -88,41 +93,45 @@ def connect_server():
           cursor.execute("select database();")
           record = cursor.fetchone()
           print("You're connected to database: ", record)
-          code_tuple = []
-          my_results = []
         
-          with open(csv_f, "r") as f:
-              csv_data = csv.reader(f)
-              for row in csv_data:
-                  code_tuple.append(tuple(row))
-              print(tuple(code_tuple))
-            
-              code_tuple = tuple(code_tuple)
-              #unpack list items and form tuple
-              cursor.execute(f'SELECT league, fixtures, tip, date, score, result, code, source FROM soccerpunt WHERE (fixtures, tip, date) IN {tuple(code_tuple)}')
-              my_results = cursor.fetchall()
-              
-              previous_html = ''
-            
-            
+    
+          print("Getting today predictions", record)
+          cursor.execute(f"""SELECT * FROM (
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_acca" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              UNION
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "oddslot" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              UNION
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_o_1_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              UNION
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_u_3_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              UNION
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "tipsbet_combo_tips" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              ) AS results ORDER BY RAND() """)
 
-              for key, value in enumerate(my_results):
-                  
-                  if(value[5] == 'Won'):
-                      resImg = '<td style="color:#09ff05"><i class="fa fa-circle" aria-hidden="true"></i></td>'
-                  elif(value[5] == 'Lost'):
-                    resImg = '<td style="color:#ff0000"><i class="fa fa-circle" aria-hidden="true"></i></td>'
-                  else:
-                    resImg = ':'
-                    continue
+          my_results = cursor.fetchall()
+          today_html = ''
+          codes = []
 
-              
-                  previous_html += f'<tr><td>{value[0]}</td><td>{value[1]}</td><td>{value[2]}</td><td>{value[4]}</td><td>{resImg}</td></tr>'
 
+          for key, value in enumerate(my_results):
+
+              today_html += f'<tr><td>{value[0]}</td><td>{value[1]}</td><td>{value[2]}</td></tr>'
+
+              #open csv file
+              with open(csv_f, "w", encoding="utf8", newline="") as f:
+                  thewriter = writer(f)
+                  fixtures = value[1]
+                  match_tip = value[2]
+                  match_date = value[3]
+                  code = [fixtures, match_tip, match_date]
+                  codes.append(code)
+                  print(code)
+
+                  thewriter.writerows(codes)
           
-          print('html:'+ previous_html)
-          
-
+          print(today_html)
+          print(fixtures)
+        
   except mysql.connector.Error as err:
 
       if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -157,24 +166,24 @@ def connect_server():
   # imageURL = str(json.loads(image.content['source_url']))
 
 
-  previous_post = {
-  'title'    : f'{previous_post_title}',
+  post = {
+  'title'    : f'{post_title}',
   'status'   : 'publish', 
   'content'  : f'{welcome_note}'      
         '<div class="card text-center ">'
     '<div class="card-header" style="background-color:#010832">'
       '<ul class="nav nav-pills card-header-pills">'
       '<li class="nav-item">'
-        f'<a class="nav-link disabled" href="#">Date:{value[3]} </a>'
+        f'<a class="nav-link disabled" href="#">Date: {value[3]}</a>'
         '</li>'
         '<li class="nav-item">'
-          f'<a class="nav-link" href="{tips_link}">Todays Tips</a>'
+          f'<a class="nav-link" href="{previous_tips_link}">Previous Tips</a>'
       ' </li>'
       
       '</ul>'
   ' </div>'
     '<div class="card-body">'
-      f'<h5 class="card-title">{previous_post_title}</h5>'
+      f'<h5 class="card-title">{post_title}</h5>'
       # '<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>'
   '<div class="col-lg-10 col-md-6">'
                       '<div class="table-responsive single-intro-inner style-2 text-center">'
@@ -184,11 +193,9 @@ def connect_server():
       '<th>League</th>'
       '<th>Fixtures</th>'
       '<th>Tip</th>'
-      '<th>Score</th>'
-      '<th>Result</th>'
       '</tr>'
     '</thead>'
-    f'<tbody>{previous_html}'
+    f'<tbody>{today_html}'
     '</tbody>'
   '</table>'
   '</div>'
@@ -199,13 +206,12 @@ def connect_server():
   '</div><br>'
   f'{comment_note}',
                                       'date'   : f'{p_date}',
-                                  'categories' : ['193'],
+                                  'categories' : ['192'],
                                   'tags' : ['63', '7', '66', '125', '127','53', '54', '153', '4', '16','14', '15', '51', '6', '11','52', '56', '58', '59', '57']
   }
 
-  r = requests.post(url, headers=header, json=previous_post)
+  r = requests.post(url, headers=header, json=post)
   print(r)
-
 
 def run():
     connect_server()

@@ -269,119 +269,124 @@ def get_previous_prediction(nbs,set_previous_date):
     print(dt)
         
     
-
-get_today_prediction(soup,p_date)
-#time.sleep(6) 
-#print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
-get_previous_prediction(soup,x_date)
-#print(get_result("2X","2:2"))
-# #insert into db
-
 #csv_f = "venasbet_data.csv"
-#NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
-#and paste here as my host ip address
-try:
-    connection = mysql.connector.connect(host=kdb_config.db_host,
-                                         database=kdb_config.db_dbname,
-                                         user=kdb_config.db_user,
-                                         password=kdb_config.db_pwd)
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select database();")
-        record = cursor.fetchone()
+def connect_server():
+    #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
+    #and paste here as my host ip address
+    try:
+        connection = mysql.connector.connect(host=kdb_config.db_host,
+                                            database=kdb_config.db_dbname,
+                                            user=kdb_config.db_user,
+                                            password=kdb_config.db_pwd)
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            cursor.execute("select database();")
+            record = cursor.fetchone()
 
-        print("You're connected to database: ", record)
-
-      
-          
-    with open(csv_f, "r") as f:
-       
-        csv_data = csv.reader(f)
-        for row in csv_data:
-            print(row)
-            cursor.execute('INSERT INTO soccerpunt(league,fixtures,tip,odd,match_time,score,date,flag,result,code,source)'\
-                 'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
-
-    print("Inserting tips now... ", time.ctime())
-    print(cursor.rowcount," record(s) created==============", time.ctime())
-
-
-    
-    time.sleep(6) 
-    print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
-    print("============Bot deleting previous tips from  database:=============== ")
-    #NOTE when i encounter Error while connecting to MySQL 1205 (HY000): Lock wait timeout exceeded; try restarting transaction;- i kill 
-    #processlist from my software MYSQL WORK BENCH, I LOGIN WITH THE SHARED HOST ;-13..., tutorial from here
-    #https://www.youtube.com/watch?v=xQ0z_rPPLDs thanks
-
-
-    cursor.execute('DELETE t1 FROM soccerpunt AS t1 INNER JOIN soccerpunt AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.source = t2.source')
+            print("You're connected to database: ", record)
 
         
-    print(cursor.rowcount," record(s) deleted==============", time.ctime()) 
-
-   
-
-except mysql.connector.Error as err:
-      if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-          print("Something is wrong with your user name or password ", err)
-      elif err.errno == errorcode.ER_BAD_DB_ERROR:
-          print("Database does not exist")
-      else:
-          print("Error while connecting to MySQL", err)
-
-finally:
-    if connection and connection.is_connected():
-        cursor.close()
-        connection.commit()
-        connection.close()
             
-        print("MySQL connection is closed")
+        with open(csv_f, "r") as f:
+        
+            csv_data = csv.reader(f)
+            for row in csv_data:
+                print(row)
+                cursor.execute('INSERT INTO soccerpunt(league,fixtures,tip,odd,match_time,score,date,flag,result,code,source)'\
+                    'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
+
+        print("Inserting tips now... ", time.ctime())
+        print(cursor.rowcount," record(s) created==============", time.ctime())
 
 
-#post_title = '1X2 Betting Prediction For Today - Daily Free Betting Tips'
-post_title = 'Combo Betting Tips - Free Combo predictions for Today'
-tip_category = '189'
-category_note = """ <h4>What is Combo Betting Tips</h4><br>
-               Combo betting, also known as multiple or accumulator betting, is a type of bet that involves combining several selections into a single wager. To win a combo bet, all of the individual selections included in the bet must be correct. Combo bets are often attractive to bettors because they offer the potential for larger payouts due to the increased risk involved in predicting the outcome of multiple events. 
-               Combo betting tips refer to recommendations or suggestions for combo bets made by experts or individuals with knowledge of the sports or events being bet on. It is important to note that betting tips and recommendations are not a guarantee of success and that all forms of gambling carry inherent risks and uncertainties. 
-               It is always important to gamble responsibly and to understand the risks involved. """
-source_name = 'tipsbet_combo_tips'
-more_tips_link = 'combo-betting-tips'
+        
+        time.sleep(6) 
+        print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
+        print("============Bot deleting previous tips from  database:=============== ")
+        #NOTE when i encounter Error while connecting to MySQL 1205 (HY000): Lock wait timeout exceeded; try restarting transaction;- i kill 
+        #processlist from my software MYSQL WORK BENCH, I LOGIN WITH THE SHARED HOST ;-13..., tutorial from here
+        #https://www.youtube.com/watch?v=xQ0z_rPPLDs thanks
 
 
-# csv_f = "tipsbet_data.csv"
-# tips = []
+        cursor.execute('DELETE t1 FROM soccerpunt AS t1 INNER JOIN soccerpunt AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.source = t2.source')
+
+            
+        print(cursor.rowcount," record(s) deleted==============", time.ctime()) 
+
+    
+
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password ", err)
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print("Error while connecting to MySQL", err)
+
+    finally:
+        if connection and connection.is_connected():
+            cursor.close()
+            connection.commit()
+            connection.close()
+                
+            print("MySQL connection is closed")
 
 
-# with open(csv_f, "r") as f:    
-#         csv_data = csv.reader(f)
-#         for row in csv_data:
-#             tips.append(row[:8])
+    #post_title = '1X2 Betting Prediction For Today - Daily Free Betting Tips'
+    post_title = 'Combo Betting Tips - Free Combo predictions for Today'
+    tip_category = '189'
+    category_note = """ <h4>What is Combo Betting Tips</h4><br>
+                Combo betting, also known as multiple or accumulator betting, is a type of bet that involves combining several selections into a single wager. To win a combo bet, all of the individual selections included in the bet must be correct. Combo bets are often attractive to bettors because they offer the potential for larger payouts due to the increased risk involved in predicting the outcome of multiple events. 
+                Combo betting tips refer to recommendations or suggestions for combo bets made by experts or individuals with knowledge of the sports or events being bet on. It is important to note that betting tips and recommendations are not a guarantee of success and that all forms of gambling carry inherent risks and uncertainties. 
+                It is always important to gamble responsibly and to understand the risks involved. """
+    source_name = 'tipsbet_combo_tips'
+    more_tips_link = 'combo-betting-tips'
 
 
-# predictions =tips[:5]
-# print(f"Predictions:   {predictions}")
+    # csv_f = "tipsbet_data.csv"
+    # tips = []
 
-# tips_total_odd = [x[7] for x in predictions][0]
-# tips_date = [x[6] for x in predictions][0]
-# all_tips = tips_date = [x[:4] for x in predictions]
- 
-# for x in all_tips:
-#     x[0] = f"({x[0]}) - "
-#     x[3] = f"Odd: ({x[3]})"
-#     x[2] = f"---Prediction: {x[2]}"
-#     post_trends = ' '.join(x)
-  
-# print(post_trends)
 
-# twiiter_bot()
+    # with open(csv_f, "r") as f:    
+    #         csv_data = csv.reader(f)
+    #         for row in csv_data:
+    #             tips.append(row[:8])
 
-wp_post(post_title = post_title,
-    tips_category = tip_category,
-    category_note = category_note,
-    source_name  = source_name,
-    more_tips_link = more_tips_link)
 
+    # predictions =tips[:5]
+    # print(f"Predictions:   {predictions}")
+
+    # tips_total_odd = [x[7] for x in predictions][0]
+    # tips_date = [x[6] for x in predictions][0]
+    # all_tips = tips_date = [x[:4] for x in predictions]
+    
+    # for x in all_tips:
+    #     x[0] = f"({x[0]}) - "
+    #     x[3] = f"Odd: ({x[3]})"
+    #     x[2] = f"---Prediction: {x[2]}"
+    #     post_trends = ' '.join(x)
+    
+    # print(post_trends)
+
+    # twiiter_bot()
+
+    wp_post(post_title = post_title,
+        tips_category = tip_category,
+        category_note = category_note,
+        source_name  = source_name,
+        more_tips_link = more_tips_link)
+
+def run():
+    get_today_prediction(soup,p_date)
+    #time.sleep(6) 
+    #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
+    get_previous_prediction(soup,x_date)
+    #print(get_result("2X","2:2"))
+    # #insert into db
+    connect_server()
+
+
+if __name__ == "__main__":
+    run()

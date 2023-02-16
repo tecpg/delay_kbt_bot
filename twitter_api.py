@@ -123,8 +123,8 @@ def twiiter_bot(tips_content):
     ######################################################################
 
 
-        k_items = [item[0] for item in kenya_trends[:3]]
-        n_items = [item[0] for item in nigeria_trends[:8]]
+        k_items = [item[0] for item in kenya_trends[:5]]
+        n_items = [item[0] for item in nigeria_trends[:10]]
         n_items + k_items
         items = np.unique(n_items+k_items) # keeps only non dublicates
         post_trends = ' '.join(items)
@@ -142,5 +142,10 @@ def twiiter_bot(tips_content):
     # except:
     #     print("something went wrong")
 
-   
-twiiter_bot(contents)
+
+def run(): 
+    twiiter_bot(contents)
+
+
+if __name__ == "__main__":
+    run()

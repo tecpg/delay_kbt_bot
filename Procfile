@@ -1,1 +1,1 @@
-worker: python oddslot_spider.py
+worker: python main.py
