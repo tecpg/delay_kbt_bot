@@ -10,7 +10,7 @@ import twitter_api
 import time as _time
 
 _runtime = 10
-day_runtime = 20
+day_runtime = 64800
 
 def kbt_post():
     oddslot_spider.run()
