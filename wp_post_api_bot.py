@@ -29,8 +29,8 @@ local_user = 'root'
 
 user = live_user
 
-live_pwd = 'auoN LBS4 pdzK 8nG7 A4je 78vY'
-local_pwd = 'WZvU hI89 7oxZ FtVj T7XQ OSW4'
+live_pwd = kdb_config.live_pwd
+local_pwd = kdb_config.local_pwd
 
 password = live_pwd
 

@@ -17,3 +17,5 @@ access_token_secret = os.environ['access_token_secret']
 client_id = os.environ['client_id']
 client_id_secret = os.environ['client_id_secret']
 
+live_pwd =  os.environ['live_pwd']
+local_pwd =  os.environ['local_pwd']
