@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import tweepy
 import configparser
+from PIL import Image, ImageFont, ImageDraw
 
 # read configs
 config = configparser.ConfigParser()
@@ -23,10 +24,6 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True)
 
-# public_tweets = api.home_timeline()
-
-# print(public_tweets[0].user.screen_name)
-
 
 nigeria_woeid = "1398823"
 kenya_woied = "1528335"
@@ -38,6 +35,7 @@ nigeria_trends = []
 
 # _________________________________________________________
                 # Fetching tips from csv
+
 csv_f = "tipsbet_data.csv"
 tips = []
 
@@ -57,13 +55,29 @@ tips_date = [x[6] for x in predictions][0]
 all_tips = tips_date = [x[:4] for x in predictions]
 post_tips = ''
 for x in all_tips:
-    x[0] = f"({x[0]})"
+    x[0] = f"({x[0]})\n"
+    x[1] = f"{x[1]}\n"
     x[2] = f"({x[2]})"
-    x[3] = f"({x[3]})-"
+    x[3] = f"({x[3]})\n\n"
     post_tips += ' '.join(x)
 
 print(post_tips)
 contents = post_tips
+
+
+#  #######################################################
+                  # Create image
+##########################################################
+
+
+thumbnail = Image.open("bg_img.jpg")
+t_font = ImageFont.truetype('a.ttf', 26)
+t_text = contents
+image_editable = ImageDraw.Draw(thumbnail)
+image_editable.text((50,60), t_text,(237, 230, 211), t_font)
+thumbnail.save("thumbnail.jpg")
+
+
 # _________________________________________________________
 
 def twiiter_bot(tips_content):
@@ -108,8 +122,8 @@ def twiiter_bot(tips_content):
     ######################################################################
 
 
-        k_items = [item[0] for item in kenya_trends[:2]]
-        n_items = [item[0] for item in nigeria_trends[:7]]
+        k_items = [item[0] for item in kenya_trends[:3]]
+        n_items = [item[0] for item in nigeria_trends[:8]]
         n_items + k_items
         items = np.unique(n_items+k_items) # keeps only non dublicates
         post_trends = ' '.join(items)
@@ -119,7 +133,8 @@ def twiiter_bot(tips_content):
         print(len(tweet))
         print(tweet)
 
-        api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
+        # api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
+        api.update_status_with_media(f"Betting Tips for Today! \n for more tip visit ---{webUrl}\n\n{post_trends}","thumbnail.jpg")
 
 
       
