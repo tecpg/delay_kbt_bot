@@ -6,7 +6,7 @@ _dotenv.load_dotenv()
 db_host = os.environ['db_host']
 db_dbname = os.environ['db_name']
 db_user = os.environ['db_user']
-db_pwd = os.environ['db_pwd']
+db_pwd = os.environ['db_password']
 
 api_key =os.environ['api_key']
 api_key_secret =os.environ['api_key_secret']
