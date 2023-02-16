@@ -3,16 +3,17 @@ import numpy as np
 import tweepy
 import configparser
 from PIL import Image, ImageFont, ImageDraw
+import kdb_config
 
 # read configs
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-api_key = config['twitter']['api_key']
-api_key_secret = config['twitter']['api_key_secret']
+api_key = kdb_config.api_key
+api_key_secret = kdb_config.api_key_secret
 
-access_token = config['twitter']['access_token']
-access_token_secret = config['twitter']['access_token_secret']
+access_token = kdb_config.access_token
+access_token_secret = kdb_config.access_token_secret
 
 webUrl = 'https://kingsbettingtips.com/combo-betting-tips'
 
