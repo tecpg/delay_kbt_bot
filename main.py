@@ -10,9 +10,10 @@ import twitter_api
 import time as _time
 
 _runtime = 10
-day_runtime = 64800
+day_runtime = 82800
 
-def kbt_post():
+def _kbt():
+    print('started for today ')
     oddslot_spider.run()
     _time.sleep(_runtime)
     tipsbet_big_odds_spider.run()
@@ -34,11 +35,12 @@ def kbt_post():
    
     print('ended for today ')
     _time.sleep(day_runtime)
-    print('done ')
+    print('done')
 
 def run():
     while True:
-        kbt_post()
+        _kbt()
+    end
        
       
         
