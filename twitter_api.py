@@ -36,52 +36,54 @@ nigeria_trends = []
 
 # _________________________________________________________
                 # Fetching tips from csv
-
-csv_f = "tipsbet_data.csv"
-tips = []
-
-
-with open(csv_f, "r") as f:    
-        csv_data = csv.reader(f)
-        for row in csv_data:
-            tips.append(row[:8])
+def get_tweet_contents():
+    csv_f = "tipsbet_data.csv"
+    tips = []
 
 
-predictions =tips[:3]
-contents = []
-print(f"Predictions:   {predictions}")
-
-tips_total_odd = [x[7] for x in predictions][0]
-tips_date = [x[6] for x in predictions][0]
-all_tips = tips_date = [x[:4] for x in predictions]
-post_tips = ''
-for x in all_tips:
-    x[0] = f"({x[0]})\n"
-    x[1] = f"{x[1]}\n"
-    x[2] = f"({x[2]})"
-    x[3] = f"({x[3]})\n\n"
-    post_tips += ' '.join(x)
-
-print(post_tips)
-contents = post_tips
+    with open(csv_f, "r") as f:    
+            csv_data = csv.reader(f)
+            for row in csv_data:
+                tips.append(row[:8])
 
 
-#  #######################################################
-                  # Create image
-##########################################################
+    predictions =tips[:3]
+    contents = []
+    print(f"Predictions:   {predictions}")
+
+    tips_total_odd = [x[7] for x in predictions][0]
+    tips_date = [x[6] for x in predictions][0]
+    all_tips = tips_date = [x[:4] for x in predictions]
+    post_tips = ''
+    for x in all_tips:
+        x[0] = f"({x[0]})\n"
+        x[1] = f"{x[1]}\n"
+        x[2] = f"({x[2]})"
+        x[3] = f"({x[3]})\n\n"
+        post_tips += ' '.join(x)
+
+    print(post_tips)
+    contents = post_tips
+    return contents
 
 
-thumbnail = Image.open("bg_img.jpg")
-t_font = ImageFont.truetype('a.ttf', 26)
-t_text = contents
-image_editable = ImageDraw.Draw(thumbnail)
-image_editable.text((50,60), t_text,(237, 230, 211), t_font)
-thumbnail.save("thumbnail.jpg")
-
-
-# _________________________________________________________
 
 def twiiter_bot(tips_content):
+        
+        #  #######################################################
+                        # Create image
+        ##########################################################
+
+
+        thumbnail = Image.open("bg_img.jpg")
+        t_font = ImageFont.truetype('a.ttf', 26)
+        t_text = get_tweet_contents()
+        image_editable = ImageDraw.Draw(thumbnail)
+        image_editable.text((50,60), t_text,(237, 230, 211), t_font)
+        thumbnail.save("thumbnail.jpg")
+
+
+        # _________________________________________________________
     # try:
     ######################################################################
                     # Kenya Trends
@@ -144,7 +146,7 @@ def twiiter_bot(tips_content):
 
 
 def run(): 
-    twiiter_bot(contents)
+    twiiter_bot(get_tweet_contents)
 
 
 if __name__ == "__main__":
