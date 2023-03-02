@@ -385,7 +385,7 @@ def run():
     get_previous_prediction(soup,x_date)
     #print(get_result("2X","2:2"))
     # #insert into db
-    # connect_server()
+    connect_server()
 
 
 if __name__ == "__main__":

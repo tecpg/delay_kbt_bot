@@ -10,7 +10,7 @@ import twitter_api
 import time as _time
 
 _runtime = 10
-day_runtime = 87500
+day_runtime = 86500
 
 def _kbt():
     print('started for today ')
@@ -41,9 +41,7 @@ def _kbt():
 def run():
     while True:
         _kbt()
-       
-       
-      
+
         
 if __name__ == "__main__":
     run()
