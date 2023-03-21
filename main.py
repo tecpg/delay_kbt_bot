@@ -7,6 +7,7 @@ import venasbet_u35goals_spider
 import previous_1x2tips
 import kbtxtips
 import twitter_api
+import protips
 import time as _time
 
 _runtime = 10
@@ -29,6 +30,8 @@ def _kbt():
     previous_1x2tips.run()
     _time.sleep(_runtime)
     kbtxtips.run()
+    _time.sleep(_runtime)
+    protips.run()
     _time.sleep(_runtime)
     twitter_api.run()
     
