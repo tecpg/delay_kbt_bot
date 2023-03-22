@@ -214,7 +214,7 @@ def get_previous_prediction(nbs,set_previous_date):
             i = str(c)
             print(i)
             
-            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[13]/td[1]/strong/span')
+            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
             
             timez = timez[0].text
             leagues = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
