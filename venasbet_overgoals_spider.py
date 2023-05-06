@@ -103,7 +103,7 @@ x_date = p_date - timedelta(days=1)
 
 def get_today_over_1_5_prediction(bs, set_date):
 
-    url ="https://r2bet.com/2_5_goals?dt="
+    url ="https://venasbet.com/2_5_goals?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -161,62 +161,66 @@ def get_today_over_1_5_prediction(bs, set_date):
 
 def get_previous_over_1_5_prediction(nbs,set_previous_date):
 
-    url ="https://r2bet.com/2_5_goals?dt="
-   
-    webpage = requests.get(url+str(set_previous_date), headers = my_headers)
-    nbs = nbs(webpage.content, "html.parser")
-    dom = etree.HTML(str(nbs))
+    try:
 
-    #get table row count for the tr loop
+        url ="https://venasbet.com/2_5_goals?dt="
+    
+        webpage = requests.get(url+str(set_previous_date), headers = my_headers)
+        nbs = nbs(webpage.content, "html.parser")
+        dom = etree.HTML(str(nbs))
 
-    tables = nbs.findChildren('table')
-    web_table = tables[0]
-    rows = web_table.findChildren(['tr'])
-    tr_count = len(rows)
-    print("Table has ",tr_count - 1," rows")
+        #get table row count for the tr loop
 
-    #open csv file
+        tables = nbs.findChildren('table')
+        web_table = tables[0]
+        rows = web_table.findChildren(['tr'])
+        tr_count = len(rows)
+        print("Table has ",tr_count - 1," rows")
 
-  
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
+        #open csv file
 
-        for x in range(0,tr_count - 1):
+    
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
 
-            c = 1 + x
-            i = str(c)
+            for x in range(0,tr_count - 1):
+
+                c = 1 + x
+                i = str(c)
+                
+                timez ="N/A"
+                league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
             
-            timez ="N/A"
-            league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-         
-            leagues = league[0].text
-            home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
-            home_team = home_team[0]
-            away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
-            away_team = away_team[0]
-            # picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
-            # picks = picks[0].text
-            picks ="Over 1.5"
-            score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
-            score = score[0].text
+                leagues = league[0].text
+                home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
+                home_team = home_team[0]
+                away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
+                away_team = away_team[0]
+                # picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
+                # picks = picks[0].text
+                picks ="Over 1.5"
+                score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
+                score = score[0].text
 
-            results = get_result(score)
+                results = get_result(score)
 
 
 
-            odds="N/A"
-            source = "venasbet_o_1_5"
-            flag = ""
-            match_date = set_previous_date
-            match_code = get_code(8)
+                odds="N/A"
+                source = "venasbet_o_1_5"
+                flag = ""
+                match_date = set_previous_date
+                match_code = get_code(8)
 
-            prediction = [leagues,remove(home_team +"vs "+away_team),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+                prediction = [leagues,remove(home_team +"vs "+away_team),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
+                dt.append(prediction)
+            
 
-        thewriter.writerows(dt)
+            thewriter.writerows(dt)
 
-    print(dt)
+        print(dt)
+    except:
+        pass
         
     
 
@@ -302,13 +306,16 @@ def connect_server():
 
 
 def run():
-    get_today_over_1_5_prediction(soup,p_date)
-    #time.sleep(6) 
-    #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
-    get_previous_over_1_5_prediction(soup,x_date)
-    #print(get_result("2:2"))
-    # #insert into db
-    connect_server()
+    try:
+        get_today_over_1_5_prediction(soup,p_date)
+        #time.sleep(6) 
+        #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
+        get_previous_over_1_5_prediction(soup,x_date)
+        #print(get_result("2:2"))
+        # #insert into db
+        connect_server()
+    except:
+        pass
 
 
 if __name__ == "__main__":

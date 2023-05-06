@@ -103,7 +103,7 @@ x_date = p_date - timedelta(days=1)
 
 def get_today_over_1_5_prediction(bs, set_date):
 
-    url ="https://r2bet.com/gg_btts?dt="
+    url ="https://venasbet.com/gg_btts?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -164,7 +164,7 @@ def get_today_over_1_5_prediction(bs, set_date):
 
 def get_previous_over_1_5_prediction(nbs,set_previous_date):
 
-    url ="https://r2bet.com/gg_btts?dt="
+    url ="https://venasbet.com/gg_btts?dt="
    
     webpage = requests.get(url+str(set_previous_date), headers = my_headers)
     nbs = nbs(webpage.content, "html.parser")

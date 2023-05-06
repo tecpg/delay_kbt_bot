@@ -122,7 +122,7 @@ x_date = p_date - timedelta(days=1)
 
 def get_today_prediction(bs, set_date):
 
-    url ="https://r2bet.com/?dt="
+    url ="https://venasbet.com/?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -179,7 +179,7 @@ def get_today_prediction(bs, set_date):
 
 def get_previous_prediction(nbs,set_previous_date):
 
-    url ="https://r2bet.com/?dt="
+    url ="https://venasbet.com/?dt="
    
     webpage = requests.get(url+str(set_previous_date), headers = my_headers)
     nbs = nbs(webpage.content, "html.parser")
@@ -336,5 +336,3 @@ def run():
 
 if __name__ == "__main__":
     run()
-
-    
