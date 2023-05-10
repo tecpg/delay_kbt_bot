@@ -15,7 +15,7 @@ api_key_secret = kdb_config.api_key_secret
 access_token = kdb_config.access_token
 access_token_secret = kdb_config.access_token_secret
 
-webUrl = 'https://kingsbettingtips.com/combo-betting-tips'
+webUrl = 'https://kingsbettingtips.com'
 
 # print(api_key)
 
@@ -37,7 +37,7 @@ nigeria_trends = []
 # _________________________________________________________
                 # Fetching tips from csv
 def get_tweet_contents():
-    csv_f = "tipsbet_data.csv"
+    csv_f = "oddslot_data.csv"
     tips = []
 
 
@@ -47,19 +47,18 @@ def get_tweet_contents():
                 tips.append(row[:8])
 
 
-    predictions =tips[:3]
+    predictions =tips[:6]
     contents = []
     print(f"Predictions:   {predictions}")
 
     tips_total_odd = [x[7] for x in predictions][0]
     tips_date = [x[6] for x in predictions][0]
-    all_tips = tips_date = [x[:4] for x in predictions]
+    all_tips = tips_date = [x[:3] for x in predictions]
     post_tips = ''
     for x in all_tips:
-        x[0] = f"({x[0]})\n"
-        x[1] = f"{x[1]}\n"
-        x[2] = f"({x[2]})"
-        x[3] = f"({x[3]})\n\n"
+        x[0] = f"{x[0]}\n"
+        x[1] = f"{x[1]} =>"
+        x[2] = f"{x[2]}\n\n"
         post_tips += ' '.join(x)
 
     print(post_tips)
@@ -75,11 +74,11 @@ def twiiter_bot(tips_content):
         ##########################################################
 
 
-        thumbnail = Image.open("bg_img.jpg")
-        t_font = ImageFont.truetype('a.ttf', 26)
+        thumbnail = Image.open("bg_img.png")
+        t_font = ImageFont.truetype('b.ttf', 20)
         t_text = get_tweet_contents()
         image_editable = ImageDraw.Draw(thumbnail)
-        image_editable.text((50,60), t_text,(237, 230, 211), t_font)
+        image_editable.text((50,400), t_text,(00, 00, 00), t_font)
         thumbnail.save("thumbnail.jpg")
 
 
@@ -101,9 +100,9 @@ def twiiter_bot(tips_content):
 
         kenya_trends.sort(key=lambda a: a[1], reverse = True)
 
-    ######################################################################
-                    # Nigeria Trends
-    ######################################################################
+    # ######################################################################
+    #                 # Nigeria Trends
+    # ######################################################################
 
         for trend in trend_results_nigeria[0]["trends"][:50]:
             name = trend["name"]
@@ -118,11 +117,11 @@ def twiiter_bot(tips_content):
             nigeria_trends.sort(key=lambda a: a[1], reverse = True)
             # print(kbt_trends)
 
-        # 👇️ using nested for loop
+    #     # 👇️ using nested for loop
 
-    ######################################################################
-                    # END
-    ######################################################################
+    # ######################################################################
+    #                 # END
+    # ######################################################################
 
 
         k_items = [item[0] for item in kenya_trends[:5]]
@@ -136,7 +135,7 @@ def twiiter_bot(tips_content):
         print(len(tweet))
         print(tweet)
 
-        # api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
+        api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
         api.update_status_with_media(f"Betting Tips for Today! \n for more tip visit ---{webUrl}\n\n{post_trends}","thumbnail.jpg")
 
 
