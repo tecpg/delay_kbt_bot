@@ -168,7 +168,7 @@ def twiiter_bot(tips_content):
         print(len(tweet))
         print(tweet)
 
-        api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
+        #api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
         api.update_status_with_media(f"Results from our previous prediction tips \n for more tip visit ---{webUrl}\n\n{post_trends}","thumbnail.jpg")
 
 
