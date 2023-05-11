@@ -85,6 +85,11 @@ def get_result(pick, score):
                 result = "Won"
             else:
                 result = "Lost"
+        elif pick == "12":
+            if s_list[0] > s_list[1] or s_list[0] < s_list[1] :
+                result = "Won"
+            else:
+                result = "Lost"
         elif score == ":":
             result = "..."
         else:
