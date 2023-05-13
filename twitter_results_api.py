@@ -82,7 +82,10 @@ def get_tweet_contents():
              lost_post = True
         else:
              lost_post = False
-            
+        
+        if x[4] not in ['Won', 'Lost']: 
+             
+             continue
    
         x[0] = f"{x[0]}\n"
         x[1] = f"{x[1]} =>"
@@ -133,9 +136,9 @@ def twiiter_bot(tips_content):
 
         kenya_trends.sort(key=lambda a: a[1], reverse = True)
 
-    # # ######################################################################
-    # #                 # Nigeria Trends
-    # # ######################################################################
+    # # # ######################################################################
+    # # #                 # Nigeria Trends
+    # # # ######################################################################
 
         for trend in trend_results_nigeria[0]["trends"][:50]:
             name = trend["name"]
@@ -150,11 +153,11 @@ def twiiter_bot(tips_content):
             nigeria_trends.sort(key=lambda a: a[1], reverse = True)
             # print(kbt_trends)
 
-    # #     # 👇️ using nested for loop
+    # # #     # 👇️ using nested for loop
 
-    # # ######################################################################
-    # #                 # END
-    # # ######################################################################
+    # # # ######################################################################
+    # # #                 # END
+    # # # ######################################################################
 
 
         k_items = [item[0] for item in kenya_trends[:5]]
@@ -168,7 +171,6 @@ def twiiter_bot(tips_content):
         print(len(tweet))
         print(tweet)
 
-        #api.update_status(f"Betting Tips! \n {tips_content} \n visit-{webUrl}\n\n{post_trends}")
         api.update_status_with_media(f"Results from our previous prediction tips \n for more tip visit ---{webUrl}\n\n{post_trends}","thumbnail.jpg")
 
 
