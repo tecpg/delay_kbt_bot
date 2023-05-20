@@ -203,7 +203,8 @@ def get_previous_prediction(nbs,set_previous_date):
     with open(csv_f, "w", encoding="utf8", newline="") as f:
         thewriter = writer(f)
 
-        for x in range(0,tr_count - 1):
+        for x in range(0,tr_count - 4):
+            print(tr_count - 4)
 
             c = 1 + x
             i = str(c)
@@ -220,7 +221,7 @@ def get_previous_prediction(nbs,set_previous_date):
             results = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[4]/span/@class')
             
             res = results
-            print(res)
+           
             if 'fa fa-check-circle text-success' in res and score != '?':
              results = "Won"
             elif 'fa fa-times-circle text-danger' in res and score != '?':

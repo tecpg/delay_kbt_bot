@@ -6,8 +6,8 @@ import venasbet_spider
 import venasbet_u35goals_spider
 import previous_1x2tips
 import kbtxtips
-import twitter_api
-import twitter_results_api
+# import twitter_api
+# import twitter_results_api
 import protips
 import time as _time
 
@@ -23,10 +23,10 @@ def _kbt():
         _time.sleep(_runtime)
         protips.run()
         _time.sleep(_runtime)
-        twitter_api.run()
-        _time.sleep(_runtime)
-        twitter_results_api.run()
-        _time.sleep(_runtime)
+        # twitter_api.run()
+        # _time.sleep(_runtime)
+        # twitter_results_api.run()
+        # _time.sleep(_runtime)
         venasbet_spider.run()
         _time.sleep(_runtime)
         venasbet_overgoals_spider.run()

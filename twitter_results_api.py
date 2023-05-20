@@ -180,8 +180,6 @@ def twiiter_bot(tips_content):
 
 
 
-
-
 def run():
     if lost_post == False:
         twiiter_bot(get_tweet_contents)
