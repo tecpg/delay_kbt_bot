@@ -68,6 +68,9 @@ def get_result(pick, score):
     
     if any(map(str.isdigit, score)):
         s_list = list(score.split(":"))
+      
+        #calculate over 2.5 score         
+    
         if pick == "1X":
             if s_list[0] > s_list[1] or s_list[0] == s_list[1] :
                 result = "Won"
@@ -90,6 +93,30 @@ def get_result(pick, score):
                 result = "Lost"
         elif pick == "12":
             if s_list[0] > s_list[1] or s_list[0] < s_list[1] :
+                result = "Won"
+            else:
+                result = "Lost"
+        elif pick == "OV1.5":
+            
+            s_n = [eval(i)for i in s_list]
+            s_n =sum(s_n)
+            if s_n >= 2:
+                result = "Won"
+            else:
+                result = "Lost"
+              
+        elif pick == "OV2.5":
+            if s_n >= 3:
+                result = "Won"
+            else:
+                result = "Lost"
+        elif pick == "2NB":
+            if s_list[0] < s_list[1] or s_list[0] == s_list[1] :
+                result = "Won"
+            else:
+                result = "Lost"
+        elif pick == "1DNB":
+            if s_list[0] > s_list[1] or s_list[0] == s_list[1] :
                 result = "Won"
             else:
                 result = "Lost"
