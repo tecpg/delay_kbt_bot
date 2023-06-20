@@ -37,7 +37,7 @@ def post_tips():
 
     url ="https://oddslot.com/tips/?page="
     dt = []
-    for page in range(1,3):
+    for page in range(1,4):
     
 
         # # Here Chrome  will be used
@@ -113,10 +113,10 @@ def post_tips():
             for sublist in my_list:
                 if sublist[3] > max_value:
                     max_value = sublist[3]
-                    sublist[3] = round(sublist[3] + 0.15, 2)
                     max_sublist = sublist
 
             print("The sublist with the highest value at index[3] is:", max_sublist)
+            max_sublist[3] = round(max_sublist[3] + 0.04, 2)
         
             match_list = [str(value) for value in max_sublist]
             
