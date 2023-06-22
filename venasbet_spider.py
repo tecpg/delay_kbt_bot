@@ -112,7 +112,7 @@ def get_result(pick, score):
                 result = "Won"
             else:
                 result = "Lost"
-        elif pick == "2NB":
+        elif pick == "2DNB":
             
             if s_list[0] < s_list[1] or s_list[0] == s_list[1] :
                 result = "Won"
