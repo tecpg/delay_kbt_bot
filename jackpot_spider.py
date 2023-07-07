@@ -116,7 +116,7 @@ def post_tips():
                     max_sublist = sublist
 
             print("The sublist with the highest value at index[3] is:", max_sublist)
-            max_sublist[3] = round(max_sublist[3] + 0.04, 2)
+            max_sublist[3] = round(max_sublist[3] + 0.08, 2)
         
             match_list = [str(value) for value in max_sublist]
             
