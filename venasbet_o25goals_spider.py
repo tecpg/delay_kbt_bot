@@ -292,7 +292,7 @@ def connect_server():
                 
             print("MySQL connection is closed")
 
-    post_title = 'Over 2.5 Goals Betting Tips - Today Free Over 2.5 Goals Predictions'
+    post_title = 'Daily Betting Tips - Todays Football Prediction'
     tip_category = '187'
     category_note = """ <h4>What is Over 2.5 Goals Prediction</h4><br>
                 Over 2.5 goals betting is a type of bet that involves predicting that there will be at least 3 goals scored in a football match. This type of bet is sometimes referred to as a "goal line" bet. Over 2.5 goals betting tips refer to recommendations or suggestions for over 2.5 goals bets made by experts or individuals with knowledge of the teams or events being bet on. It is important to note that betting tips and recommendations are not a guarantee of success and that all forms of gambling carry inherent risks and uncertainties. 

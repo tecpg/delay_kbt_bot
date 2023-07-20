@@ -340,7 +340,7 @@ def connect_server():
             print("MySQL connection is closed")
 
 
-    post_title = 'Accumulator Betting Tips - Free Acca Predictions for Today'
+    post_title = 'Todays Football Prediction - Daily Betting Tips'
     tip_category = '191'
     category_note = """ <h4>What is an Accumulator Tip</h4><br>ACCA is an abbreviation for "accumulator" or "accumulator bet." An accumulator bet is a type of bet that involves combining multiple selections into a single wager. 
         To win an accumulator bet, all of the individual selections included in the bet must be correct.

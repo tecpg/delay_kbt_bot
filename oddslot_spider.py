@@ -312,7 +312,7 @@ def connect_server():
             print("MySQL connection is closed")
 
 
-    post_title = 'Double Chance Betting Tips - Today Free Double Chance Predictions'
+    post_title = 'Today Fotball Prediction - Daily Betting Tips'
     tip_category = '190'
     category_note = """ <h4>What is a Double Chance Prediction</h4><br>
                     Double chance betting is a type of betting option that allows you to cover two of the three possible outcomes in a football match with one bet. 

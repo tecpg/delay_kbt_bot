@@ -166,7 +166,7 @@ def wp_post(**post_dict):
     'status'   : 'publish', 
     'content'  : f'{welcome_note}'
     
-    '<div class="col-lg-10 col-md-6">'
+    '<div">'
                     '<div class="table-responsive single-intro-inner style-2 text-center">'
                         '<table class="table table-striped">'
                         f'<h4 class="title">{post_title}</h4>'

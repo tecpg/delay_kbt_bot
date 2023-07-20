@@ -287,7 +287,7 @@ def connect_server():
 
 
 
-    post_title = 'Under 3.5 Goals Betting Tips - Today Free Under 3.5 Goals Predictions'
+    post_title = 'Todays Football Prediction - Daily Betting Tips'
     tip_category = '188'
     category_note = """ <h4>What is Under 3.5 goals Prediction</h4><br>
                 Under 3.5 goals betting is a type of bet that involves predicting that there will be 3 goals or fewer scored in a football match. This type of bet is sometimes referred to as a "goal line" bet. Under 3.5 goals betting tips refer to recommendations or suggestions for under 3.5 goals bets made by experts or individuals with knowledge of the teams or events being bet on. It is important to note that betting tips and recommendations are not a guarantee of success and that all forms of gambling carry inherent risks and uncertainties. 
