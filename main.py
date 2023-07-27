@@ -6,6 +6,7 @@ import venasbet_spider
 import venasbet_u35goals_spider
 import previous_1x2tips
 import kbtxtips
+import vip_ticket_tips
 # import twitter_api
 # import twitter_results_api
 import jackpot_spider
@@ -26,8 +27,8 @@ def _kbt():
         _time.sleep(_runtime)
         jackpot_spider.run()
         _time.sleep(_runtime)
-        # twitter_results_api.run()
-        # _time.sleep(_runtime)
+        vip_ticket_tips.run()
+        _time.sleep(_runtime)
         venasbet_spider.run()
         _time.sleep(_runtime)
         venasbet_overgoals_spider.run()
