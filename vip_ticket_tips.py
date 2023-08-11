@@ -50,7 +50,7 @@ def post_tips():
 
     url ="https://oddslot.com/tips/?page="
     dt = []
-    for page in range(1,3):
+    for page in range(1,4):
     
 
         # # Here Chrome  will be used
@@ -58,7 +58,7 @@ def post_tips():
         spider = soup(webpage.content, "html.parser")
         dom = etree.HTML(str(spider))
 
-        with open(csv_f, "w", encoding="utf-8-sig", newline="") as f:
+        with open(csv_f, "w", encoding="utf-8", newline="") as f:
             thewriter = writer(f)
 
             for x in range(0,10):
@@ -119,8 +119,6 @@ def post_tips():
             max_sublist = []
             selected_list = my_list[:6]
             
-            
-
             for sublist in selected_list:
                 if check_odd_range(sublist[3]):
                     sublist[3] = round(sublist[3] + 0.08, 2)

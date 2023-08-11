@@ -322,11 +322,11 @@ def connect_server():
     more_tips_link = 'double-chance-betting-tips'
 
 
-    # wp_post(post_title = post_title,
-    #     tips_category = tip_category,
-    #     category_note = category_note,
-    #     source_name  = source_name,
-    #     more_tips_link = more_tips_link)
+    wp_post(post_title = post_title,
+        tips_category = tip_category,
+        category_note = category_note,
+        source_name  = source_name,
+        more_tips_link = more_tips_link)
     
 def run():
     get_today_prediction(soup,p_date)

@@ -4,7 +4,7 @@ import venasbet_o25goals_spider
 import venasbet_overgoals_spider
 import venasbet_spider
 import venasbet_u35goals_spider
-import previous_1x2tips
+import featured_match
 import kbtxtips
 import vip_ticket_tips
 # import twitter_api
@@ -13,7 +13,7 @@ import jackpot_spider
 import protips
 import time as _time
 
-_runtime = 10
+_runtime = 5
 day_runtime = 86500
 
 def _kbt():
@@ -24,6 +24,7 @@ def _kbt():
         tipsbet_big_odds_spider.run()
         _time.sleep(_runtime)
         protips.run()
+        featured_match.run()
         _time.sleep(_runtime)
         jackpot_spider.run()
         _time.sleep(_runtime)
@@ -36,8 +37,6 @@ def _kbt():
         venasbet_u35goals_spider.run()
         _time.sleep(_runtime)
         venasbet_o25goals_spider.run()
-        _time.sleep(_runtime)
-        previous_1x2tips.run()
         _time.sleep(_runtime)
         kbtxtips.run()
        

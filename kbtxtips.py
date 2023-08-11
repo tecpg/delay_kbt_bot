@@ -97,16 +97,14 @@ def connect_server():
     
           print("Getting today predictions", record)
           cursor.execute(f"""SELECT * FROM (
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_acca" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_acca" AND date = "{sql_date}" ORDER BY RAND() LIMIT 1)
                               UNION
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "oddslot" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "oddslot" AND date = "{sql_date}" ORDER BY RAND() LIMIT 1)
                               UNION
                               (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_o_1_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
                               UNION
                               (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_u_3_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
-                              UNION
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "tipsbet_combo_tips" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
-                              ) AS results ORDER BY RAND() """)
+                              AS results ORDER BY RAND() """)
 
           my_results = cursor.fetchall()
           today_html = ''
