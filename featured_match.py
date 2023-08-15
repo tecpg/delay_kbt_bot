@@ -46,6 +46,9 @@ from datetime import timedelta
 from datetime import date
 from featured_match_wp_post import featured_match_wp_post
 import kdb_config
+import time as _time
+
+_runtime = 1
 
 
 session = requests.Session()
@@ -188,12 +191,13 @@ def post():
 
             """
 
-    featured_match_wp_post(post_title = post_title,
-            tips_category = tip_category,
-            category_note = category_note,
-            telegram_content = join_telegram_content,
-            post_content = featured_post_content,
-        )
+        featured_match_wp_post(post_title = post_title,
+                tips_category = tip_category,
+                category_note = category_note,
+                telegram_content = join_telegram_content,
+                post_content = featured_post_content,
+            )
+    _time.sleep(_runtime)
     
 def run():
     post()
