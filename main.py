@@ -39,8 +39,6 @@ def _kbt():
         venasbet_o25goals_spider.run()
         _time.sleep(_runtime)
         kbtxtips.run()
-       
-
         print('ended for today ')
         _time.sleep(day_runtime)
         print('done')

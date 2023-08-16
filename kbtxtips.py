@@ -103,7 +103,7 @@ def connect_server():
                               UNION
                               (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_o_1_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
                               UNION
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_u_3_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_u_3_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2))
                               AS results ORDER BY RAND() """)
 
           my_results = cursor.fetchall()
