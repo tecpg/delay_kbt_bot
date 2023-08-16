@@ -118,17 +118,18 @@ def connect_server():
               #open csv file
               with open(csv_f, "w", encoding="utf8", newline="") as f:
                   thewriter = writer(f)
+                  league = value[0]
                   fixtures = value[1]
                   match_tip = value[2]
                   match_date = value[3]
-                  code = [fixtures, match_tip, match_date]
+                  code = [league, fixtures, match_tip, match_date]
                   codes.append(code)
                   print(code)
 
                   thewriter.writerows(codes)
           
           print(today_html)
-          print(fixtures)
+          print("here are the fixtures: " + fixtures)
         
   except mysql.connector.Error as err:
 

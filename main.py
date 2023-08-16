@@ -10,6 +10,7 @@ import vip_ticket_tips
 # import twitter_api
 # import twitter_results_api
 import jackpot_spider
+import kbt_telegram_bot
 import protips
 import time as _time
 
@@ -39,6 +40,8 @@ def _kbt():
         venasbet_o25goals_spider.run()
         _time.sleep(_runtime)
         kbtxtips.run()
+        _time.sleep(_runtime)
+        kbt_telegram_bot.run()
         print('ended for today ')
         _time.sleep(day_runtime)
         print('done')
