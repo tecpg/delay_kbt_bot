@@ -50,7 +50,7 @@ def post_tips():
 
     url ="https://oddslot.com/tips/?page="
     dt = []
-    for page in range(1,4):
+    for page in range(1,7):
     
 
         # # Here Chrome  will be used
@@ -117,7 +117,7 @@ def post_tips():
             my_list = dt
             random.shuffle(my_list)
             max_sublist = []
-            selected_list = my_list[:6]
+            selected_list = my_list[:12]
             
             for sublist in selected_list:
                 if check_odd_range(sublist[3]):
