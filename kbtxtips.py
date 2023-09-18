@@ -44,6 +44,7 @@ x_date = yesterday_date - timedelta(days=1)
 
 
 sql_date = date.today().strftime('%Y-%m-%d')
+sql_date2 = date.today().strftime('%d-%m-%Y')
 # sql_date = '2022-10-28'
 print(sql_date)
 
@@ -97,13 +98,11 @@ def connect_server():
     
           print("Getting today predictions", record)
           cursor.execute(f"""SELECT * FROM (
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_acca" AND date = "{sql_date}" ORDER BY RAND() LIMIT 1)
-                              UNION
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "oddslot" AND date = "{sql_date}" ORDER BY RAND() LIMIT 1)
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "protips_acca" AND date = "{sql_date}" ORDER BY RAND() LIMIT 1)
                               UNION
                               (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_o_1_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2)
                               UNION
-                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "venasbet_u_3_5" AND date = "{sql_date}" ORDER BY RAND() LIMIT 2))
+                              (SELECT league, fixtures, tip, date, code, source FROM soccerpunt WHERE source = "vip_tips" AND date = "{sql_date2}" ORDER BY RAND() LIMIT 2))
                               AS results ORDER BY RAND() """)
 
           my_results = cursor.fetchall()
@@ -121,6 +120,7 @@ def connect_server():
                   league = value[0]
                   fixtures = value[1]
                   match_tip = value[2]
+                  
                   match_date = value[3]
                   code = [league, fixtures, match_tip, match_date]
                   codes.append(code)
