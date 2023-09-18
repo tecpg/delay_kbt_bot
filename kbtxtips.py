@@ -108,8 +108,7 @@ def connect_server():
           my_results = cursor.fetchall()
           today_html = ''
           codes = []
-
-
+          
           for key, value in enumerate(my_results):
 
               today_html += f'<tr><td>{value[0]}</td><td>{value[1]}</td><td>{value[2]}</td></tr>'
