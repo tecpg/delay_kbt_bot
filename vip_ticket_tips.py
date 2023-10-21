@@ -156,9 +156,16 @@ def post_to_mysql():
         
             csv_data = csv.reader(f)
             for row in csv_data:
-                print(row)
-                cursor.execute('INSERT INTO soccerpunt(league,fixtures,tip,odd,match_time,score,date,flag,result,code,source)'\
-                    'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
+                if len(row) == 11:
+                    cursor.execute(
+                        'INSERT INTO soccerpunt(league, fixtures, tip, odd, match_time, score, date, flag, result, code, source)'
+                        'VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                        row
+                    )
+                else:
+                    print(f"Skipping row with incorrect number of values: {row}")
+
+               
 
         print("Inserting tips now... ", time.ctime())
         print(cursor.rowcount," record(s) created==============", time.ctime())
