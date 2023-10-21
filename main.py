@@ -18,7 +18,8 @@ _runtime = 5
 day_runtime = 86500
 
 def _kbt():
- 
+        
+        
         print('started for today ')
         _time.sleep(_runtime)
         jackpot_spider.run()
