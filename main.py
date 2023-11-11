@@ -6,10 +6,10 @@ import venasbet_spider
 import venasbet_u35goals_spider
 import featured_match
 import kbtxtips
-import vip_ticket_tips
+#import vip_ticket_tips
 # import twitter_api
 # import twitter_results_api
-import jackpot_spider
+#import jackpot_spider
 import kbt_telegram_bot
 import protips
 import time as _time
@@ -22,9 +22,9 @@ def _kbt():
         
         print('started for today ')
         _time.sleep(_runtime)
-        jackpot_spider.run()
+        #jackpot_spider.run()
         _time.sleep(_runtime)
-        vip_ticket_tips.run()
+        #vip_ticket_tips.run()
         oddslot_spider.run()
         _time.sleep(_runtime)
         tipsbet_big_odds_spider.run()
