@@ -22,9 +22,9 @@ def _kbt():
         
         print('started for today ')
         _time.sleep(_runtime)
-       #jackpot_spider.run()
+        jackpot_spider.run()
         _time.sleep(_runtime)
-       vip_ticket_tips.run()
+        vip_ticket_tips.run()
      #  oddslot_spider.run()
         _time.sleep(_runtime)
      #   tipsbet_big_odds_spider.run()
