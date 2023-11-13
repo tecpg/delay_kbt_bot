@@ -9,7 +9,7 @@ import kbtxtips
 import vip_ticket_tips
 # import twitter_api
 # import twitter_results_api
-#import jackpot_spider
+import jackpot_spider
 import kbt_telegram_bot
 import protips
 import time as _time
