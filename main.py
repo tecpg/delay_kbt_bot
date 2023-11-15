@@ -1,4 +1,4 @@
-#import oddslot_spider
+import oddslot_spider
 #import tipsbet_big_odds_spider
 import venasbet_o25goals_spider
 import venasbet_overgoals_spider
@@ -25,7 +25,7 @@ def _kbt():
         jackpot_spider.run()
         _time.sleep(_runtime)
         vip_ticket_tips.run()
-     #  oddslot_spider.run()
+        oddslot_spider.run()
         _time.sleep(_runtime)
      #   tipsbet_big_odds_spider.run()
         _time.sleep(_runtime)
