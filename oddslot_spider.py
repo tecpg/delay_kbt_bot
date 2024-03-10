@@ -27,100 +27,21 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import date
 from wp_post_api_bot import wp_post
-import kdb_config
+import kbt_load_env
+from consts import global_consts as gc
+import kbt_funtions
 
 
 global csv_data
-csv_f = "oddslot_data.csv"
-
-def GET_UA():
-    uastrings = ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.25 (KHTML, like Gecko) Version/8.0 Safari/600.1.25',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0',\
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8',\
-                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.1.17 (KHTML, like Gecko) Version/7.1 Safari/537.85.10',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',\
-                'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36'\
-                ]
-
-    return random.choice(uastrings)
-
-
-def get_code(length):
-    letters = string.ascii_lowercase
-    r_letters = ''.join(random.choice(letters) for i in range(length))
-    numbers =   str(random.randint(2220,333000333))
-    code = r_letters+numbers
-    return code
-
-# Python code to remove whitespace
-def remove(string):
-    return string.replace("\n", "")
-
-def get_result(pick, score):
-    
-    if any(map(str.isdigit, score)):
-        s_list = list(score.split(":"))
-        if pick == "1X":
-            if s_list[0] > s_list[1] or s_list[0] == s_list[1] :
-                result = "Won"
-            else:
-                result = "Lost"
-        elif pick == "2X":
-            if s_list[0] < s_list[1] or s_list[0] == s_list[1] :
-                result = "Won"
-            else:
-                result = "Lost"
-        elif pick == "1":
-            if s_list[0] > s_list[1]:
-                result = "Won"
-            else:
-                result = "Lost"
-        elif pick == "2":
-            if s_list[0] < s_list[1]:
-                result = "Won"
-            else:
-                result = "Lost"
-        elif pick == "12":
-            if s_list[0] > s_list[1] or s_list[0] < s_list[1] :
-                result = "Won"
-            else:
-                result = "Lost"
-        elif score == ":":
-            result = "..."
-        else:
-            result = "..."
-
-        return result
-    else:
-        result = "..."
-        return result
-
-
-
-
+csv_f = gc.ODDSLOT_CSV
 
 session = requests.Session()
-my_headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8"}
-#my_headers = GET_UA
+my_headers = gc.MY_HEARDER
 dt = []
 
-# taking input as the current date
-# today() method is supported by date
-# class in datetime module
-
-p_date = date.today()
+p_date = gc.PRESENT_DAY_DATE
 # calculating end date by adding 4 days
-x_date = p_date - timedelta(days=1)
-
-# # printing end date
-# print("Ending date")
-print(x_date)
-
+x_date = gc.YESTERDAY_DATE
 
 
 def get_today_prediction(bs, set_date):
@@ -168,10 +89,10 @@ def get_today_prediction(bs, set_date):
             source = "oddslot"
             flag = ""
             match_date = set_date
-            match_code = get_code(8)
+            match_code = kbt_funtions.get_code(8)
             score=""
 
-            prediction = [leagues,remove(home_team +"vs "+away_team),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [leagues,kbt_funtions.remove(home_team +"vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
@@ -219,7 +140,7 @@ def get_previous_prediction(nbs,set_previous_date):
             score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
             score = score[0].text
 
-            results = get_result(picks,score)
+            results = kbt_funtions.get_result(picks,score)
 
 
             #calculate over 2.5 score
@@ -235,9 +156,9 @@ def get_previous_prediction(nbs,set_previous_date):
             source = "oddslot"
             flag = ""
             match_date = set_previous_date
-            match_code = get_code(8)
+            match_code = kbt_funtions.get_code(8)
 
-            prediction = [leagues,remove(home_team +"vs "+away_team),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [leagues,kbt_funtions.remove(home_team +"vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
@@ -255,10 +176,8 @@ def connect_server():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
     # and paste here as my host ip address
     try:
-        connection = mysql.connector.connect(host=kdb_config.db_host,
-                                            database=kdb_config.db_dbname,
-                                            user=kdb_config.db_user,
-                                            password=kdb_config.db_pwd)
+        connection = kbt_funtions.db_connection()
+
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)

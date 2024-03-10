@@ -16,75 +16,9 @@ from mysql.connector import errorcode
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
-import kdb_config
-
-
-local_url = 'http://localhost:8080/wordpress/wp-json/wp/v2/posts/?post_type=predictions'
-live_url = 'https://kingsbettingtips.com/wp-json/wp/v2/posts'
-
-url = live_url
-
-live_user = 'adminKBT'
-local_user = 'root'
-
-user = live_user
-
-live_pwd = kdb_config.live_pwd
-local_pwd = kdb_config.local_pwd
-
-password = live_pwd
-
-creds = user + ':' + password
-
-p_time = datetime.now() + timedelta(minutes=5)
-p_date = p_time.strftime("%Y-%m-%dT%H:%M:%S")
-
-
-sql_date = date.today().strftime('%Y-%m-%d')
-# sql_date = '28-10-2022'
-print(sql_date)
-
-
-# post_title = ''
-# tip_category = 'Over 1.5 goals'
-# category_note = """  """
-# source_name = ''
-
-# more_tips_link = ''
-
-# wp_post_contents = {
-#     'post_title' : post_title,
-#     'tips_category' : tip_category,
-#     'category_note' : category_note,
-#     'source_name'  : source_name,
-#     'more_tips_link' : more_tips_link
-
-# }
-
-
-welcome_note = """ Hello Kings!
-
-We have just released a new set of football prediction tips for the upcoming matches. Our team of experts have analyzed the data and have come up with some highly accurate predictions.
-
-Whether you are a casual fan or a serious bettor, these tips will help you make informed decisions about your bets. Be sure to check them out and let us know what you think.
-<blockquote>
-<small>As always, it is important to remember that these tips are not guaranteed and that there is always a risk of losing money when betting.</small> <strong>Please gamble responsibly.</strong></blockquote>
-
-Thank you for your support and happy betting!<br> """
-
-join_telegram_content = """ We have recently started a new Telegram group for sports fans to discuss and share their thoughts on the latest events and games.
-If you are interested in joining, please click on the link below to request access. We look forward to having you as a member of our community.
-See you in the group!<br> 
-<div class="media single-contact-info">
-<a class="btn btn-base" href="https://t.me/+EQVAXh9ctNgwZDJk">Join our Telegram Group<i class="fas fa-arrow-alt-circle-right ms-2"></i></a>
-        </div>  
-"""
-
-comment_note = """ <p>
-We would love to hear your thoughts and opinions on it. Please feel free to leave a comment below and let us know what you think. 
-Your feedback is always valuable to us. Thank you!</p> """
-
-
+import kbt_load_env
+import kbt_funtions
+import consts.global_consts as gc
 
 #posting into wp
 def wp_post(**post_dict):
@@ -94,22 +28,11 @@ def wp_post(**post_dict):
     source_name = post_dict["source_name"]
     more_tips_link = post_dict["more_tips_link"]
     post_title = post_dict["post_title"]
-    
-    
-    # print(tip_category)
-    # print(tip_note)
-
 
     try:
-        connection = mysql.connector.connect(host=kdb_config.db_host,
-                                         database=kdb_config.db_dbname,
-                                         user=kdb_config.db_user,
-                                         password=kdb_config.db_pwd)
-
-        # connection = mysql.connector.connect(host='localhost',
-        #                                  database='kingsbet_KBTdb',
-        #                                  user='root',
-        #                                  password='')
+        #open db connection
+        connection = kbt_funtions.db_connection()
+       
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
@@ -118,7 +41,7 @@ def wp_post(**post_dict):
             record = cursor.fetchone()
             print("You're connected to database: ", record)
 
-            cursor.execute(f'SELECT league, fixtures, tip, date FROM soccerpunt WHERE source = "{source_name}" AND date = "{sql_date}" ORDER BY id DESC LIMIT 4')
+            cursor.execute(f'SELECT league, fixtures, tip, date FROM soccerpunt WHERE source = "{source_name}" AND date = "{gc.MYSQL_DATE}" ORDER BY id DESC LIMIT 4')
             my_results = cursor.fetchall()
             html = ''
 
@@ -144,27 +67,10 @@ def wp_post(**post_dict):
             
             print("MySQL connection is closed")
 
-
-    token = base64.b64encode(creds.encode())
-    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
-
-    token = base64.b64encode(creds.encode())
-    header = {'Authorization': 'Basic ' + token.decode('utf-8')}
-
-    # media = {
-    #     'file' : open('imager.png', 'rb'),
-    #     'caption' : 'First api image',
-    #     'description' : 'image api'
-    # }
-
-    # image = requests.post(url + '/media', headers=header, files= media )
-    # imageURL = str(json.loads(image.content['source_url']))
-
-
     post = {
     'title'    : f'{post_title}',
     'status'   : 'publish', 
-    'content'  : f'{welcome_note}'
+    'content'  : f'{gc.WP_WELCOME_NOTE}'
     
     '<div">'
                     '<div class="table-responsive single-intro-inner style-2 text-center">'
@@ -187,13 +93,13 @@ def wp_post(**post_dict):
                                     f'<a class="btn btn-base" href="{more_tips_link}">Load more...<i class="fas fa-arrow-alt-circle-right ms-2"></i></a>'
                                             '</div>'
                                         '</div>'
-                                        f'{join_telegram_content}'
+                                        f'{gc.WP_JOIN_TELEGRAM_NOTE}'
                                         f'{tip_note}'
-                                        f'{comment_note}',
-                                     'date'   : f'{p_date}',
+                                        f'{gc.WP_COMMENT_NOTE}',
+                                     'date'   : f'{gc.WP_POST_DATE}',
                                     'categories' : ['4', '185', f'{tip_category}'],
                                     'tags' : ['63', '7', '66', '125', '127','53', '54', '153', '4', '16','14', '15', '51', '6', '11','52', '56', '58', '59', '57']
     }
 
-    r = requests.post(url, headers=header, json=post)
+    r = requests.post(gc.WP_LIVE_URL, headers=gc.WP_HEADER, json=post)
     print(r)

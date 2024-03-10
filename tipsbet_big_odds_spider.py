@@ -27,77 +27,16 @@ from datetime import datetime
 from datetime import timedelta
 from datetime import date
 from wp_post_api_bot import wp_post
-import kdb_config
+import kbt_load_env
+from consts import global_consts as gc
+import kbt_funtions
 
 
 global csv_data
-csv_f = "tipsbet_data.csv"
-
-
-def GET_UA():
-    uastrings = ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10) AppleWebKit/600.1.25 (KHTML, like Gecko) Version/8.0 Safari/600.1.25',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0',\
-                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8',\
-                'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36',\
-                'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/600.1.17 (KHTML, like Gecko) Version/7.1 Safari/537.85.10',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko',\
-                'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0',\
-                'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36'\
-                ]
-
-    return random.choice(uastrings)
-
-
-def get_code(length):
-    letters = string.ascii_lowercase
-    r_letters = ''.join(random.choice(letters) for i in range(length))
-    numbers =   str(random.randint(2220,333000333))
-    code = r_letters+numbers
-    return code
-
-# Python code to remove whitespace
-def remove(string):
-    return string.replace("\n", "")
-
-def get_result(pick, score):
-    s_list = list(score.split(":"))
-
-    if pick == "1X":
-        if s_list[0] > s_list[1] or s_list[0] == s_list[1] :
-            result = "Won"
-        else:
-            result = "Lost"
-    elif pick == "X2":
-         if s_list[0] < s_list[1] or s_list[0] == s_list[1] :
-            result = "Won"
-         else:
-            result = "Lost"
-    elif pick == "1":
-         if s_list[0] > s_list[1]:
-            result = "Won"
-         else:
-            result = "Lost"
-    elif pick == "2":
-         if s_list[0] < s_list[1]:
-            result = "Won"
-         else:
-            result = "Lost"
-    else:
-        result = score , pick
-
-    return result
-
-
-
-
-
+csv_f = gc.TIPSBET_CSV
 
 session = requests.Session()
-my_headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8"}
-#my_headers = GET_UA
+my_headers = gc.MY_HEARDER
 dt = []
 
 # taking input as the current date
@@ -105,10 +44,10 @@ dt = []
 # class in datetime module
 
 date_ = date.today()
-p_date = date.today().strftime('%d-%m-%Y')
+p_date = gc.PRESENT_DAY_DMY
 
 x_date = date_- timedelta(days=1)
-x_date = x_date.strftime('%d-%m-%Y')
+x_date = gc.YESTERDAY_DMY
 
 # print(x_date, p_date)
 
@@ -154,12 +93,17 @@ def get_today_prediction(bs, set_date):
         for x in range(2,tr_count-2):
             c =  x
             i = str(c)
-
-            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
-            timez = timez[0].text
           
             league = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-            league = league[0].text
+            league = league[0].text  
+            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
+            
+             # Check if the element is found
+            if timez:
+                timez = timez[0].text
+                print(timez)
+            else:
+               timez = ''
             match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
             match = match[0].text
             match = match.replace("–", "VS")
@@ -169,15 +113,16 @@ def get_today_prediction(bs, set_date):
             odds= dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
             odds = odds[0].text
             
+            
             flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
             flag = flag[0].text
             match_date = date.today().strftime('%Y-%m-%d')
-            match_code = get_code(8)
+            match_code = kbt_funtions.get_code(8)
             source = "tipsbet_combo_tips"
             score = "N/A"
           
 
-            prediction = [league,remove(match),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [league,kbt_funtions.remove(match),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
@@ -258,9 +203,9 @@ def get_previous_prediction(nbs,set_previous_date):
             source = "tipsbet_combo_tips"
             x_date = date_- timedelta(days=1)
             match_date = x_date.strftime('%Y-%m-%d')
-            match_code = get_code(8)
+            match_code = kbt_funtions.get_code(8)
 
-            prediction = [leagues,remove(match),  picks, odds, remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [leagues,kbt_funtions.remove(match),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
@@ -274,10 +219,8 @@ def connect_server():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
     #and paste here as my host ip address
     try:
-        connection = mysql.connector.connect(host=kdb_config.db_host,
-                                            database=kdb_config.db_dbname,
-                                            user=kdb_config.db_user,
-                                            password=kdb_config.db_pwd)
+        connection = kbt_funtions.db_connection()
+
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
@@ -343,34 +286,6 @@ def connect_server():
                 It is always important to gamble responsibly and to understand the risks involved. """
     source_name = 'tipsbet_combo_tips'
     more_tips_link = 'combo-betting-tips'
-
-
-    # csv_f = "tipsbet_data.csv"
-    # tips = []
-
-
-    # with open(csv_f, "r") as f:    
-    #         csv_data = csv.reader(f)
-    #         for row in csv_data:
-    #             tips.append(row[:8])
-
-
-    # predictions =tips[:5]
-    # print(f"Predictions:   {predictions}")
-
-    # tips_total_odd = [x[7] for x in predictions][0]
-    # tips_date = [x[6] for x in predictions][0]
-    # all_tips = tips_date = [x[:4] for x in predictions]
-    
-    # for x in all_tips:
-    #     x[0] = f"({x[0]}) - "
-    #     x[3] = f"Odd: ({x[3]})"
-    #     x[2] = f"---Prediction: {x[2]}"
-    #     post_trends = ' '.join(x)
-    
-    # print(post_trends)
-
-    # twiiter_bot()
 
     wp_post(post_title = post_title,
         tips_category = tip_category,

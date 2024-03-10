@@ -3,17 +3,17 @@ import numpy as np
 import tweepy
 import configparser
 from PIL import Image, ImageFont, ImageDraw
-import kdb_config
+import kbt_load_env
 
 # read configs
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-api_key = kdb_config.api_key
-api_key_secret = kdb_config.api_key_secret
+api_key = kbt_load_env.api_key
+api_key_secret = kbt_load_env.api_key_secret
 
-access_token = kdb_config.access_token
-access_token_secret = kdb_config.access_token_secret
+access_token = kbt_load_env.access_token
+access_token_secret = kbt_load_env.access_token_secret
 
 webUrl = 'https://kingsbettingtips.com'
 

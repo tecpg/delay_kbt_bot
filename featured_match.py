@@ -1,86 +1,22 @@
-import datetime
+from cmath import cos
 import requests
-import json
-import base64
 from cmath import cos
 from csv import DictReader, writer
-import csv
-from lib2to3.pgen2 import driver
-import random
-import string
-import requests
-import time
-import io
-import mysql.connector
-from mysql.connector import errorcode
-from datetime import datetime
-from datetime import timedelta
-from datetime import date
-import kdb_config
-from cmath import cos
-from csv import DictReader, writer
-import csv
-import datetime
-from lib2to3.pgen2 import driver
-import pprint
-from pydoc import stripid
-import random
-import string
-from unittest import result
-from urllib import request
-import requests
 from bs4 import BeautifulSoup as soup
-import time
-from wsgiref import headers
-import requests
-import os
-import time
-import io
-import requests
-import mysql.connector
-from mysql.connector import errorcode
-
-from lxml import etree
-from datetime import datetime
-from datetime import timedelta
-from datetime import date
 from featured_match_wp_post import featured_match_wp_post
-import kdb_config
 import time as _time
+import consts.global_consts as gc
 
 _runtime = 1
 
 
 session = requests.Session()
-my_headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8"}
-#my_headers = GET_UA
 dt = []
-
-p_date = date.today()
-# calculating end date by adding 4 days
-x_date = p_date - timedelta(days=1)
-
-live_url = 'https://kingsbettingtips.com/wp-json/wp/v2/posts'
-
-url = live_url
-
-live_user = 'adminKBT'
-
-user = live_user
-
-live_pwd = kdb_config.live_pwd
-
-password = live_pwd
-
-creds = user + ':' + password
-
-p_time = datetime.now() + timedelta(minutes=5)
-p_date = p_time.strftime("%Y-%m-%dT%H:%M:%S")
 
 def post():
     url = "https://kingsolomonbet.com"
 
-    webpage = requests.get(url, headers = my_headers)
+    webpage = requests.get(url, headers = gc.MY_HEARDER)
     bs = soup(webpage.content, "html.parser")
 
     match_list = []
@@ -124,20 +60,6 @@ def post():
         match = {"league":league_name,"home_team":home_team, "away_team":away_team, "prediction":prediction,"match_time": match_time}
         dt.append(match)
         print(match_tip)
-
-
-    welcome_note = """  """
-
-    join_telegram_content = """ We have recently started a new Telegram group for sports fans to discuss and share their thoughts on the latest events and games.
-    If you are interested in joining, please click on the link below to request access. We look forward to having you as a member of our community.
-    See you in the group!<br> 
-    <a class="btn btn-base" href="https://t.me/+EQVAXh9ctNgwZDJk">Our Telegram<i class="fas fa-arrow-alt-circle-right ms-2"></i></a>
-            
-    """
-
-    comment_note = """ <p>
-    We would love to hear your thoughts and opinions on it. Please feel free to leave a comment below and let us know what you think. 
-    Your feedback is always valuable to us. Thank you!</p> """
 
 
     for match in dt:
@@ -194,7 +116,7 @@ def post():
         featured_match_wp_post(post_title = post_title,
                 tips_category = tip_category,
                 category_note = category_note,
-                telegram_content = join_telegram_content,
+                telegram_content = gc.WP_JOIN_TELEGRAM_NOTE,
                 post_content = featured_post_content,
             )
     _time.sleep(_runtime)

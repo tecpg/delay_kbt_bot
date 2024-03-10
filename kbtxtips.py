@@ -16,37 +16,13 @@ from mysql.connector import errorcode
 from datetime import datetime
 from datetime import timedelta
 from datetime import date
-import kdb_config
+import kbt_load_env
+from consts import global_consts as gc
+import kbt_funtions
 
 
-local_url = 'http://localhost:8080/wordpress/wp-json/wp/v2/posts/?post_type=predictions'
-live_url = 'https://kingsbettingtips.com/wp-json/wp/v2/posts'
-
-url = live_url
-
-live_user = 'adminKBT'
-local_user = 'root'
-
-user = live_user
-
-live_pwd = 'auoN LBS4 pdzK 8nG7 A4je 78vY'
-local_pwd = 'WZvU hI89 7oxZ FtVj T7XQ OSW4'
-
-password = live_pwd
-
-creds = user + ':' + password
-
-p_time = datetime.now() + timedelta(minutes=5)
-p_date = p_time.strftime("%Y-%m-%dT%H:%M:%S")
-yesterday_date = date.today()
-# calculating end date by adding 4 days
-x_date = yesterday_date - timedelta(days=1)
-
-
-sql_date = date.today().strftime('%Y-%m-%d')
-sql_date2 = date.today().strftime('%d-%m-%Y')
-# sql_date = '2022-10-28'
-print(sql_date)
+sql_date = gc.PRESENT_DAY_YMD
+sql_date2 = gc.PRESENT_DAY_DMY
 
 
 post_title = '1x2 Betting Tips For Today - Daily Free Betting Tips'
@@ -59,34 +35,11 @@ tips_link = 'category/1x2-betting-tips-for-today/'
 previous_tips_link = 'https://kingsbettingtips.com/category/1x2-betting-tips-for-today/'
 
 
-welcome_note = """ <blockquote>
-<small>As always, it is important to remember that these tips are not guaranteed and that there is always a risk of losing money when betting.</small> <strong>Please gamble responsibly.</strong></blockquote>
-<br> """
-
-join_telegram_content = """<p class="card-text"> We have recently started a new Telegram group for sports fans to discuss and share their thoughts on the latest events and games.
-If you are interested in joining, please click on the link below to request access. We look forward to having you as a member of our community.
-See you in the group!<br> 
-"""
-
-comment_note = """ <p>
-We would love to hear your thoughts and opinions on it. Please feel free to leave a comment below and let us know what you think. 
-Your feedback is always valuable to us. Thank you!</p> """
-
-
-
-
 def connect_server():
   csv_f = "1x2bet-code.csv"
   try:
-      connection = mysql.connector.connect(host=kdb_config.db_host,
-                                          database=kdb_config.db_dbname,
-                                          user=kdb_config.db_user,
-                                          password=kdb_config.db_pwd)
+      connection =  kbt_funtions.db_connection()
 
-      # connection = mysql.connector.connect(host='localhost',
-      #                                     database='kingsbet_KBTdb',
-      #                                     user='root',
-      #                                     password='')
       if connection.is_connected():
           db_Info = connection.get_server_info()
           print("Connected to MySQL Server version ", db_Info)
@@ -148,26 +101,10 @@ def connect_server():
           print("MySQL connection is closed")
 
 
-  token = base64.b64encode(creds.encode())
-  header = {'Authorization': 'Basic ' + token.decode('utf-8')}
-
-  token = base64.b64encode(creds.encode())
-  header = {'Authorization': 'Basic ' + token.decode('utf-8')}
-
-  # media = {
-  #     'file' : open('imager.png', 'rb'),
-  #     'caption' : 'First api image',
-  #     'description' : 'image api'
-  # }
-
-  # image = requests.post(url + '/media', headers=header, files= media )
-  # imageURL = str(json.loads(image.content['source_url']))
-
-
   post = {
   'title'    : f'{post_title}',
   'status'   : 'publish', 
-  'content'  : f'{welcome_note}'      
+  'content'  : f'{gc.WP_WELCOME_NOTE}'      
         '<div class="card text-center ">'
     '<div class="card-header" style="background-color:#010832">'
       '<ul class="nav nav-pills card-header-pills">'
@@ -198,17 +135,17 @@ def connect_server():
   '</table>'
   '</div>'
   '</div>'
-  f'{join_telegram_content}'
+  f'{gc.WP_JOIN_TELEGRAM_NOTE}'
       '<a class="btn btn-base" href="https://t.me/+EQVAXh9ctNgwZDJk">Join our Telegram Group<i class="fas fa-arrow-alt-circle-right ms-2"></i></a>'
   ' </div>'
   '</div><br>'
-  f'{comment_note}',
-                                      'date'   : f'{p_date}',
+  f'{gc.WP_COMMENT_NOTE}',
+                                      'date'   : f'{gc.PRESENT_DAY_DATE}',
                                   'categories' : ['192'],
                                   'tags' : ['63', '7', '66', '125', '127','53', '54', '153', '4', '16','14', '15', '51', '6', '11','52', '56', '58', '59', '57']
   }
 
-  r = requests.post(url, headers=header, json=post)
+  r = requests.post(gc.WP_LIVE_URL, headers=gc.WP_HEADER, json=post)
   print(r)
 
 def run():

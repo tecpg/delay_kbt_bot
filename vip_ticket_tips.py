@@ -20,33 +20,20 @@ import mysql.connector
 from mysql.connector import errorcode
 from datetime import date
 from lxml import etree
+import kbt_funtions
+from consts import global_consts as gc
 
-date_ = date.today()
-p_date = date.today().strftime('%d-%m-%Y')
 
-def get_code(length):
-    letters = string.ascii_lowercase
-    r_letters = ''.join(random.choice(letters) for i in range(length))
-    numbers =   str(random.randint(2220,333000333))
-    code = r_letters+numbers
-    return code
-
-def check_odd_range(value):
-    return 1.50 <= value <= 4.0
-
-def check_date(date, webDate ):
-        # Convert input date string to a datetime object
-    input_date_obj = datetime.strptime(date, "%d-%m-%Y")
-    # Format the date as "Thu-July-2023"
-    formatted_date_str = input_date_obj.strftime("%a-%B-%Y")
-    
+date_ = gc.PRESENT_DAY_DATE
+p_date = gc.PRESENT_DAY_DMY
 
 
 
-csv_f = "vip_tips_data.csv"
+csv_f = gc.VIP_CSV
+
 def post_tips():
     session = requests.Session()
-    my_headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8"}
+    my_headers = gc.MY_HEARDER
 
     url ="https://oddslot.com/tips/?page="
     dt = []
@@ -108,7 +95,7 @@ def post_tips():
                 source = "vip_tips"
                 flag = ""
                 match_date = p_date
-                match_code = get_code(8)
+                match_code = kbt_funtions.get_code(8)
 
                 prediction = [leagues, home_teams +' vs '+ away_teams, picks, odds, timez, score, match_date, flag, results, match_code, source ]
                 dt.append(prediction)
@@ -120,7 +107,7 @@ def post_tips():
             selected_list = my_list[:12]
             
             for sublist in selected_list:
-                if check_odd_range(sublist[3]):
+                if kbt_funtions.check_odd_range(sublist[3]):
                     sublist[3] = round(sublist[3] + 0.08, 2)
                     max_sublist = sublist
                 
@@ -138,10 +125,8 @@ def post_to_mysql():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
     #and paste here as my host ip address
     try:
-        connection = mysql.connector.connect(host='131.226.5.3',
-                                            database='kingsbet_KBTdb',
-                                            user='kingsbet_mycomp',
-                                            password='mycomp007')
+        connection = kbt_funtions.db_connection()
+        
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)

@@ -19,42 +19,23 @@ import mysql.connector
 from mysql.connector import errorcode
 from datetime import date
 from lxml import etree
+from consts import global_consts as gc
+import kbt_funtions
 
-date_ = date.today()
-p_date = date.today().strftime('%d-%m-%Y')
-
-def get_code(length):
-    letters = string.ascii_lowercase
-    r_letters = ''.join(random.choice(letters) for i in range(length))
-    numbers =   str(random.randint(2220,333000333))
-    code = r_letters+numbers
-    return code
-
-csv_f = "jackpot_data.csv"
 def post_tips():
-    session = requests.Session()
-    my_headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36", "Accept":"text/html,application/xhtml+xml,application/xml; q=0.9,image/webp,image/apng,*/*;q=0.8"}
-
     url ="https://oddslot.com/tips/?page="
     dt = []
     for page in range(1,4):
     
 
         # # Here Chrome  will be used
-        webpage = requests.get(url + str(page), headers = my_headers)
+        webpage = requests.get(url + str(page), headers = gc.MY_HEARDER)
         spider = soup(webpage.content, "html.parser")
         dom = etree.HTML(str(spider))
 
-
-        
-        with open(csv_f, "w", encoding="utf8", newline="") as f:
+        with open(gc.JACKPOT_CSV, "w", encoding="utf8", newline="") as f:
             thewriter = writer(f)
-            # header = ['League', 'Fixtures', 'Tip', 'Odd', 'Time']
-            # thewriter.writerow(header)
-
-
-        
-
+           
             for x in range(0,10):
 
                 c = 1 + x
@@ -99,8 +80,8 @@ def post_tips():
                 match =""
                 source = "single_jackpot"
                 flag = ""
-                match_date = p_date
-                match_code = get_code(8)
+                match_date = gc.PRESENT_DAY_DMY
+                match_code = kbt_funtions.get_code(8)
 
                 prediction = [leagues, home_teams +' vs '+ away_teams, picks, odds, timez, score, match_date, flag, results, match_code, source ]
                 dt.append(prediction)
@@ -133,10 +114,8 @@ def post_to_mysql():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
     #and paste here as my host ip address
     try:
-        connection = mysql.connector.connect(host='131.226.5.3',
-                                            database='kingsbet_KBTdb',
-                                            user='kingsbet_mycomp',
-                                            password='mycomp007')
+        connection = kbt_funtions.db_connection()
+
         if connection.is_connected():
             db_Info = connection.get_server_info()
             print("Connected to MySQL Server version ", db_Info)
@@ -147,7 +126,7 @@ def post_to_mysql():
             print("You're connected to database: ", record)
 
                 
-        with open(csv_f, "r") as f:
+        with open(gc.JACKPOT_CSV, "r") as f:
         
             csv_data = csv.reader(f)
             for row in csv_data:
