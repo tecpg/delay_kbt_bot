@@ -1,5 +1,5 @@
 import oddslot_spider
-import tipsbet_big_odds_spider
+#import tipsbet_big_odds_spider
 import venasbet_o25goals_spider
 import venasbet_overgoals_spider
 import venasbet_spider
