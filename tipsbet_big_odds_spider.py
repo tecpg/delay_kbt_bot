@@ -7,6 +7,7 @@ import pprint
 from pydoc import stripid
 import random
 import string
+import traceback
 from unittest import result
 from urllib import request
 import requests
@@ -87,48 +88,59 @@ def get_today_prediction(bs, set_date):
 
     #open csv file
 
-   
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
-        for x in range(2,tr_count-2):
-            c =  x
-            i = str(c)
-          
-            league = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-            league = league[0].text  
-            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
-            
-             # Check if the element is found
-            if timez:
-                timez = timez[0].text
-                print(timez)
-            else:
-               timez = ''
-            match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
-            match = match[0].text
-            match = match.replace("–", "VS")
-            picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
-            picks = picks[0].text
-            results = "N/A"
-            odds= dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
-            odds = odds[0].text
-            
-            
-            flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
-            flag = flag[0].text
-            match_date = date.today().strftime('%Y-%m-%d')
-            match_code = kbt_funtions.get_code(8)
-            source = "tipsbet_combo_tips"
-            score = "N/A"
-          
+    
+    try:
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
+            for x in range(2, tr_count - 2):
+                c = x
+                i = str(c)
 
-            prediction = [league,kbt_funtions.remove(match),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+                try:
+                    league = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
+                    league = league[0].text  
+                    timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
 
-        thewriter.writerows(dt)
+                    # Check if the element is found
+                    if timez:
+                        timez = timez[0].text
+                        print(timez)
+                    else:
+                        timez = ''
 
-    print(dt)
+                    match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
+                    match = match[0].text
+                    match = match.replace("–", "VS")
+
+                    picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
+                    picks = picks[0].text
+
+                    results = "N/A"
+                    
+                    odds = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
+                    odds = odds[0].text
+
+                    flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
+                    flag = flag[0].text
+                    match_date = date.today().strftime('%Y-%m-%d')
+                    match_code = kbt_funtions.get_code(8)
+                    source = "tipsbet_combo_tips"
+                    score = "N/A"
+
+                    prediction = [league, kbt_funtions.remove(match), picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source]
+                    dt.append(prediction)
+
+                except IndexError:
+                    print(f"Error: IndexError occurred at index {i}")
+                    traceback.print_exc()  # This will print the traceback for debugging purposes
+                    continue  # Skip this iteration and proceed with the next one
+
+            thewriter.writerows(dt)
+            print(dt)
+
+    except Exception as e:
+        print("An error occurred:", e)
+        traceback.print_exc()
 
 
 def get_previous_prediction(nbs,set_previous_date):
@@ -149,70 +161,68 @@ def get_previous_prediction(nbs,set_previous_date):
 
     #open csv file
 
-  
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
+    try:
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
 
-        for x in range(2,tr_count - 3):
+            for x in range(2, tr_count - 3):
+                c = 1 + x
+                i = str(c)
+                print(i)
 
-            c = 1 + x
-            i = str(c)
-            print(i)
-            
-            timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
-            
-            timez = timez[0].text
-            leagues = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-           
-            leagues = leagues[0].text
-            
-            match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
-            match = match[0].text
-            
-            match = match.replace("–", "VS")
-            picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
-            picks = picks[0].text
-           
-            odds= dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
-            odds = odds[0].text
-            score = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span/strong')
-            score = score[0].text
-            flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
-            flag = flag[0].text
+                try:
+                    timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
+                    timez = timez[0].text
 
-            results = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span//@style')
-            res = results[0]
-            if res.find('#008000') != -1 and score != '?':
-             results = "Won"
-            elif res.find('#ff0000') != -1 and score != '?':
-             results = "Lost"
-            elif score == '?':
-                results = "..."
+                    leagues = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
+                    leagues = leagues[0].text
 
+                    match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
+                    match = match[0].text
+                    match = match.replace("–", "VS")
 
-            #calculate over 2.5 score
-            # s_list = list(score.split(":"))
-            # s_n = [eval(i)for i in s_list]
-            # s_n =sum(s_n)
-            # if s_n > 2:
-            #     results = "over 2.5 won"
-            # else:
-            #     results = "over 2.5 lost "
+                    picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
+                    picks = picks[0].text
 
-            
-            source = "tipsbet_combo_tips"
-            x_date = date_- timedelta(days=1)
-            match_date = x_date.strftime('%Y-%m-%d')
-            match_code = kbt_funtions.get_code(8)
+                    odds = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
+                    odds = odds[0].text
 
-            prediction = [leagues,kbt_funtions.remove(match),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+                    score = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span/strong')
+                    score = score[0].text
 
-        thewriter.writerows(dt)
+                    flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
+                    flag = flag[0].text
 
-    print(dt)
-        
+                    results = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span//@style')
+                    res = results[0]
+
+                    if res.find('#008000') != -1 and score != '?':
+                        results = "Won"
+                    elif res.find('#ff0000') != -1 and score != '?':
+                        results = "Lost"
+                    elif score == '?':
+                        results = "..."
+                except IndexError:
+                    print(f"Error: IndexError occurred at index {i}")
+                    traceback.print_exc()  # This will print the traceback for debugging purposes
+                    continue  # Skip this iteration and proceed with the next one
+
+                source = "tipsbet_combo_tips"
+                x_date = date_ - timedelta(days=1)
+                match_date = x_date.strftime('%Y-%m-%d')
+                match_code = kbt_funtions.get_code(8)
+
+                prediction = [leagues, kbt_funtions.remove(match), picks, odds, kbt_funtions.remove(timez), score,
+                            match_date, flag, results, match_code, source]
+                dt.append(prediction)
+
+            thewriter.writerows(dt)
+
+        print(dt)
+
+    except Exception as e:
+        print("An error occurred:", e)
+        traceback.print_exc()
     
 #csv_f = "venasbet_data.csv"
 def connect_server():

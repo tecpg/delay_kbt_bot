@@ -8,6 +8,7 @@ from pydoc import stripid
 import random
 import string
 import sys
+import traceback
 from unittest import result
 from urllib import request
 import requests
@@ -134,51 +135,54 @@ def get_previous_prediction(nbs,set_previous_date):
     #open csv file
 
   
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
 
-        for x in range(0,tr_count - 4):
-            print(tr_count - 4)
+    try:
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
+            for x in range(0, tr_count - 4):
+                c = 1 + x
+                i = str(c)
 
-            c = 1 + x
-            i = str(c)
-            
-            timez ="N/A"
-            league = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[1]/small')
-            leagues = league[0].text
-            fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/div/span')
-            fixtures = fixtures[0].text
-            picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
-            picks = picks[0].text
-            score = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span')
-            score = score[0].text
-            results = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[4]/span/@class')
-            
-            res = results
-           
-            if 'fa fa-check-circle text-success' in res and score != '?':
-             results = "Won"
-            elif 'fa fa-times-circle text-danger' in res and score != '?':
-             results = "Lost"
-            elif score == '?':
-                results = "..."
+                timez = "N/A"
+                try:
+                    league = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[1]/small')
+                    leagues = league[0].text
+                    fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/div/span')
+                    fixtures = fixtures[0].text
+                    picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
+                    picks = picks[0].text
+                    score = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span')
+                    score = score[0].text
+                    results = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[4]/span/@class')
+                    res = results
+                except IndexError:
+                    print(f"Error: IndexError occurred at index {i}")
+                    traceback.print_exc()  # This will print the traceback for debugging purposes
+                    continue  # Skip this iteration and proceed with the next one
 
-            odds="N/A"
-            source = "protips_acca"
-            flag = ""
-            match_date = set_previous_date
-            match_code = kbt_funtions.get_code(8)
-            protip = 'No'
-        
+                if 'fa fa-check-circle text-success' in res and score != '?':
+                    results = "Won"
+                elif 'fa fa-times-circle text-danger' in res and score != '?':
+                    results = "Lost"
+                elif score == '?':
+                    results = "..."
 
-            prediction = [leagues,fixtures,  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source, protip ]
-            dt.append(prediction)
-           
-        
+                odds = "N/A"
+                source = "protips_acca"
+                flag = ""
+                match_date = set_previous_date
+                match_code = kbt_funtions.get_code(8)
+                protip = 'No'
 
-        thewriter.writerows(dt)
+                prediction = [leagues, fixtures,  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source, protip]
+                dt.append(prediction)
 
-    print(dt)
+            thewriter.writerows(dt)
+            print(dt)
+
+    except Exception as e:
+        print("An error occurred:", e)
+        traceback.print_exc()
         
 
 
