@@ -76,12 +76,12 @@ def get_result_by_score(pick, score):
             elif "1DNB" in pick:
                 return "Won" if s_list[0] > s_list[1] or s_list[0] == s_list[1] else "Lost"
             else:
-                return "..1."
+                return "..."
         else:
-            return ".2.."
+            return "..."
      except Exception as e:
         print(e)
-        return "..3."
+        return "..."
 
 
 def check_odd_range(value):

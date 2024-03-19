@@ -145,7 +145,7 @@ def get_previous_prediction(nbs,set_previous_date):
             score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
             score = score[0].text
 
-            results = kbt_funtions.get_result_by_score(picks,score)
+            results = kbt_funtions.get_result(picks,score)
 
             odds="N/A"
             source = "venasbet_acca"
