@@ -76,64 +76,57 @@ def get_today_prediction(bs, set_date):
     #open csv file
 
     try:
-        with open(csv_f, "w", encoding="utf8", newline="") as f:
-            thewriter = writer(f)
-            protip = ''
+            with open(csv_f, "w", encoding="utf8", newline="") as f:
+                thewriter = writer(f)
+                protip = ''
 
-            for x in range(0,tr_count - 4):
-
-                c = 1 + x
-                i = str(c)
-                if c > 1:
-                    protip = 'yes'
-                else:
-                    protip ='No'
-                try:    
-                    league = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[1]/small')
-                    leagues = league[0].text
-
-                
-                            # Try the primary XPath expression for fixtures
+                for x in range(0, tr_count - 4):
+                    c = 1 + x
+                    i = str(c)
+                    if c > 1:
+                        protip = 'yes'
+                    else:
+                        protip = 'No'
                     try:
-                        fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/a/div/span')
-                        fixtures = fixtures[0].text
+                        league = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[1]/small')
+                        leagues = league[0].text
+
+                        # Try the primary XPath expression for fixtures
+                        try:
+                            fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/a/div/span')
+                            fixtures = fixtures[0].text
+                        except IndexError:
+                            # Use an alternate XPath expression or set a default value
+                            noLink_fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/div/span')
+                            fixtures = noLink_fixtures[0].text if noLink_fixtures else "N/A"
+
+                        picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
+                        picks = picks[0].text
+
+                        results = "N/A"
+                        timez = "--:--"
+                        odds = "N/A"
+                        source = "protips_acca"
+                        flag = ""
+                        match_date = set_date
+                        match_code = kbt_funtions.get_code(8)
+                        score = ""
                     except IndexError:
-                        # Use an alternate XPath expression or set a default value
-                        fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr{i}/td[1]/div/div[2]/div/span')
-                        fixtures = fixtures[0].text if fixtures else "N/A"
-                        continue
-
-
-
-                    picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
-                    picks = picks[0].text
-
-
-
-                    results = "N/A"
-                    timez = "--:--"
-                    odds="N/A"
-                    source = "protips_acca"
-                    flag = ""
-                    match_date = set_date
-                    match_code = kbt_funtions.get_code(8)
-                    score=""
-                except IndexError:
                         print(f"Error: IndexError occurred at index {i}")
                         traceback.print_exc()  # This will print the traceback for debugging purposes
                         continue  # Skip this iteration and proceed with the next one
 
-                prediction = [leagues,fixtures, picks, odds, timez, score, match_date, flag, results, match_code, source, protip ]
-                dt.append(prediction)
-        
+                    prediction = [leagues, fixtures, picks, odds, timez, score, match_date, flag, results, match_code, source, protip]
+                    dt.append(prediction)
 
-            thewriter.writerows(dt)
+                thewriter.writerows(dt)
 
-        print(dt)
-        print(fixtures)
+            print(dt)
+            print(fixtures)
     except Exception as e:
-            print("An error occurred:", e)
-            traceback.print_exc()
+        print("An error occurred:", e)
+        traceback.print_exc()
+
         
 
 def get_previous_prediction(nbs,set_previous_date):
@@ -175,9 +168,9 @@ def get_previous_prediction(nbs,set_previous_date):
                         fixtures = fixtures[0].text
                     except IndexError:
                         # Use an alternate XPath expression or set a default value
-                        fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr{i}/td[1]/div/div[2]/div/span')
-                        fixtures = fixtures[0].text if fixtures else "N/A"
-                        continue
+                        noLink_fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr{i}/td[1]/div/div[2]/div/span')
+                        fixtures = noLink_fixtures[0].text if noLink_fixtures else "No linked fixture/A"
+                        
 
                     picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
                     picks = picks[0].text
