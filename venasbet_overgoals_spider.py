@@ -55,7 +55,7 @@ x_date = gc.YESTERDAY_DATE
 
 def get_today_over_1_5_prediction(bs, set_date):
 
-    url ="https://venasbet.com/over-2-5-goals-prediction?dt="
+    url ="https://www.r2bet.com/2_5_goals?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -115,7 +115,7 @@ def get_previous_over_1_5_prediction(nbs,set_previous_date):
 
     try:
 
-        url ="https://venasbet.com/over-2-5-goals-prediction?dt="
+        url ="https://www.r2bet.com/2_5_goals?dt="
     
         webpage = requests.get(url+str(set_previous_date), headers = my_headers)
         nbs = nbs(webpage.content, "html.parser")
