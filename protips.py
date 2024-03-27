@@ -63,7 +63,6 @@ def get_today_prediction(bs, set_date):
     bs = bs(webpage.content, "html.parser")
     dom = etree.HTML(str(bs))
 
-
     #get table row count for the tr loop
 
     tables = bs.find("div", {"id": "pills-football-tabContent"})
@@ -94,15 +93,17 @@ def get_today_prediction(bs, set_date):
                         # Try the primary XPath expression for fixtures
                         try:
                             fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/a/div/span')
-                            fixtures = fixtures[0].text
+                            fixtures = fixtures[0].text 
+                            
+                            
                         except IndexError:
                             # Use an alternate XPath expression or set a default value
                             noLink_fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/div/span')
                             fixtures = noLink_fixtures[0].text if noLink_fixtures else "N/A"
 
-                        picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
+                        picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span/b')
                         picks = picks[0].text
-
+                   
                         results = "N/A"
                         timez = "--:--"
                         odds = "N/A"
@@ -111,6 +112,7 @@ def get_today_prediction(bs, set_date):
                         match_date = set_date
                         match_code = kbt_funtions.get_code(8)
                         score = ""
+                        
                     except IndexError:
                         print(f"Error: IndexError occurred at index {i}")
                         traceback.print_exc()  # This will print the traceback for debugging purposes
@@ -172,7 +174,7 @@ def get_previous_prediction(nbs,set_previous_date):
                         fixtures = noLink_fixtures[0].text if noLink_fixtures else "No linked fixture/A"
                         
 
-                    picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[2]/span/b')
+                    picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span/b')
                     picks = picks[0].text
                     score = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span')
                     score = score[0].text
