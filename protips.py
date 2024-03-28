@@ -52,7 +52,7 @@ x_date = gc.YESTERDAY_DATE
 
 # # printing end date
 # print("Ending date")
-#print(x_date)
+print(x_date)
 
 
 def get_today_prediction(bs, set_date):
@@ -170,15 +170,16 @@ def get_previous_prediction(nbs,set_previous_date):
                         fixtures = fixtures[0].text
                     except IndexError:
                         # Use an alternate XPath expression or set a default value
-                        noLink_fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr{i}/td[1]/div/div[2]/div/span')
-                        fixtures = noLink_fixtures[0].text if noLink_fixtures else "No linked fixture/A"
+                        noLink_fixtures = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[1]/div/div[2]/div/span')
+                        fixtures = noLink_fixtures[0].text if noLink_fixtures else "N/A"
                         
 
                     picks = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span/b')
                     picks = picks[0].text
-                    score = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[3]/span')
+                    score = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[4]/span')
                     score = score[0].text
-                    results = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[4]/span/@class')
+                    results = dom.xpath(f'//*[@id="pills-football"]/div[2]/table/tbody/tr[{i}]/td[5]/span/@class')
+                                      
                     res = results
                 except IndexError:
                     print(f"Error: IndexError occurred at index {i}")
@@ -199,7 +200,7 @@ def get_previous_prediction(nbs,set_previous_date):
                 match_code = kbt_funtions.get_code(8)
                 protip = 'No'
 
-                prediction = [leagues, fixtures,  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source, protip]
+                prediction = [leagues, fixtures,  picks, odds, timez, score, match_date, flag, results, match_code, source, protip]
                 dt.append(prediction)
 
             thewriter.writerows(dt)
@@ -271,13 +272,14 @@ def connect_server():
 
 
 def run():
-    get_today_prediction(soup,p_date)
+    #get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
     get_previous_prediction(soup,x_date)
     #print(get_result("2X","2:2"))
     # #insert into db
     connect_server()
+   
 
 
 if __name__ == "__main__":
