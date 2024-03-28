@@ -272,7 +272,7 @@ def connect_server():
 
 
 def run():
-    #get_today_prediction(soup,p_date)
+    get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
     get_previous_prediction(soup,x_date)
