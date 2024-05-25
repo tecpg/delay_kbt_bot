@@ -133,14 +133,16 @@ def get_today_prediction(bs, set_date):
 
 def get_previous_prediction(nbs,set_previous_date):
 
-    url ="https://www.betensured.com/?date="
+    url ="https://www.betensured.com/"
    
-    webpage = requests.get(url+str(set_previous_date)+"&sport=1", headers = my_headers)
+    webpage = requests.get(url, headers = my_headers)
     nbs = nbs(webpage.content, "html.parser")
     dom = etree.HTML(str(nbs))
+    
 
     #get table row count for the tr loop
     tables = nbs.find("div", {"id": "pills-football-tabContent"})
+    print(nbs)
     table = tables.findChildren('table')
     web_table = table[0]
     rows = web_table.findChildren(['tr'])
@@ -272,7 +274,7 @@ def connect_server():
 
 
 def run():
-    get_today_prediction(soup,p_date)
+    #get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
     get_previous_prediction(soup,x_date)

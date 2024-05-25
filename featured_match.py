@@ -22,7 +22,7 @@ def post():
     match_list = []
 
     matches = bs.find_all('div', class_='single-match')
-
+    
     for match in matches:
         match_title = match.find('h5', class_='match-title').text
 
