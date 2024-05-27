@@ -55,18 +55,20 @@ x_date = gc.YESTERDAY_DMY
 
 
 bs = soup
-url ="https://tipsbet.co.uk/free-betting-tips-"
+# url ="https://tipsbet.co.uk/free-betting-tips-"
    
-webpage = requests.get(url+str(p_date), headers = my_headers)
-bs = bs(webpage.content, "html.parser")
-dom = etree.HTML(str(bs))
+# webpage = requests.get(url+str(p_date), headers = my_headers)
+# bs = bs(webpage.content, "html.parser")
+# dom = etree.HTML(str(bs))
 
-#get table row count for the tr loop
+# #get table row count for the tr loop
 
-tables = bs.findChildren('table')
-web_table = tables[0]
-rows = web_table.findChildren(['tr'])
-tr_count = len(rows)
+# tables = bs.findChildren('table')
+# print(bs)
+
+# web_table = tables[0]
+# rows = web_table.findChildren(['tr'])
+# tr_count = len(rows)
 
 
 def get_today_prediction(bs, set_date):
@@ -76,6 +78,7 @@ def get_today_prediction(bs, set_date):
     webpage = requests.get(url+str(p_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
     dom = etree.HTML(str(bs))
+    print(dom)
 
     #get table row count for the tr loop
 
