@@ -1,5 +1,5 @@
 import oddslot_spider
-# import tipsbet_big_odds_spider
+import tipsbet_big_odds_spider
 import venasbet_o25goals_spider
 import venasbet_overgoals_spider
 import venasbet_spider
@@ -35,7 +35,7 @@ def _kbt():
         featured_match_app.run()
         venasbet_spider.run()
         _time.sleep(_runtime)
-        # tipsbet_big_odds_spider.run()
+        tipsbet_big_odds_spider.run()
         _time.sleep(_runtime)
         venasbet_overgoals_spider.run()
         _time.sleep(_runtime)
