@@ -5,6 +5,7 @@ import venasbet_overgoals_spider
 import venasbet_spider
 import venasbet_u35goals_spider
 import featured_match
+import featured_match_app
 import kbtxtips
 import vip_ticket_tips
 # import twitter_api
@@ -31,6 +32,7 @@ def _kbt():
         _time.sleep(_runtime)
         featured_match.run()
         _time.sleep(_runtime)
+        featured_match_app.run()
         venasbet_spider.run()
         _time.sleep(_runtime)
         # tipsbet_big_odds_spider.run()

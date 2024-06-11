@@ -53,84 +53,88 @@ x_date = gc.YESTERDAY_DMY
 # print(x_date, p_date)
 
 
-
 bs = soup
-# url ="https://tipsbet.co.uk/free-betting-tips-"
-   
-# webpage = requests.get(url+str(p_date), headers = my_headers)
-# bs = bs(webpage.content, "html.parser")
-# dom = etree.HTML(str(bs))
-
-# #get table row count for the tr loop
-
-# tables = bs.findChildren('table')
-# print(bs)
-
-# web_table = tables[0]
-# rows = web_table.findChildren(['tr'])
-# tr_count = len(rows)
 
 
 def get_today_prediction(bs, set_date):
 
-    url ="https://tipsbet.co.uk/free-betting-tips-"
-   
-    webpage = requests.get(url+str(p_date), headers = my_headers)
-    bs = bs(webpage.content, "html.parser")
-    dom = etree.HTML(str(bs))
-    print(dom)
+
+      # Set the URL based on the given date
+    url = f"https://tipsbet.co.uk/free-betting-tips-{set_date}/"
+    
+    # Get the web page content
+    webpage = requests.get(url, headers=my_headers)
+    
+    # Parse the page content with BeautifulSoup
+    soup = bs(webpage.content, "html.parser")
+    
+    # Convert the BeautifulSoup object to a lxml etree
+    dom = etree.HTML(str(soup))
 
     #get table row count for the tr loop
-
-    tables = bs.findChildren('table')
-    web_table = tables[0]
-    rows = web_table.findChildren(['tr'])
-    tr_count = len(rows)
-    print("Table has ",tr_count - 1," rows")
+     # Get all table elements on the page
+    tables = soup.findChildren('table')
     
+    # Assume the first table contains the relevant data
+    web_table = tables[0]
+    
+    # Get all rows in the table
+    rows = web_table.findChildren(['tr'])
+    
+    # Calculate the number of rows
+    tr_count = len(rows)
+    print("Table has", tr_count - 1, "rows")
 
     #open csv file
 
     
+    # Open CSV file
     try:
         with open(csv_f, "w", encoding="utf8", newline="") as f:
-            thewriter = writer(f)
+            thewriter = csv.writer(f)
             for x in range(2, tr_count - 2):
                 c = x
                 i = str(c)
 
                 try:
                     league = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-                    league = league[0].text  
+                    league = league[0].text if league else ''  
+                    
                     timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
-
-                    # Check if the element is found
-                    if timez:
-                        timez = timez[0].text
-                        print(timez)
-                    else:
-                        timez = ''
+                    timez = timez[0].text if timez else ''
 
                     match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
-                    match = match[0].text
-                    match = match.replace("–", "VS")
+                    match = match[0].text.replace("–", "VS") if match else ''
 
                     picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
-                    picks = picks[0].text
+                    picks = picks[0].text if picks else ''
 
                     results = "N/A"
                     
                     odds = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
-                    odds = odds[0].text
+                    odds = odds[0].text if odds else ''
 
                     flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
-                    flag = flag[0].text
+                    flag = flag[0].text if flag else ''
+                    
                     match_date = date.today().strftime('%Y-%m-%d')
-                    match_code = kbt_funtions.get_code(8)
+                    match_code = kbt_funtions.get_code(8)  # Assuming this function is defined elsewhere
                     source = "tipsbet_combo_tips"
                     score = "N/A"
 
-                    prediction = [league, kbt_funtions.remove(match), picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source]
+                    prediction = [
+                        league,
+                        kbt_funtions.remove(match),  # Assuming this function is defined elsewhere
+                        picks,
+                        odds,
+                        kbt_funtions.remove(timez),  # Assuming this function is defined elsewhere
+                        score,
+                        match_date,
+                        flag,
+                        results,
+                        match_code,
+                        source
+                    ]
                     dt.append(prediction)
 
                 except IndexError:
@@ -147,26 +151,39 @@ def get_today_prediction(bs, set_date):
 
 
 def get_previous_prediction(nbs,set_previous_date):
-
-    url ="https://tipsbet.co.uk/free-betting-tips-"
-   
-    webpage = requests.get(url+str(set_previous_date), headers = my_headers)
-    nbs = nbs(webpage.content, "html.parser")
-    dom = etree.HTML(str(nbs))
+      # Set the URL based on the given date
+    url = f"https://tipsbet.co.uk/free-betting-tips-{set_previous_date}/"
+    
+    # Get the web page content
+    webpage = requests.get(url, headers=my_headers)
+    
+    # Parse the page content with BeautifulSoup
+    soup = nbs(webpage.content, "html.parser")
+    
+    # Convert the BeautifulSoup object to a lxml etree
+    dom = etree.HTML(str(soup))
 
     #get table row count for the tr loop
-
-    tables = nbs.findChildren('table')
+     # Get all table elements on the page
+    tables = soup.findChildren('table')
+    
+    # Assume the first table contains the relevant data
     web_table = tables[0]
+    
+    # Get all rows in the table
     rows = web_table.findChildren(['tr'])
+    
+    # Calculate the number of rows
     tr_count = len(rows)
-    print("Table has ",tr_count - 1," rows")
+    print("Table has", tr_count - 1, "rows")
 
     #open csv file
 
+
+      # Open CSV file
     try:
         with open(csv_f, "w", encoding="utf8", newline="") as f:
-            thewriter = writer(f)
+            thewriter = csv.writer(f)
 
             for x in range(2, tr_count - 3):
                 c = 1 + x
@@ -175,29 +192,28 @@ def get_previous_prediction(nbs,set_previous_date):
 
                 try:
                     timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
-                    timez = timez[0].text
+                    timez = timez[0].text if timez else ''
 
                     leagues = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-                    leagues = leagues[0].text
+                    leagues = leagues[0].text if leagues else ''
 
                     match = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[6]/strong')
-                    match = match[0].text
-                    match = match.replace("–", "VS")
+                    match = match[0].text.replace("–", "VS") if match else ''
 
                     picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
-                    picks = picks[0].text
+                    picks = picks[0].text if picks else ''
 
                     odds = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
-                    odds = odds[0].text
+                    odds = odds[0].text if odds else ''
 
                     score = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span/strong')
-                    score = score[0].text
+                    score = score[0].text if score else ''
 
                     flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
-                    flag = flag[0].text
+                    flag = flag[0].text if flag else ''
 
                     results = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[9]/span//@style')
-                    res = results[0]
+                    res = results[0] if results else ''
 
                     if res.find('#008000') != -1 and score != '?':
                         results = "Won"
@@ -211,12 +227,23 @@ def get_previous_prediction(nbs,set_previous_date):
                     continue  # Skip this iteration and proceed with the next one
 
                 source = "tipsbet_combo_tips"
-                x_date = date_ - timedelta(days=1)
+                x_date = date.today() - timedelta(days=1)
                 match_date = x_date.strftime('%Y-%m-%d')
                 match_code = kbt_funtions.get_code(8)
 
-                prediction = [leagues, kbt_funtions.remove(match), picks, odds, kbt_funtions.remove(timez), score,
-                            match_date, flag, results, match_code, source]
+                prediction = [
+                    leagues,
+                    kbt_funtions.remove(match),
+                    picks,
+                    odds,
+                    kbt_funtions.remove(timez),
+                    score,
+                    match_date,
+                    flag,
+                    results,
+                    match_code,
+                    source
+                ]
                 dt.append(prediction)
 
             thewriter.writerows(dt)
