@@ -5,10 +5,6 @@ import datetime
 from lib2to3.pgen2 import driver
 import pprint
 from pydoc import stripid
-import random
-import string
-from unittest import result
-from urllib import request
 import requests
 from bs4 import BeautifulSoup as soup
 import time
@@ -112,15 +108,9 @@ def post(bs):
             prediction = [league_name, home_team, away_team, match_tip, odd, match_time, match_date, home_flag, away_flag, league_flag, source ]
             dt.append(prediction)
         
-        
-
         thewriter.writerows(dt)
 
     print(dt)
-
-
-
-
 
 
 #csv_f = "venasbet_data.csv"

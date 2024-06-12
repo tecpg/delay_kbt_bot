@@ -87,3 +87,14 @@ def get_result_by_score(pick, score):
 def check_odd_range(value):
     return 1.50 <= value <= 4.0
 
+
+
+# Function to get a random string from the list
+def get_random_odd():
+    # Define the list of strings
+    odds = ['1.20', '1.15', '1.20', '1.27', '1.30', '1.35', '1.30', '1.40', '1.45']
+    return random.choice(odds)
+
+# # Example usage
+# random_string = get_random_string(odds)
+

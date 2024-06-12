@@ -1,12 +1,12 @@
 from cmath import cos
 from csv import DictReader, writer
 import csv
+
 import datetime
 from lib2to3.pgen2 import driver
 import pprint
 from pydoc import stripid
-import random
-import string
+
 import traceback
 from unittest import result
 from urllib import request
@@ -40,6 +40,7 @@ session = requests.Session()
 my_headers = gc.MY_HEARDER
 dt = []
 
+
 # taking input as the current date
 # today() method is supported by date
 # class in datetime module
@@ -52,14 +53,11 @@ x_date = gc.YESTERDAY_DMY
 
 # print(x_date, p_date)
 
-
 bs = soup
-
 
 def get_today_prediction(bs, set_date):
 
-
-      # Set the URL based on the given date
+    # Set the URL based on the given date
     url = f"https://tipsbet.co.uk/free-betting-tips-{set_date}/"
     
     # Get the web page content
@@ -85,9 +83,6 @@ def get_today_prediction(bs, set_date):
     tr_count = len(rows)
     print("Table has", tr_count - 1, "rows")
 
-    #open csv file
-
-    
     # Open CSV file
     try:
         with open(csv_f, "w", encoding="utf8", newline="") as f:

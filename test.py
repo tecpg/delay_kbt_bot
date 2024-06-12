@@ -22,9 +22,9 @@ def check_ip_blocked(url):
     except requests.exceptions.RequestException as e:
         return f"An error occurred: {e}"
 
-url = "https://www.sslproxies.org"
-result = check_ip_blocked(url)
-print(result)
+# url = "https://www.sslproxies.org"
+# result = check_ip_blocked(url)
+# print(result)
 
 import requests
 from bs4 import BeautifulSoup
@@ -62,13 +62,28 @@ def make_request(url, proxies):
         return None
 
 # Example usage
-proxies = get_proxies()
-if proxies:
-    url_to_scrape = 'https://www.betensured.com/'
-    response_text = make_request(url_to_scrape, proxies)
-    if response_text:
-        print(response_text)
-    else:
-        print('Failed to retrieve response using proxy.')
-else:
-    print('No proxies retrieved. Check if the proxy list website is accessible.')
+# proxies = get_proxies()
+# if proxies:
+#     url_to_scrape = 'https://www.betensured.com/'
+#     response_text = make_request(url_to_scrape, proxies)
+#     if response_text:
+#         print(response_text)
+#     else:
+#         print('Failed to retrieve response using proxy.')
+# else:
+#     print('No proxies retrieved. Check if the proxy list website is accessible.')
+
+
+import random
+
+
+
+# Function to get a random string from the list
+def get_random_string():
+    # Define the list of strings
+    odds = ['1.20', '1.15', '1.20', '1.27', '1.30', '1.35', '1.30', '1.40', '1.45']
+    return random.choice(odds)
+
+# Example usage
+random_string = get_random_string()
+print(f'Randomly picked string: {random_string}')
