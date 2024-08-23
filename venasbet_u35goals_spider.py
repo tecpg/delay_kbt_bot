@@ -86,7 +86,7 @@ def get_today_under_3_5_prediction(bs, set_date):
 
 
             results = "N/A"
-            odds= odds = kbt_funtions.get_random_odd()
+            odds = kbt_funtions.get_random_odd()
             source = "venasbet_u_3_5"
             flag = ""
             match_date = set_date

@@ -51,7 +51,7 @@ logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asc
 def post(bs):
     url = "https://kingsolomonbet.com"
     dt = []
-    csv_f = 'output.csv'
+    
 
     try:
         webpage = requests.get(url, headers=gc.MY_HEARDER)
