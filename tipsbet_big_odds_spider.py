@@ -55,46 +55,66 @@ x_date = gc.YESTERDAY_DMY
 
 bs = soup
 
+import requests
+from bs4 import BeautifulSoup as bs
+from lxml import etree
+import csv
+import traceback
+from datetime import date
+
 def get_today_prediction(bs, set_date):
-
-    # Set the URL based on the given date
     url = f"https://tipsbet.co.uk/free-betting-tips-{set_date}/"
-    
-    # Get the web page content
-    webpage = requests.get(url, headers=my_headers)
-    
-    # Parse the page content with BeautifulSoup
-    soup = bs(webpage.content, "html.parser")
-    
-    # Convert the BeautifulSoup object to a lxml etree
-    dom = etree.HTML(str(soup))
 
-    #get table row count for the tr loop
-     # Get all table elements on the page
-    tables = soup.findChildren('table')
-    
-    # Assume the first table contains the relevant data
-    web_table = tables[0]
-    
-    # Get all rows in the table
-    rows = web_table.findChildren(['tr'])
-    
-    # Calculate the number of rows
-    tr_count = len(rows)
-    print("Table has", tr_count - 1, "rows")
-
-    # Open CSV file
     try:
+        # Get the web page content
+        webpage = requests.get(url, headers=my_headers)
+        webpage.raise_for_status()  # Raises an HTTPError for bad responses
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch the webpage: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Parse the page content with BeautifulSoup
+        soup = bs(webpage.content, "html.parser")
+        # Convert the BeautifulSoup object to a lxml etree
+        dom = etree.HTML(str(soup))
+    except Exception as e:
+        print(f"Failed to parse the webpage content: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Get table row count for the tr loop
+        tables = soup.findChildren('table')
+        if not tables:
+            print("No tables found on the page.")
+            return
+
+        # Assume the first table contains the relevant data
+        web_table = tables[0]
+        rows = web_table.findChildren(['tr'])
+        tr_count = len(rows)
+        print("Table has", tr_count - 1, "rows")
+    except Exception as e:
+        print(f"Failed to process the table: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Open CSV file
         with open(csv_f, "w", encoding="utf8", newline="") as f:
             thewriter = csv.writer(f)
+            dt = []
+
             for x in range(2, tr_count - 2):
                 c = x
                 i = str(c)
 
                 try:
                     league = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[5]/strong/span/span/span/span')
-                    league = league[0].text if league else ''  
-                    
+                    league = league[0].text if league else ''
+
                     timez = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[1]/strong/span')
                     timez = timez[0].text if timez else ''
 
@@ -104,14 +124,12 @@ def get_today_prediction(bs, set_date):
                     picks = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[7]/strong/span')
                     picks = picks[0].text if picks else ''
 
-                    results = "N/A"
-                    
                     odds = dom.xpath(f'//*[@id="table-tipsbet"]/tbody/tr[{i}]/td[8]/strong/span')
                     odds = odds[0].text if odds else ''
 
                     flag = dom.xpath('//*[@id="system"]/div/div/div[1]/h3/strong/span')
                     flag = flag[0].text if flag else ''
-                    
+
                     match_date = date.today().strftime('%Y-%m-%d')
                     match_code = kbt_funtions.get_code(8)  # Assuming this function is defined elsewhere
                     source = "tipsbet_combo_tips"
@@ -126,59 +144,69 @@ def get_today_prediction(bs, set_date):
                         score,
                         match_date,
                         flag,
-                        results,
+                        "N/A",
                         match_code,
                         source
                     ]
                     dt.append(prediction)
 
-                except IndexError:
-                    print(f"Error: IndexError occurred at index {i}")
-                    traceback.print_exc()  # This will print the traceback for debugging purposes
-                    continue  # Skip this iteration and proceed with the next one
+                except Exception as e:
+                    print(f"Error processing row {i}: {e}")
+                    traceback.print_exc()
+                    continue  # Skip this row and continue with the next
 
             thewriter.writerows(dt)
             print(dt)
 
     except Exception as e:
-        print("An error occurred:", e)
+        print(f"An error occurred while writing to CSV: {e}")
         traceback.print_exc()
 
 
-def get_previous_prediction(nbs,set_previous_date):
-      # Set the URL based on the given date
+def get_previous_prediction(nbs, set_previous_date):
     url = f"https://tipsbet.co.uk/free-betting-tips-{set_previous_date}/"
-    
-    # Get the web page content
-    webpage = requests.get(url, headers=my_headers)
-    
-    # Parse the page content with BeautifulSoup
-    soup = nbs(webpage.content, "html.parser")
-    
-    # Convert the BeautifulSoup object to a lxml etree
-    dom = etree.HTML(str(soup))
 
-    #get table row count for the tr loop
-     # Get all table elements on the page
-    tables = soup.findChildren('table')
-    
-    # Assume the first table contains the relevant data
-    web_table = tables[0]
-    
-    # Get all rows in the table
-    rows = web_table.findChildren(['tr'])
-    
-    # Calculate the number of rows
-    tr_count = len(rows)
-    print("Table has", tr_count - 1, "rows")
-
-    #open csv file
-
-
-      # Open CSV file
     try:
+        # Get the web page content
+        webpage = requests.get(url, headers=my_headers)
+        webpage.raise_for_status()  # Raises an HTTPError for bad responses
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch the webpage: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Parse the page content with BeautifulSoup
+        soup = nbs(webpage.content, "html.parser")
+        # Convert the BeautifulSoup object to a lxml etree
+        dom = etree.HTML(str(soup))
+    except Exception as e:
+        print(f"Failed to parse the webpage content: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Get table row count for the tr loop
+        tables = soup.findChildren('table')
+        if not tables:
+            print("No tables found on the page.")
+            return
+
+        # Assume the first table contains the relevant data
+        web_table = tables[0]
+        rows = web_table.findChildren(['tr'])
+        tr_count = len(rows)
+        print("Table has", tr_count - 1, "rows")
+    except Exception as e:
+        print(f"Failed to process the table: {e}")
+        traceback.print_exc()
+        return
+
+    try:
+        # Open CSV file
         with open(csv_f, "w", encoding="utf8", newline="") as f:
             thewriter = csv.writer(f)
+            dt = []
 
             for x in range(2, tr_count - 3):
                 c = 1 + x
@@ -216,39 +244,40 @@ def get_previous_prediction(nbs,set_previous_date):
                         results = "Lost"
                     elif score == '?':
                         results = "..."
-                except IndexError:
-                    print(f"Error: IndexError occurred at index {i}")
-                    traceback.print_exc()  # This will print the traceback for debugging purposes
-                    continue  # Skip this iteration and proceed with the next one
 
-                source = "tipsbet_combo_tips"
-                x_date = date.today() - timedelta(days=1)
-                match_date = x_date.strftime('%Y-%m-%d')
-                match_code = kbt_funtions.get_code(8)
+                    source = "tipsbet_combo_tips"
+                    x_date = date.today() - timedelta(days=1)
+                    match_date = x_date.strftime('%Y-%m-%d')
+                    match_code = kbt_funtions.get_code(8)
 
-                prediction = [
-                    leagues,
-                    kbt_funtions.remove(match),
-                    picks,
-                    odds,
-                    kbt_funtions.remove(timez),
-                    score,
-                    match_date,
-                    flag,
-                    results,
-                    match_code,
-                    source
-                ]
-                dt.append(prediction)
+                    prediction = [
+                        leagues,
+                        kbt_funtions.remove(match),
+                        picks,
+                        odds,
+                        kbt_funtions.remove(timez),
+                        score,
+                        match_date,
+                        flag,
+                        results,
+                        match_code,
+                        source
+                    ]
+                    dt.append(prediction)
+
+                except Exception as e:
+                    print(f"Error processing row {i}: {e}")
+                    traceback.print_exc()
+                    continue  # Skip this row and continue with the next
 
             thewriter.writerows(dt)
 
         print(dt)
 
     except Exception as e:
-        print("An error occurred:", e)
+        print(f"An error occurred while writing to CSV: {e}")
         traceback.print_exc()
-    
+
 #csv_f = "venasbet_data.csv"
 def connect_server():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip

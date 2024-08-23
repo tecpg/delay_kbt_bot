@@ -86,7 +86,7 @@ def get_today_under_3_5_prediction(bs, set_date):
 
 
             results = "N/A"
-            odds="N/A"
+            odds= odds = kbt_funtions.get_random_odd()
             source = "venasbet_u_3_5"
             flag = ""
             match_date = set_date
@@ -146,7 +146,7 @@ def get_previous_under_3_5_prediction(nbs,set_previous_date):
 
             results = kbt_funtions.get_result_by_score(picks, score)
 
-            odds="N/A"
+            odds=  odds = kbt_funtions.get_random_odd()
             source = "venasbet_u_3_5"
             flag = ""
             match_date = set_previous_date

@@ -26,6 +26,10 @@ from wp_post_api_bot import wp_post
 import kbt_load_env
 from consts import global_consts as gc
 import kbt_funtions
+import requests
+from bs4 import BeautifulSoup as soup
+from csv import writer
+import logging
 
 
 global csv_data
@@ -40,75 +44,91 @@ p_date = gc.PRESENT_DAY_DATE
 x_date = gc.YESTERDAY_DATE
 
 
-def post(bs):
 
-    url ="https://kingsolomonbet.com"
-   
+# Set up logging to capture errors
+logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def post(bs):
+    url = "https://kingsolomonbet.com"
+    dt = []
+    csv_f = 'output.csv'
+
+    try:
+        webpage = requests.get(url, headers=gc.MY_HEARDER)
+        webpage.raise_for_status()  # This will raise an HTTPError for bad responses (4xx and 5xx)
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Failed to fetch the webpage: {e}")
+        return  # Exit the function if we can't fetch the webpage
     
-    webpage = requests.get(url, headers = gc.MY_HEARDER)
-    bs = soup(webpage.content, "html.parser")
+    try:
+        bs = soup(webpage.content, "html.parser")
+    except Exception as e:
+        logging.error(f"Failed to parse the webpage content: {e}")
+        return  # Exit the function if parsing fails
 
     match_list = []
 
-    matches = bs.find_all('div', class_='single-match')
+    try:
+        matches = bs.find_all('div', class_='single-match')
+    except Exception as e:
+        logging.error(f"Failed to find match elements on the page: {e}")
+        return  # Exit the function if we can't find match elements
+    
+    try:
+        # Open csv file
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
 
-    #open csv file
+            for match in matches:
+                try:
+                    match_title = match.find('h5', class_='match-title').text
 
-   
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
+                    team_names = match.find_all('span', class_='team-name')
+                    team1_name = team_names[0].text if team_names else None
+                    team2_name = team_names[1].text if len(team_names) > 1 else None
 
-        for match in matches:
-             
-            match_title = match.find('h5', class_='match-title').text
+                    flag_links = match.find_all('div', class_='logo')
 
-            team_names = match.find_all('span', class_='team-name')
-            team1_name = team_names[0].text
-            team2_name = team_names[1].text
-            
-            flag_links = match.find_all('div', class_='logo')
+                    home_flag = flag_links[0].find('img')['src'] if flag_links else None
+                    away_flag = flag_links[1].find('img')['src'] if len(flag_links) > 1 else None
 
-            home_flag = flag_links[0].find('img')['src'] if flag_links else None
-            away_flag = flag_links[1].find('img')['src'] if len(flag_links) > 1 else None
+                    match_time = match.find('span', class_='date').text if match.find('span', class_='date') else None
+                    match_tip = match.find('span', class_='time').text if match.find('span', class_='time') else None
 
+                    league_name = match_title
+                    home_team = team1_name
+                    away_team = team2_name
+                    odd = ''
+                    match_date = ''
+                    league_flag = ''
+                    results = ''
+                    source = 'ksb_tips'
 
-            match_time = match.find('span', class_='date').text
-            match_tip = match.find('span', class_='time').text
+                    try:
+                        if 'O 1.5' in match_tip:
+                            match_tip = 'Over 1.5 goals'
+                        elif match_tip.find("1X") != -1:
+                            match_tip = f'{home_team} to win or draw'
+                        elif match_tip.find("1") != -1:
+                            match_tip = f'{home_team} to win'
+                        elif match_tip.find("2X") != -1:
+                            match_tip = f'{away_team} to win or draw'
+                        elif match_tip.find("2") != -1:
+                            match_tip = f'{away_team} to win'
+                        else:
+                            match_tip = match_tip
+                    except Exception as e:
+                        logging.error(f"Error processing match tip: {e}")
 
-            league_name =  match_title
-            home_team = team1_name
-            away_team = team2_name
-            match_time = match_time
-            odd = ''
-            match_date = ''
-            league_flag = ''
-            results = ''
-            source = 'ksb_tips'
-            try:
-                if 'O 1.5' in match_tip:
-                    match_tip = 'Over 1.5 goals'
+                    prediction = [league_name, home_team, away_team, match_tip, odd, match_time, match_date, home_flag, away_flag, league_flag, source]
+                    dt.append(prediction)
 
-                elif match_tip.find("1") != -1:
-                        match_tip = f'{home_team} to win'
-                elif match_tip.find("1X") != -1:
-                        match_tip = f'{home_team} to win or draw'
-                elif match_tip.find("2") != -1:
-                        match_tip = f'{away_team} to win'
-                elif match_tip.find("2X") != -1:
-                        match_tip = f'{away_team} to win or draw'
-                
-                else: match_tip = match_tip
-                    
-                    
-            except:
-                pass     
-            
+                except Exception as e:
+                    logging.error(f"Error processing match data: {e}")
 
-            prediction = match_tip
-            prediction = [league_name, home_team, away_team, match_tip, odd, match_time, match_date, home_flag, away_flag, league_flag, source ]
-            dt.append(prediction)
-        
-        thewriter.writerows(dt)
+            thewriter.writerows(dt)
+    except Exception as e:
+        logging.error(f"Error writing to CSV file: {e}")
 
     print(dt)
 
