@@ -105,7 +105,7 @@ def get_today_prediction(bs, set_date):
         # Open CSV file
         with open(csv_f, "w", encoding="utf8", newline="") as f:
             thewriter = csv.writer(f)
-            dt = []
+          
 
             for x in range(2, tr_count - 2):
                 c = x
@@ -206,7 +206,7 @@ def get_previous_prediction(nbs, set_previous_date):
         # Open CSV file
         with open(csv_f, "w", encoding="utf8", newline="") as f:
             thewriter = csv.writer(f)
-            dt = []
+         
 
             for x in range(2, tr_count - 3):
                 c = 1 + x
