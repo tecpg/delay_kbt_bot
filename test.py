@@ -75,44 +75,73 @@ else:
 
 
 
-# Importing the necessary libraries
 import requests
 from bs4 import BeautifulSoup
 
-# Specify the URL of the website you want to scrape
-url = 'https://typersi.com/wczoraj,yesterday.html'  # Replace with the target URL
+def get_today_prediction():
+    # Define the URL and headers
+    url = "https://typersi.com/"
+    my_headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
 
-# Send a GET request to the website
-response = requests.get(url)
+    # Fetch the webpage content
+    webpage = requests.get(url, headers=my_headers)
 
-# Check if the request was successful (status code 200)
-if response.status_code == 200:
-    # Parse the HTML content of the webpage using Beautiful Soup
-    soup = BeautifulSoup(response.content, 'html.parser')
+    # Parse the webpage content with BeautifulSoup
+    bs = BeautifulSoup(webpage.content, "html.parser")
 
-    # Find all article titles and their links
-    # This example assumes the titles are within <h2> tags and links are within <a> tags
-    articles = soup.find_all('h2')  # Adjust this tag based on the structure of your target website
+    # Find all div elements with class 'tableBox'
+    tables = bs.find_all("div", {"class": "tableBox"})
 
-    # Loop through each article found
-    for article in articles:
-        # Extract the text of the article title
-        title = article.get_text(strip=True)
+    # Limit to first three divs containing tables
+    limited_tables = tables[:3]
 
-        # Extract the link if it's within an <a> tag inside the <h2>
-        link_tag = article.find('a')  # Find the <a> tag inside <h2>
-        link = link_tag['href'] if link_tag else 'No link available'
+    # Check if any tables were found
+    if not limited_tables:
+        print("No 'tableBox' divs found.")
+        return
 
-        # Print the title and link
-        print(f'Title: {title}')
-        print(f'Link: {link}')
-        print('-' * 40)
+    # Loop through the first three 'tableBox' divs
+    for index, table_box in enumerate(limited_tables):
+        print(f"\nExtracting data from table {index + 1}:")
 
-else:
-    print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
+        # Find the table within the div
+        table = table_box.find('table')
+        
+        # Check if a table is found inside the current div
+        if not table:
+            print("No table found within this tableBox.")
+            continue
 
+        # Find all rows in the table
+        rows = table.find_all('tr')
+        
+        # Loop through each row and extract specific columns
+        for row_index, row in enumerate(rows):
+            # Find all cells in the current row (both <td> and <th>)
+            cells = row.find_all(['td', 'th'])
 
-import random
+            # Check if the row contains the expected number of cells (at least 4)
+            if len(cells) >= 4:
+                # Extract the specific columns by index
+                time = cells[1].get_text(strip=True)
+                match_league = cells[2].get_text(strip=True)
+                tip = cells[3].get_text(strip=True)
+                odds = cells[4].get_text(strip=True)
+
+                # Print the extracted data
+                print(f" {time}  {match_league} |{tip}  {odds}")
+
+            # Skip rows that don't match the expected structure
+            else:
+                print(f"Skipping row {row_index + 1}: does not have the expected number of columns.")
+
+    print("Data extraction complete.")
+
+# Call the function
+get_today_prediction()
+
 
 
 

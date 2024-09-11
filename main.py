@@ -1,5 +1,6 @@
 import oddslot_spider
 import tipsbet_big_odds_spider
+import highodds
 import venasbet_o25goals_spider
 import venasbet_overgoals_spider
 import venasbet_spider
@@ -12,7 +13,6 @@ import vip_ticket_tips
 # import twitter_results_api
 import jackpot_spider
 import kbt_telegram_bot
-# import protips
 import time as _time
 
 
@@ -27,7 +27,7 @@ def _kbt():
         jackpot_spider.run()
         _time.sleep(_runtime)
         vip_ticket_tips.run()
-        # protips.run()
+        highodds()
         oddslot_spider.run()
         _time.sleep(_runtime)
         # featured_match.run()
