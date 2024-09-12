@@ -27,7 +27,7 @@ def _kbt():
         jackpot_spider.run()
         _time.sleep(_runtime)
         vip_ticket_tips.run()
-        highodds()
+        highodds.run()
         oddslot_spider.run()
         _time.sleep(_runtime)
         # featured_match.run()
