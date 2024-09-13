@@ -166,7 +166,7 @@ def post():
     # Text and links to post
     message_text = "Winning KBT free telegram tips for today! Do not miss the cash!"
     link_url = "Subscribe now to view all tips https://kingsbettingtips.com/vip-subscriptions/ or get the our app for free! https://kingsbettingtips.com/download-app/"
-    link_url2 = "Last prediction results:- https://kingsbettingtips.com/hot-tips/"
+    link_url2 = "Last prediction results:- https://kingsbettingtips.com/hot-odd-betting-tips/"
 
     # Combine all text parts into a single message
     full_message = f"{message_text}\n\n{post_tips}\n{link_url}\n{link_url2}"
