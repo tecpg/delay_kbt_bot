@@ -1,25 +1,90 @@
-23:30,Soccer,Sol de America - Libertad Asuncion,2,1.6,,,typersi,2024-09-11
-17:00,Soccer,Zlin B - Uhersky Brod /Czech Republic 3. MSFL,1,1.5,,,typersi,2024-09-11
-19:30,Handball,Aon Fivers - Krems,1,1.51,,,typersi,2024-09-11
-19:00,Soccer,Lokomotive Leipzig - Zwickau,1,1.55,,,typersi,2024-09-11
-19:00,Soccer,Lokomotive Leipzig - Zwickau,1,1.55,,,typersi,2024-09-11
-23:30,Soccer,Sol de America - Libertad Asuncion,2,1.57,,,typersi,2024-09-11
-00:00,,U. De Chile - Palestino,1,1.6,0:1,Lost,typersi,2024-09-10
-20:45,,Northern Ireland U21 - Ukraine U21,2,1.53,1:2,Won,typersi,2024-09-10
-18:00,,Eikeri U./Neel I. - Bektas E./Krunic A.,1,1.57,Tennis,,typersi,2024-09-10
-04:00,,Pel D./Stevens B. - Watanabe S./Takeru Y.,1,1.5,2:1,Won,typersi,2024-09-10
-04:00,,Kingsley C. - Tracy J.,1,1.53,2:1,Won,typersi,2024-09-10
-10:30,,France U19 - Poland U19,1,1.56,2:1,Won,typersi,2024-09-10
-16:00,,Kyrgyzstan - Uzbekistan,2,1.5,2:3,Won,typersi,2024-09-10
-20:00,,Kuwait - Iraq,2,1.57,0:0,Lost,typersi,2024-09-10
-21:30,,Ibbou I./Karamoko N. - Barnett A./Haverlag I.,2,1.5,2:0,Lost,typersi,2024-09-10
-20:45,,Worksop - Ilkeston,1,1.56,2:0,Won,typersi,2024-09-10
-20:00,,Del Pino M./La Serna J. M. - Gimenez I./Yamacita F.,1,1.6,0:2,Lost,typersi,2024-09-10
-15:00,,Botswana - Egypt,2,1.52,0:4,Won,typersi,2024-09-10
-20:45,,Netherlands - Germany /UEFA Nations League,X2,1.5,2:2,Won,typersi,2024-09-10
-00:00,,U. De Chile - Palestino,1,1.6,0:1,Lost,typersi,2024-09-10
-16:00,,Kyrgyzstan - Uzbekistan,2,1.5,2:3,Won,typersi,2024-09-10
-03:30,,Osorio C. - Baptiste H.,1,1.55,2:0,Won,typersi,2024-09-10
-19:00,,Holbaek - AB Copenhagen,2,1.56,2:0,Lost,typersi,2024-09-10
-10:30,,France U19 - Poland U19,1,1.54,2:1,Won,typersi,2024-09-10
-00:00,,U. De Chile - Palestino,1,1.56,0:1,Lost,typersi,2024-09-10
+03:00,ARG 1,CA River PlateVsAtletico Tucuman,12,1.20,,,safertip,2024-09-14
+14:00,GER D2,Hannover 96VsFC Kaiserslautern,1X,1.23,,,safertip,2024-09-14
+14:00,GER D2,SSV Ulm 1846VsFC Nuremberg,12,1.25,,,safertip,2024-09-14
+14:30,EPL,SouthamptonVsManchester United,X2,1.17,,,safertip,2024-09-14
+14:30,ENG CH,LeedsVsBurnley,1X,1.17,,,safertip,2024-09-14
+14:30,ENG CH,Millwall FCVsLuton Town,Over1.5,1.28,,,safertip,2024-09-14
+14:30,ENG CH,Oxford UnitedVsStoke City,X2,1.30,,,safertip,2024-09-14
+14:30,EST D1,FC KuressareVsFlora Tallin,2,1.44,,,safertip,2024-09-14
+15:00,La Liga,RCD MallorcaVsVillarreal,U3.5,1.23,,,safertip,2024-09-14
+15:00,FIN D1,HJK HelsinkiVsSJK,1X,1.19,,,safertip,2024-09-14
+15:30,FL2,Paris FCVsFC Metz,1X,1.27,,,safertip,2024-09-14
+15:30,AZB D1,Shamakhi FKVsSumqayit FK,X2,1.30,,,safertip,2024-09-14
+16:00,ITA Serie A,ComoVsBologna,X2,1.33,,,safertip,2024-09-14
+16:00,ITA Serie B,SSC BariVsMontava 1911,1X,1.24,,,safertip,2024-09-14
+16:00,ITA Serie B,BresciaVsFrosinone,U3.5,1.20,,,safertip,2024-09-14
+16:00,ITA Serie B,CittadellaVsUS Catanzaro,Home Over0.5,1.25,,,safertip,2024-09-14
+16:00,ITA Serie B,US CremoneseVsSpezia,12,1.24,,,safertip,2024-09-14
+16:00,ITA Serie B,Juve StabiaVsPalermo,Over1.5,1.31,,,safertip,2024-09-14
+16:30,Bundesliga,RB LeipzigVsUnion Berlin,1,1.43,,,safertip,2024-09-14
+16:30,Bundesliga,TSG HoffenheimVsBayer Leverkusen,Over2.5,1.29,,,safertip,2024-09-14
+16:30,Bundesliga,SC FreiburgVsVFL Bochum,1,1.63,,,safertip,2024-09-14
+16:30,Bundesliga,VFL WolfsburgVsEintracht Frankfurt,Over1.5,1.22,,,safertip,2024-09-14
+16:30,Bundesliga,Borussia MonchegladbachVsVFB Stuttgart,BTTS,1.40,,,safertip,2024-09-14
+17:00,EPL,Brighton & HoveVsIpswich Town,1,1.38,,,safertip,2024-09-14
+17:00,EPL,Crystal PalaceVsLeicester City,Over1.5,1.23,,,safertip,2024-09-14
+17:00,EPL,FulhamVsWestham United,BTTS,1.53,,,safertip,2024-09-14
+17:00,EPL,LiverpoolVsNottingham Forest,1,1.21,,,safertip,2024-09-14
+17:00,EPL,Manchester CityVsBrentford City,1 & Over1.5,1.22,,,safertip,2024-09-14
+17:00,ENG CH,Blackburn RoversVsBristol City,Home Over0.5,1.19,,,safertip,2024-09-14
+17:00,ENG CH,Derby CountyVsCardiff City,1X,1.31,,,safertip,2024-09-14
+17:00,ENG CH,MiddlesboroughVsPreston NE,1,1.45,,,safertip,2024-09-14
+17:00,ENG CH,Plymouth ArgyleVsSunderland,X2,1.18,,,safertip,2024-09-14
+17:00,ENG CH,Sheffield WednesdayVsQPR,Over1.5,1.27,,,safertip,2024-09-14
+17:00,ENG CH,Swansea CityVsNorwich City,BTTS,1.67,,,safertip,2024-09-14
+17:00,ENG CH,Watford FCVsCoventry City,Over1.5,1.21,,,safertip,2024-09-14
+17:00,GER D2,SV DarmstadtVsEintracht Braunschweig,Over1.5,1.16,,,safertip,2024-09-14
+17:00,SCT D1,CelticVsHearts FC,Over2.5,1.28,,,safertip,2024-09-14
+17:00,SCT D1,Aberdeen FCVsMotherwell FC,1X,1.17,,,safertip,2024-09-14
+17:00,SCT D1,Hibernian FCVsSt Johnstone,1X,1.15,,,safertip,2024-09-14
+17:00,SCT D1,Ross CountyVsDundee FC,Over1.5,1.18,,,safertip,2024-09-14
+17:00,SCT D1,St MirrenVsKilmarnock,U3.5,1.20,,,safertip,2024-09-14
+17:00,EST D1,PaideVsFC Nomme United,1,1.20,,,safertip,2024-09-14
+17:00,FIN D1,Ilves TampereVsFC Hakka,12,1.17,,,safertip,2024-09-14
+17:00,FIN D1,AC OuluVsFC Lahti,Over1.5,1.26,,,safertip,2024-09-14
+17:00,N.IRE D1,CrusadersVsGlenavon FC,1,1.37,,,safertip,2024-09-14
+17:00,N.IRE D1,Coleraine FCVsCarrick Rangers,1,1.55,,,safertip,2024-09-14
+17:00,N.IRE D1,LinfieldVsLarne FC,1X,1.21,,,safertip,2024-09-14
+17:00,N.IRE D1,Loughgall FCVsClifftonville,X2,1.20,,,safertip,2024-09-14
+17:00,N.IRE D1,Ballymena UnitedVsGlentoran FC,12,1.21,,,safertip,2024-09-14
+17:00,TURK D1,SivassporVsGaziantep FK,1X,1.27,,,safertip,2024-09-14
+17:00,TURK D1,SamsunsporVsKonyaspor,Home Over0.5,1.19,,,safertip,2024-09-14
+17:15,La Liga,EspanyolVsDeportivo Alaves,U3.5,1.16,,,safertip,2024-09-14
+17:15,La Liga 2,SD EibarVsTenerife CD,1X,1.16,,,safertip,2024-09-14
+17:15,La Liga 2,Levante UDVsEldense,Home Over0.5,1.18,,,safertip,2024-09-14
+17:30,NED Eredvise,FC TwenteVsPEC Zwolle,1,1.30,,,safertip,2024-09-14
+17:30,NED Eredvise,PSV EindhovenVsNEC Nijmegen,1/1,1.40,,,safertip,2024-09-14
+17:30,POR D1,Casa PiaVsMoreirense FC,U3.5,1.16,,,safertip,2024-09-14
+18:00,FL1,MarseilleVsNice,1,1.68,,,safertip,2024-09-14
+18:00,AUST D1,Wolfsberger ACVsRapid Vienna,Over1.5,1.17,,,safertip,2024-09-14
+18:00,AZB D1,Qarabag FKVsSebail FK,1,1.20,,,safertip,2024-09-14
+18:30,Croa HNL,NK Istra 1961VsLokomotiv Zagreb,U3.5,1.23,,,safertip,2024-09-14
+19:00,ITA Serie A,Empoli FCVsJuventus,2,1.69,,,safertip,2024-09-14
+19:00,EST D1,Levadia TallinVsJK Trans Narva,1,1.20,,,safertip,2024-09-14
+19:00,FIN D1,KuPSVsVPS Vaasa,1,1.53,,,safertip,2024-09-14
+19:00,SER D1,FK VojvodinaVsFK Pancevo,Over1.5,1.19,,,safertip,2024-09-14
+19:30,EPL,Aston VillaVsEverton,1,1.47,,,safertip,2024-09-14
+19:30,La Liga,SevillaVsGetafe,1X,1.24,,,safertip,2024-09-14
+19:30,Bundesliga,Holstein KielVsBayern Munich,2,1.21,,,safertip,2024-09-14
+19:30,La Liga 2,Racing SantanderVsSporting Gijon,1X,1.24,,,safertip,2024-09-14
+19:30,La Liga 2,MalagaVsSD Huesca,1X,1.26,,,safertip,2024-09-14
+19:45,NED Eredvise,FC GroningenVsFeyenoord,2,1.42,,,safertip,2024-09-14
+20:00,FL1,AJ AuxerreVsMonaco,X2,1.21,,,safertip,2024-09-14
+20:00,POR D1,AVS SadVsRio Ave FC,Home Over0.5,1.29,,,safertip,2024-09-14
+20:00,TURK D1,GalatasarayVsSakaryaspor,1,1.24,,,safertip,2024-09-14
+20:00,TURK D1,BB BodrumsporVsInstabul Basaksehir,X2,1.31,,,safertip,2024-09-14
+20:30,AUST D1,BW LinzVsLASK Linz,Over1.5,1.20,,,safertip,2024-09-14
+21:00,NED Eredvise,NAC BredaVsFortuna Sittard,Over1.5,1.22,,,safertip,2024-09-14
+21:00,ARG 1,CA San LorenzoVsVelez Sarsfield,U2.5,1.38,,,safertip,2024-09-14
+21:00,Croa HNL,HNK GoricaVsHNK Rijeka,2,1.55,,,safertip,2024-09-14
+21:00,SER D1,Crevna ZvezdaVsFK Napredak,1/1,1.32,,,safertip,2024-09-14
+21:00,SER D1,FK Madost LucaniVsFK Radnicki 1923,BTTS,1.53,,,safertip,2024-09-14
+21:30,GER D2,FC CologneVsFC Magdeburg,1,1.47,,,safertip,2024-09-14
+21:45,ITA Serie A,AC MilanVsVenezia,1,1.28,,,safertip,2024-09-14
+22:00,EPL,BournemouthVsChelsea FC,X2,1.26,,,safertip,2024-09-14
+22:00,La Liga,Real SociedadVsReal Madrid,U3.5,1.30,,,safertip,2024-09-14
+22:00,FL1,PSGVsBrest,1,1.26,,,safertip,2024-09-14
+22:00,NED Eredvise,AZ AlkamaarVsSC Heerenveen,1,1.36,,,safertip,2024-09-14
+22:30,POR D1,FC FamalicaoVsGil Vicente,1X,1.18,,,safertip,2024-09-14
+22:30,POR D1,BenficaVsSanta Clara,1,1.25,,,safertip,2024-09-14
+23:30,ARG 1,Racing ClubVsBoca Juniors,U3.5,1.17,,,safertip,2024-09-14

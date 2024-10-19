@@ -1,3 +1,6 @@
 2024-08-23 10:07:12,451 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
 2024-08-23 10:57:35,963 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
 2024-08-23 11:01:51,693 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
+2024-09-14 10:26:27,086 - ERROR - Failed to find match elements on the page: name 'bookmaker' is not defined
+2024-10-05 12:39:01,971 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
+2024-10-07 13:08:37,308 - ERROR - Failed to fetch the webpage: HTTPSConnectionPool(host='www.safertip.com', port=443): Max retries exceeded with url: /all-predictions (Caused by NameResolutionError("<urllib3.connection.HTTPSConnection object at 0x100c12410>: Failed to resolve 'www.safertip.com' ([Errno 8] nodename nor servname provided, or not known)"))

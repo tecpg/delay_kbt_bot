@@ -33,7 +33,7 @@ import logging
 
 
 global csv_data
-csv_f = gc.HIGHODDS_CSV
+csv_f = gc.SAFE_BET_CSV
 
 session = requests.Session()
 my_headers = gc.MY_HEARDER
@@ -68,7 +68,7 @@ MY_HEADER = {"User-Agent": "Mozilla/5.0"}
 
 
 def get_today_prediction(set_date):
-    url = "https://typersi.com/"
+    url = "https://www.safertip.com/all-predictions"
  
 
     try:
@@ -88,12 +88,12 @@ def get_today_prediction(set_date):
 
     try:
         # Find all div elements with class 'tableBox'
-        tables = bs.find_all("div", {"class": "tableBox"})
+        tables = bs.find_all("div", {"class": "col-md-9"})
         limited_tables = tables[:4]  # Limit to first four divs containing tables
 
         # Check if any tables were found
         if not limited_tables:
-            print("No 'tableBox' divs found.")
+            print("No 'col-md-9' divs found.")
             return
 
         # Loop through the first four 'tableBox' divs
@@ -119,30 +119,23 @@ def get_today_prediction(set_date):
                 # Check if the row contains the expected number of cells (at least 7)
                 if len(cells) >= 7:
                     # Extract the specific columns by index
+                    league = cells[0].get_text(strip=True)
                     time = cells[1].get_text(strip=True)
                     fixtures = cells[2].get_text(strip=True)
                     tip = cells[3].get_text(strip=True)
-                    odd_text = cells[4].get_text(strip=True)
-                    bookmaker = cells[6].get_text(strip=True)
+                    odd = cells[4].get_text(strip=True)
+                    
+                    score = 'N/A'
+                    result = 'N/A'
+                    source = 'safertip'
+                    match_date = set_date
 
-                    try:
-                        odd = float(odd_text)  # Convert odds to a float
-                    except ValueError:
-                        continue  # Skip if odds can't be converted to float
+                    # Print the extracted data
+                    # print(f"{time}  {league} {fixtures} | {tip}  {odd}")
 
-                    # Check if odds are within the desired range and if bookmaker is 'Soccer'
-                    if 1.5 <= odd <= 1.90 and bookmaker in ['Soccer', 'Handball', 'Tennis']:
-                        score = ''
-                        result = ''
-                        source = 'typersi'
-                        match_date = set_date
-
-                        # Print the extracted data
-                        print(f"{time}  {fixtures} | {tip}  {odd} {bookmaker}")
-
-                        # Append the data to the list
-                        prediction = [time, bookmaker, fixtures, tip, odd, score, result, source, match_date]
-                        dt.append(prediction)
+                    # Append the data to the list
+                    prediction = [time, league, fixtures, tip, odd, score, result, source, match_date]
+                    dt.append(prediction)
     except Exception as e:
         logging.error(f"Failed to find match elements on the page: {e}")
         return  # Exit the function if we can't find match elements
@@ -157,108 +150,6 @@ def get_today_prediction(set_date):
 
     # Print the collected data
     print(dt)
-
-def get_yesterday_prediction(set_date):
-    url = "https://typersi.com/wczoraj,yesterday.html"
-  
-
-    try:
-        # Fetch the webpage content
-        webpage = requests.get(url, headers=MY_HEADER)
-        webpage.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Failed to fetch the webpage: {e}")
-        return  # Exit the function if we can't fetch the webpage
-
-    try:
-        # Parse the webpage content with BeautifulSoup
-        bs = soup(webpage.content, "html.parser")
-    except Exception as e:
-        logging.error(f"Failed to parse the webpage content: {e}")
-        return  # Exit the function if parsing fails
-
-    try:
-        # Find all div elements with class 'tableBox'
-        tables = bs.find_all("div", {"class": "tableBox"})
-        limited_tables = tables[:4]  # Limit to first three divs containing tables
-
-        # Check if any tables were found
-        if not limited_tables:
-            print("No 'tableBox' divs found.")
-            return
-
-        # Loop through the first three 'tableBox' divs
-        for index, table_box in enumerate(limited_tables):
-            print(f"\nExtracting data from table {index + 1}:")
-
-            # Find the table within the div
-            table = table_box.find('table')
-
-            # Check if a table is found inside the current div
-            if not table:
-                print("No table found within this tableBox.")
-                continue
-
-            # Find all rows in the table
-            rows = table.find_all('tr')
-
-            # Loop through each row and extract specific columns
-            for row_index, row in enumerate(rows[1:]):
-                # Find all cells in the current row (both <td> and <th>)
-                cells = row.find_all(['td', 'th'])
-
-                # Check if the row contains the expected number of cells (at least 6)
-                if len(cells) >= 6:
-                    # Extract the specific columns by index
-                    time = cells[1].get_text(strip=True)
-                    fixtures = cells[2].get_text(strip=True)
-                    tip = cells[3].get_text(strip=True)
-                    odd_text = cells[5].get_text(strip=True)
-
-                    try:
-                        odd = float(odd_text)  # Convert odds to a float
-                    except ValueError:
-                        continue  # Skip if odds can't be converted to float
-
-                    # Check if odds are within the desired range
-                    if 1.5 <= odd <= 1.9:
-                        score = cells[7].get_text(strip=True)
-                        result_class = cells[7].get('class', [])  # Adjust the index based on where the score is located
-                        check_result = ' '.join(result_class)  # Convert the class list to a string
-
-                        # Check the class for result status
-                        if '_tloss' in check_result:
-                            result = 'Lost'
-                        elif '_twin' in check_result:
-                            result = 'Won'
-                        else:
-                            result = ''  # Handle any other cases
-
-                        source = 'typersi'
-                        match_date = set_date
-                        bookmaker = ''
-
-                        # Print the extracted data
-                        print(f" {time}  {fixtures} | {tip}  {odd}")
-
-                        # Append the data to the list
-                        prediction = [time, bookmaker, fixtures, tip, odd, score, result, source, match_date]
-                        dt.append(prediction)
-    except Exception as e:
-        logging.error(f"Failed to find match elements on the page: {e}")
-        return  # Exit the function if we can't find match elements
-
-    try:
-        # Write the extracted data to a CSV file
-        with open(csv_f, "w", encoding="utf8", newline="") as f:
-            thewriter = writer(f)
-            thewriter.writerows(dt)
-    except Exception as e:
-        logging.error(f"Error writing to CSV file: {e}")
-
-    # Print the collected data
-    print(dt)
-
 
 
 
@@ -284,7 +175,7 @@ def connect_server():
             csv_data = csv.reader(f)
             for row in csv_data:
                 print(row)
-                cursor.execute('INSERT INTO highodds(time, sports, fixtures, tip, odd, score, result, source, match_date)'\
+                cursor.execute('INSERT INTO predictions (time, league, fixtures, tip, odd, score, result, source, match_date)'\
                     'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
             
 
@@ -297,7 +188,7 @@ def connect_server():
         print("============Bot deleting previous tips from  database:=============== ")
 
 
-        cursor.execute('DELETE t1 FROM highodds AS t1 INNER JOIN highodds AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.tip = t2.tip')
+        cursor.execute('DELETE t1 FROM predictions AS t1 INNER JOIN safebet AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.tip = t2.tip')
 
             
         print(cursor.rowcount," record(s) deleted==============", time.ctime()) 
@@ -325,7 +216,7 @@ def connect_server():
     
 def run():
     get_today_prediction(p_date)
-    get_yesterday_prediction(x_date)
+
    
     connect_server()
 
