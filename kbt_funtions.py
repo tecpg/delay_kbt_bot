@@ -98,3 +98,30 @@ def get_random_odd():
 # # Example usage
 # random_string = get_random_string(odds)
 
+from datetime import datetime, timedelta
+
+def adjust_to_gmt(time_string):
+    """
+    Adjusts the given time string (in HH:MM format) by subtracting 2 hours
+    to convert to GMT.
+
+    Args:
+    - time_string (str): The time in "HH:MM" format.
+
+    Returns:
+    - str: The adjusted time in "HH:MM" format.
+    """
+    try:
+        # Parse the time string into a datetime object
+        original_time = datetime.strptime(time_string, "%H:%M")
+        
+        # Subtract 2 hours to convert to GMT
+        adjusted_time = original_time - timedelta(hours=2)
+        
+        # Format the adjusted time back to "HH:MM" format
+        return adjusted_time.strftime("%H:%M")
+    
+    except ValueError:
+        print("Invalid time format. Please use 'HH:MM'.")
+        return None
+

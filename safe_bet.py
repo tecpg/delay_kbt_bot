@@ -112,7 +112,7 @@ def get_today_prediction(set_date):
             rows = table.find_all('tr')
 
             # Loop through each row and extract specific columns
-            for row_index, row in enumerate(rows[1:]):
+            for row_index, row in enumerate(rows[10:]):
                 # Find all cells in the current row (both <td> and <th>)
                 cells = row.find_all(['td', 'th'])
 
@@ -121,7 +121,8 @@ def get_today_prediction(set_date):
                     # Extract the specific columns by index
                     league = cells[0].get_text(strip=True)
                     time = cells[1].get_text(strip=True)
-                    fixtures = cells[2].get_text(strip=True)
+                    adjusted_time = kbt_funtions.adjust_to_gmt(time)
+                    fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
                     tip = cells[3].get_text(strip=True)
                     odd = cells[4].get_text(strip=True)
                     
@@ -134,7 +135,7 @@ def get_today_prediction(set_date):
                     # print(f"{time}  {league} {fixtures} | {tip}  {odd}")
 
                     # Append the data to the list
-                    prediction = [time, league, fixtures, tip, odd, score, result, source, match_date]
+                    prediction = [adjusted_time, league, fixtures, tip, odd, score, result, source, match_date]
                     dt.append(prediction)
     except Exception as e:
         logging.error(f"Failed to find match elements on the page: {e}")
