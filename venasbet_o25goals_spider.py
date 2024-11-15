@@ -76,13 +76,13 @@ def get_today_over_1_5_prediction(bs, set_date):
             i = str(c)
             
             timez = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-            timez = timez[0].text
+            timez = timez[0].text.strip()
             league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]')
             leagues = league[0].text
             home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[1]')
-            home_team = home_team[0]
+            home_team = home_team[0].strip()
             away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[2]')
-            away_team = away_team[0]
+            away_team = away_team[0].strip()
             # picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]')
             # picks = picks[0].text
             picks="Over 2.5"
@@ -97,7 +97,7 @@ def get_today_over_1_5_prediction(bs, set_date):
             match_code = kbt_funtions.get_code(8)
             score=""
 
-            prediction = [leagues,kbt_funtions.remove(home_team +"vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
@@ -138,9 +138,9 @@ def get_previous_over_1_5_prediction(nbs,set_previous_date):
          
             leagues = league[0].text
             home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
-            home_team = home_team[0]
+            home_team = home_team[0].strip()
             away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
-            away_team = away_team[0]
+            away_team = away_team[0].strip()
             # picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
             # picks = picks[0].text
             picks = "Over 2.5"
@@ -155,7 +155,7 @@ def get_previous_over_1_5_prediction(nbs,set_previous_date):
             match_date = set_previous_date
             match_code = kbt_funtions.get_code(8)
 
-            prediction = [leagues,kbt_funtions.remove(home_team +"vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
+            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
             dt.append(prediction)
         
 
