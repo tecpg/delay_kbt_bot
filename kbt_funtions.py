@@ -92,7 +92,26 @@ def check_odd_range(value):
 # Function to get a random string from the list
 def get_random_odd():
     # Define the list of strings
-    odds = ['1.20', '1.15', '1.20', '1.27', '1.30', '1.35', '1.30', '1.40', '1.45']
+    odds = ['1.20', '1.25', '1.20', '1.27', '1.30', '1.35', '1.30', '1.40', '1.45']
+    return random.choice(odds)
+
+
+# Function to get a random string from the list
+def get_random_odd_2():
+    # Define the list of strings
+    odds = ['1.40', '1.25', '1.30', '1.27', '1.40', '1.35', '1.30', '1.40', '1.45']
+    return random.choice(odds)
+
+# Function to get a random string from the list
+def get_random_odd_3():
+    # Define the list of strings
+    odds = ['1.40', '1.55', '1.35', '1.40', '1.45', '1.65', '1.50', '1.48', '1.45']
+    return random.choice(odds)
+
+# Function to get a random string from the list
+def get_random_odd_draws():
+    # Define the list of strings
+    odds = ['11.40', '8.55', '4.35', '6.40', '3.45', '5.65', '4.50', '3.48', '4.45']
     return random.choice(odds)
 
 # # Example usage

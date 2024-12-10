@@ -80,68 +80,64 @@ from bs4 import BeautifulSoup
 
 def get_today_prediction():
     # Define the URL and headers
-    url = "https://typersi.com/"
+    url = "https://99predict.com/?dt=18-11-2024"
     my_headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     }
 
-    # Fetch the webpage content
-    webpage = requests.get(url, headers=my_headers)
+    try:
+        # Fetch the webpage content
+        response = requests.get(url, headers=my_headers)
+        response.raise_for_status()
 
-    # Parse the webpage content with BeautifulSoup
-    bs = BeautifulSoup(webpage.content, "html.parser")
+        # Parse the webpage content with BeautifulSoup
+        soup = BeautifulSoup(response.content, "html.parser")
 
-    # Find all div elements with class 'tableBox'
-    tables = bs.find_all("div", {"class": "tableBox"})
-
-    # Limit to first three divs containing tables
-    limited_tables = tables[:3]
-
-    # Check if any tables were found
-    if not limited_tables:
-        print("No 'tableBox' divs found.")
-        return
-
-    # Loop through the first three 'tableBox' divs
-    for index, table_box in enumerate(limited_tables):
-        print(f"\nExtracting data from table {index + 1}:")
-
-        # Find the table within the div
-        table = table_box.find('table')
+        # Find all div elements with the class "tips-box"
+        tips_boxes = soup.find_all("div", {"class": "tips-box"})
         
-        # Check if a table is found inside the current div
-        if not table:
-            print("No table found within this tableBox.")
-            continue
+        # Extract the relevant text from each tips-box
+        predictions = []
+        for box in tips_boxes:
+            # Extract league name
+            league = box.find("div", {"class": "league-box"}).get_text(strip=True)
+            
+            # Extract match time
+            time = box.find("div", {"class": "time-box"}).get_text(strip=True)
+            
+            # Extract teams
+            teams = box.find_all("div", {"class": "match-box"})
+            home_team = teams[0].get_text(strip=True)
+            away_team = teams[1].get_text(strip=True)
+            
+            # Extract tips
+            tips = box.find("span", {"class": "tips"}).get_text(strip=True)
 
-        # Find all rows in the table
-        rows = table.find_all('tr')
-        
-        # Loop through each row and extract specific columns
-        for row_index, row in enumerate(rows):
-            # Find all cells in the current row (both <td> and <th>)
-            cells = row.find_all(['td', 'th'])
+            # Append data as a dictionary
+            predictions.append({
+                "league": league,
+                "time": time,
+                "home_team": home_team,
+                "away_team": away_team,
+                "tips": tips
+            })
 
-            # Check if the row contains the expected number of cells (at least 4)
-            if len(cells) >= 4:
-                # Extract the specific columns by index
-                time = cells[1].get_text(strip=True)
-                match_league = cells[2].get_text(strip=True)
-                tip = cells[3].get_text(strip=True)
-                odds = cells[4].get_text(strip=True)
+        return predictions
 
-                # Print the extracted data
-                print(f" {time}  {match_league} |{tip}  {odds}")
+    except requests.exceptions.RequestException as e:
+        print(f"An error occurred: {e}")
+        return []
 
-            # Skip rows that don't match the expected structure
-            else:
-                print(f"Skipping row {row_index + 1}: does not have the expected number of columns.")
-
-    print("Data extraction complete.")
-
-# Call the function
-get_today_prediction()
-
+# Example usage
+predictions = get_today_prediction()
+for i, prediction in enumerate(predictions, 1):
+    print(f"Prediction {i}:")
+    print(f"  League: {prediction['league']}")
+    print(f"  Time: {prediction['time']}")
+    print(f"  Home Team: {prediction['home_team']}")
+    print(f"  Away Team: {prediction['away_team']}")
+    print(f"  Tips: {prediction['tips']}")
+    print()
 
 
 

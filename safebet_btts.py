@@ -33,7 +33,7 @@ import logging
 
 
 global csv_data
-csv_f = gc.SAFE_BET_CSV
+csv_f = gc.SAFE_BET_BTTS_CSV
 
 session = requests.Session()
 my_headers = gc.MY_HEARDER
@@ -68,7 +68,7 @@ MY_HEADER = {"User-Agent": "Mozilla/5.0"}
 
 
 def get_today_prediction(set_date):
-    url = "https://www.safertip.com/all-predictions"
+    url = "https://www.safertip.com/both-teams-score"
  
 
     try:
@@ -112,7 +112,7 @@ def get_today_prediction(set_date):
             rows = table.find_all('tr')
 
             # Loop through each row and extract specific columns
-            for row_index, row in enumerate(rows[10:]):
+            for row_index, row in enumerate(rows[:10]):
                 # Find all cells in the current row (both <td> and <th>)
                 cells = row.find_all(['td', 'th'])
 
@@ -124,19 +124,28 @@ def get_today_prediction(set_date):
                     adjusted_time = kbt_funtions.adjust_to_gmt(time)
                     fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
                     tip = cells[3].get_text(strip=True)
-                    odd = cells[4].get_text(strip=True)
-                    
-                    score = 'N/A'
-                    result = 'N/A'
-                    source = 'safertip'
-                    match_date = set_date
+                    odd_text = cells[4].get_text(strip=True)
 
-                    # Print the extracted data
-                    # print(f"{time}  {league} {fixtures} | {tip}  {odd}")
+                    try:
+                        # Convert odd to float and filter by odds >= 1.20
+                        odd = float(odd_text)
+                        if odd >= 1.50:
+                            score = 'N/A'
+                            result = 'N/A'
+                            source = 'safertip_btts'
+                            match_date = set_date
+                            flag = ''
+                            match_code = kbt_funtions.get_code(8)
 
-                    # Append the data to the list
-                    prediction = [adjusted_time, league, fixtures, tip, odd, score, result, source, match_date]
-                    dt.append(prediction)
+                            # Append the data to the list
+                            prediction = [
+                                league, fixtures, tip, odd_text, adjusted_time,
+                                score, match_date, flag, result, match_code, source
+                            ]
+                            dt.append(prediction)
+                    except ValueError:
+                        print(f"Skipping row with invalid odd value: {odd_text}")
+
     except Exception as e:
         logging.error(f"Failed to find match elements on the page: {e}")
         return  # Exit the function if we can't find match elements
@@ -151,8 +160,6 @@ def get_today_prediction(set_date):
 
     # Print the collected data
     print(dt)
-
-
 
 def connect_server():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
@@ -176,8 +183,10 @@ def connect_server():
             csv_data = csv.reader(f)
             for row in csv_data:
                 print(row)
-                cursor.execute('INSERT INTO predictions (time, league, fixtures, tip, odd, score, result, source, match_date)'\
-                    'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
+                cursor.execute('INSERT INTO soccerpunt(league,fixtures,tip,odd,match_time,score,date,flag,result,code,source)'\
+                    'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
+            
+
             
 
         print("Inserting tips now... ", time.ctime())
@@ -189,7 +198,7 @@ def connect_server():
         print("============Bot deleting previous tips from  database:=============== ")
 
 
-        cursor.execute('DELETE t1 FROM predictions AS t1 INNER JOIN predictions AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.tip = t2.tip  AND t1.source = t2.source')
+        cursor.execute('DELETE t1 FROM soccerpunt AS t1 INNER JOIN soccerpunt AS t2 WHERE t1.id < t2.id AND t1.fixtures = t2.fixtures AND t1.tip = t2.tip AND t1.source = t2.source')
 
             
         print(cursor.rowcount," record(s) deleted==============", time.ctime()) 
