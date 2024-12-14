@@ -70,36 +70,37 @@ def get_today_prediction(bs, set_date):
    
     with open(csv_f, "w", encoding="utf8", newline="") as f:
         thewriter = writer(f)
-
-        for x in range(0,tr_count - 1):
-
-            c = 1 + x
-            i = str(c)
-            
-            timez = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-            timez = timez[0].text.strip()
-            league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]')
-            leagues = league[0].text
-            home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[1]')
-            home_team = home_team[0].strip()
-            away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[2]')
-            away_team = away_team[0].strip()
-            picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]')
-            picks = picks[0].text
-
-
-
-            results = "N/A"
-            odds=kbt_funtions.get_random_odd()
-            source = "venasbet_acca"
-            flag = ""
-            match_date = set_date
-            match_code = kbt_funtions.get_code(8)
-            score=""
-
-            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
         
+        for x in range(0,tr_count - 1):
+            try:
+                c = 1 + x
+                i = str(c)
+                
+                timez = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
+                timez = timez[0].text.strip()
+                league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]')
+                leagues = league[0].text
+                home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[1]')
+                home_team = home_team[0].strip()
+                away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[2]')
+                away_team = away_team[0].strip()
+                picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]')
+                picks = picks[0].text
+
+
+
+                results = "N/A"
+                odds=kbt_funtions.get_random_odd()
+                source = "venasbet_acca"
+                flag = ""
+                match_date = set_date
+                match_code = kbt_funtions.get_code(8)
+                score=""
+
+                prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
+                dt.append(prediction)
+            except:
+                pass
 
         thewriter.writerows(dt)
 
@@ -129,33 +130,34 @@ def get_previous_prediction(nbs,set_previous_date):
         thewriter = writer(f)
 
         for x in range(0,tr_count - 1):
+            try:
+                c = 1 + x
+                i = str(c)
+                
+                timez ="N/A"
+                league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
+                leagues = league[0].text
+                home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
+                home_team = home_team[0].strip()
+                away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
+                away_team = away_team[0].strip()
+                picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
+                picks = picks[0].text
+                score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
+                score = score[0].text
 
-            c = 1 + x
-            i = str(c)
-            
-            timez ="N/A"
-            league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-            leagues = league[0].text
-            home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
-            home_team = home_team[0].strip()
-            away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
-            away_team = away_team[0].strip()
-            picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
-            picks = picks[0].text
-            score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
-            score = score[0].text
+                results = kbt_funtions.get_result(picks,score)
 
-            results = kbt_funtions.get_result(picks,score)
+                odds= kbt_funtions.get_random_odd()
+                source = "venasbet_acca"
+                flag = ""
+                match_date = set_previous_date
+                match_code = kbt_funtions.get_code(8)
 
-            odds= kbt_funtions.get_random_odd()
-            source = "venasbet_acca"
-            flag = ""
-            match_date = set_previous_date
-            match_code = kbt_funtions.get_code(8)
-
-            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+                prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
+                dt.append(prediction)
+            except:
+                pass
 
         thewriter.writerows(dt)
 

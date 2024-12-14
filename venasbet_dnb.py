@@ -148,7 +148,7 @@ def get_previous_prediction(nbs,set_previous_date):
             results = kbt_funtions.get_result(picks,score)
 
             odds= kbt_funtions.get_random_odd()
-            source = "venasbet_btts"
+            source = "venasbet_dnb"
             flag = ""
             match_date = set_previous_date
             match_code = kbt_funtions.get_code(8)
