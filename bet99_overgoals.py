@@ -105,6 +105,8 @@ def get_today_prediction(set_date):
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred: {e}")
+
+
 def get_previous_prediction(set_date):
     # Define the URL
     url = "https://99predict.com/over-1-5-goals?dt="
@@ -156,7 +158,7 @@ def get_previous_prediction(set_date):
                     result = "Lost"
                 else:
                     result = "N/A"
-                source = 'bet99'
+                source = 'bet99_overgoals'
                 flag = ''
                 match_date = set_date
                 match_code = kbt_funtions.get_code(8)

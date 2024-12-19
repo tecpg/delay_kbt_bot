@@ -17,9 +17,11 @@ import venasbet_wah
 import bet99
 import bet99_betday
 import bet99_draws
+import bet99_overgoals
 import safebet_btts
+import safebet_dc
 import safebet_over_goals
-import betnum
+# import betnum
 import venasbet_over_35goals
 
 # import twitter_api
@@ -75,11 +77,14 @@ def _kbt():
         bet99_betday.run()
         _time.sleep(_runtime)
         bet99_draws.run()
-        betnum.run()
+        _time.sleep(_runtime)
+        bet99_overgoals.run()
+       
         _time.sleep(_runtime)
         safebet_btts.run()
         _time.sleep(_runtime)
         safebet_over_goals.run()
+        safebet_dc.run()
         
         print('ended for today ')
         _time.sleep(day_runtime)

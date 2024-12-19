@@ -95,7 +95,7 @@ def get_today_over_1_5_prediction(bs, set_date):
 
 
             results = "N/A"
-            odds=kbt_funtions.get_random_odd()
+            odds=kbt_funtions.get_random_odd_over_15()
             source = "venasbet_o_1_5"
             flag = ""
             match_date = set_date

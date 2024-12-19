@@ -95,6 +95,11 @@ def get_random_odd():
     odds = ['1.20', '1.25', '1.20', '1.27', '1.30', '1.35', '1.30', '1.40', '1.45']
     return random.choice(odds)
 
+def get_random_odd_over_15():
+    # Define the list of strings
+    odds = ['1.20', '1.15', '1.20', '1.10', '1.20', '1.15', '1.10', '1.10', '1.25']
+    return random.choice(odds)
+
 
 # Function to get a random string from the list
 def get_random_odd_2():

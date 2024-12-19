@@ -33,7 +33,7 @@ import logging
 
 
 global csv_data
-csv_f = gc.SAFE_BET_OVERGOALS_CSV
+csv_f = gc.SAFE_BET_DC_CSV
 
 session = requests.Session()
 my_headers = gc.MY_HEARDER
@@ -68,7 +68,7 @@ MY_HEADER = {"User-Agent": "Mozilla/5.0"}
 
 
 def get_today_prediction(set_date):
-    url = "https://www.safertip.com/over-25"
+    url = "https://www.safertip.com/double-chance"
  
 
     try:
@@ -123,7 +123,7 @@ def get_today_prediction(set_date):
                     time = cells[1].get_text(strip=True)
                     adjusted_time = kbt_funtions.adjust_to_gmt(time)
                     fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
-                    tip = 'Over 1.5'
+                    tip = cells[3].get_text(strip=True)
                     odd_text = cells[4].get_text(strip=True)
 
                     try:
@@ -132,11 +132,11 @@ def get_today_prediction(set_date):
                         if odd >= 1.10:
                             score = 'N/A'
                             result = 'N/A'
-                            source = 'safertip_over_15'
+                            source = 'safertip_dc'
                             match_date = set_date
                             flag = ''
                             match_code = kbt_funtions.get_code(8)
-                            final_odd = kbt_funtions.get_random_odd()
+                            final_odd = odd_text
 
                             # Append the data to the list
                             prediction = [
