@@ -48,119 +48,168 @@ x_date =  gc.YESTERDAY_DATE
 
 
 
-
 def get_today_prediction(bs, set_date):
+    url = "https://venasbet.com/index.php/handicap?dt="
 
-    url ="https://venasbet.com/index.php/handicap?dt="
-   
-    webpage = requests.get(url+str(set_date), headers = my_headers)
+    try:
+        # Request the webpage
+        webpage = requests.get(url + str(set_date), headers=my_headers)
+        webpage.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+    except requests.RequestException as e:
+        print(f"Failed to fetch the webpage: {e}")
+        return
+
+    # Parse the webpage
     bs = bs(webpage.content, "html.parser")
     dom = etree.HTML(str(bs))
 
-    #get table row count for the tr loop
-
+    # Get all tables on the page
     tables = bs.findChildren('table')
+    if not tables:  # Check if no tables are found
+        print("No tables found on the webpage.")
+        return
+
     web_table = tables[0]
     rows = web_table.findChildren(['tr'])
     tr_count = len(rows)
-    print("Table has ",tr_count - 1," rows")
 
-    #open csv file
+    if tr_count <= 1:  # Check if there are no rows beyond the header
+        print("Table has no data rows.")
+        return
 
+    print("Table has ", tr_count - 1, " rows")
 
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
+    # Open CSV file for writing
+    try:
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
+            dt = []
 
-        for x in range(0,tr_count - 1):
+            for x in range(tr_count - 1):
+                i = str(1 + x)
 
-            c = 1 + x
-            i = str(c)
-            
-            timez = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-            timez = timez[0].text.strip()
-            league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]')
-            leagues = league[0].text
-            home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[1]')
-            home_team = home_team[0].strip()
-            away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[2]')
-            away_team = away_team[0].strip()
-            picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]')
-            picks = picks[0].text
+                try:
+                    # Extract data using XPath
+                    timez = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')[0].text.strip()
+                    leagues = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]')[0].text
+                    home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[1]')[0].strip()
+                    away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]/text()[2]')[0].strip()
+                    picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]')[0].text
 
+                    # Prepare prediction data
+                    results = "N/A"
+                    odds = kbt_funtions.get_random_odd_2()
+                    source = "venasbet_handicap"
+                    flag = ""
+                    match_date = set_date
+                    match_code = kbt_funtions.get_code(8)
+                    score = ""
 
+                    prediction = [
+                        leagues,
+                        kbt_funtions.remove(home_team + " vs " + away_team),
+                        picks,
+                        odds,
+                        kbt_funtions.remove(timez),
+                        score,
+                        match_date,
+                        flag,
+                        results,
+                        match_code,
+                        source,
+                    ]
+                    dt.append(prediction)
+                except IndexError as e:
+                    print(f"Failed to process row {i}: {e}")
 
-            results = "N/A"
-            odds=kbt_funtions.get_random_odd_2()
-            source = "venasbet_handicap"
-            flag = ""
-            match_date = set_date
-            match_code = kbt_funtions.get_code(8)
-            score=""
+            # Write all predictions to the CSV
+            thewriter.writerows(dt)
 
-            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+        print("Predictions saved to CSV:", dt)
+    except Exception as e:
+        print(f"Failed to write to the CSV file: {e}")
 
-        thewriter.writerows(dt)
+def get_previous_prediction(nbs, set_previous_date):
+    url = "https://venasbet.com/index.php/handicap?dt="
 
-    print(dt)
+    try:
+        # Request the webpage
+        webpage = requests.get(url + str(set_previous_date), headers=my_headers)
+        webpage.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+    except requests.RequestException as e:
+        print(f"Failed to fetch the webpage: {e}")
+        return
 
-
-def get_previous_prediction(nbs,set_previous_date):
-
-    url ="https://venasbet.com/index.php/handicap?dt="
-   
-    webpage = requests.get(url+str(set_previous_date), headers = my_headers)
+    # Parse the webpage
     nbs = nbs(webpage.content, "html.parser")
     dom = etree.HTML(str(nbs))
 
-    #get table row count for the tr loop
-
+    # Get all tables on the page
     tables = nbs.findChildren('table')
+    if not tables:  # Check if no tables are found
+        print("No tables found on the webpage.")
+        return
+
     web_table = tables[0]
     rows = web_table.findChildren(['tr'])
     tr_count = len(rows)
-    print("Table has ",tr_count - 1," rows")
 
-    #open csv file
+    if tr_count <= 1:  # Check if there are no rows beyond the header
+        print("Table has no data rows.")
+        return
 
-  
-    with open(csv_f, "w", encoding="utf8", newline="") as f:
-        thewriter = writer(f)
+    print("Table has ", tr_count - 1, " rows")
 
-        for x in range(0,tr_count - 1):
+    # Open CSV file for writing
+    try:
+        with open(csv_f, "w", encoding="utf8", newline="") as f:
+            thewriter = writer(f)
+            dt = []
 
-            c = 1 + x
-            i = str(c)
-            
-            timez ="N/A"
-            league = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')
-            leagues = league[0].text
-            home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')
-            home_team = home_team[0].strip()
-            away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')
-            away_team = away_team[0].strip()
-            picks = dom.xpath(f' //*[@id="home"]/table/tbody/tr[{i}]/td[3]')
-            picks = picks[0].text
-            score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')
-            score = score[0].text
+            for x in range(tr_count - 1):
+                i = str(1 + x)
 
-            results = kbt_funtions.get_result(picks,score)
+                try:
+                    # Extract data using XPath
+                    timez = "N/A"  # Default value if not available
+                    leagues = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[1]')[0].text
+                    home_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[1]')[0].strip()
+                    away_team = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[2]/text()[2]')[0].strip()
+                    picks = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[3]')[0].text
+                    score = dom.xpath(f'//*[@id="home"]/table/tbody/tr[{i}]/td[4]/strong')[0].text
 
-            odds= kbt_funtions.get_random_odd()
-            source = "venasbet_handicap"
-            flag = ""
-            match_date = set_previous_date
-            match_code = kbt_funtions.get_code(8)
+                    # Prepare result and prediction data
+                    results = kbt_funtions.get_result(picks, score)
+                    odds = kbt_funtions.get_random_odd()
+                    source = "venasbet_handicap"
+                    flag = ""
+                    match_date = set_previous_date
+                    match_code = kbt_funtions.get_code(8)
 
-            prediction = [leagues,kbt_funtions.remove(home_team +" vs "+away_team),  picks, odds, kbt_funtions.remove(timez), score, match_date, flag, results, match_code, source ]
-            dt.append(prediction)
-        
+                    prediction = [
+                        leagues,
+                        kbt_funtions.remove(home_team + " vs " + away_team),
+                        picks,
+                        odds,
+                        kbt_funtions.remove(timez),
+                        score,
+                        match_date,
+                        flag,
+                        results,
+                        match_code,
+                        source,
+                    ]
+                    dt.append(prediction)
+                except IndexError as e:
+                    print(f"Failed to process row {i}: {e}")
 
-        thewriter.writerows(dt)
+            # Write all predictions to the CSV
+            thewriter.writerows(dt)
 
-    print(dt)
-        
+        print("Predictions saved to CSV:", dt)
+    except Exception as e:
+        print(f"Failed to write to the CSV file: {e}")
+   
 
 
 #csv_f = "venasbet_data.csv"
