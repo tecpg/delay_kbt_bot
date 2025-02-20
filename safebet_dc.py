@@ -129,7 +129,7 @@ def get_today_prediction(set_date):
                     try:
                         # Convert odd to float and filter by odds >= 1.20
                         odd = float(odd_text)
-                        if odd >= 1.10:
+                        if odd >= 1.15:
                             score = 'N/A'
                             result = 'N/A'
                             source = 'safertip_dc'

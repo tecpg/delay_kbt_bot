@@ -158,7 +158,7 @@ def get_previous_over_1_5_prediction(nbs,set_previous_date):
 
 
 
-                odds= kbt_funtions.get_random_odd()
+                odds= odds=kbt_funtions.get_random_odd_over_15()
                 source = "venasbet_o_1_5"
                 flag = ""
                 match_date = set_previous_date

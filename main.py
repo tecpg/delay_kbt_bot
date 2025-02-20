@@ -24,9 +24,6 @@ import safebet_over_goals
 # import betnum
 import venasbet_over_35goals
 
-# import twitter_api
-# import twitter_results_api
-import jackpot_spider
 import kbt_telegram_bot
 import time as _time
 
@@ -39,10 +36,15 @@ def _kbt():
         
         print('started for today ')
         _time.sleep(_runtime)
-        jackpot_spider.run()
+        
         _time.sleep(_runtime)
         vip_ticket_tips.run()
-       
+        _time.sleep(_runtime)
+        safebet_btts.run()
+        _time.sleep(_runtime)
+        safebet_over_goals.run()
+        safebet_dc.run()
+        _time.sleep(_runtime)
         oddslot_spider.run()
         _time.sleep(_runtime)
         safe_bet.run()
@@ -80,11 +82,7 @@ def _kbt():
         _time.sleep(_runtime)
         bet99_overgoals.run()
        
-        _time.sleep(_runtime)
-        safebet_btts.run()
-        _time.sleep(_runtime)
-        safebet_over_goals.run()
-        safebet_dc.run()
+       
         
         print('ended for today ')
         _time.sleep(day_runtime)
