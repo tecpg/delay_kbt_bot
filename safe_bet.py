@@ -117,7 +117,7 @@ def get_today_prediction(set_date):
                 cells = row.find_all(['td', 'th'])
 
                 # Check if the row contains the expected number of cells (at least 7)
-                if len(cells) >= 7:
+                if len(cells) >= 4:
                     # Extract the specific columns by index
                     league = cells[0].get_text(strip=True)
                     time = cells[1].get_text(strip=True)

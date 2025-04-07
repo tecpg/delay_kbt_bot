@@ -117,7 +117,7 @@ def get_today_prediction(set_date):
                 cells = row.find_all(['td', 'th'])
 
                 # Check if the row contains the expected number of cells (at least 7)
-                if len(cells) >= 7:
+                if len(cells) >= 4:
                     # Extract the specific columns by index
                     league = cells[0].get_text(strip=True)
                     time = cells[1].get_text(strip=True)
@@ -129,7 +129,7 @@ def get_today_prediction(set_date):
                     try:
                         # Convert odd to float and filter by odds >= 1.20
                         odd = float(odd_text)
-                        if odd >= 1.50:
+                        if odd >= 1.55:
                             score = 'N/A'
                             result = 'N/A'
                             source = 'safertip_btts'

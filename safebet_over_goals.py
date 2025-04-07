@@ -43,6 +43,8 @@ p_date = gc.PRESENT_DAY_DATE
 # calculating end date by adding 4 days
 x_date = gc.YESTERDAY_DATE
 
+country_list = gc.COUNTRIES
+
 
 
 # Set up logging to capture errors
@@ -117,9 +119,24 @@ def get_today_prediction(set_date):
                 cells = row.find_all(['td', 'th'])
 
                 # Check if the row contains the expected number of cells (at least 7)
-                if len(cells) >= 7:
+                if len(cells) >= 4:
                     # Extract the specific columns by index
-                    league = cells[0].get_text(strip=True)
+                    
+                    league_value = cells[0].get_text(strip=True)
+                    league_prefix = league_value [:3].upper()  # Extract first 3 letters and convert to uppercase
+                    # Find matching country
+                    matching_country = next((c for c in country_list if c["2_code"] == league_prefix or c["3_code"] == league_prefix), None)
+                    if matching_country:
+                        league = matching_country["name"] 
+                        flag = matching_country["2_code"] 
+
+                    else:
+                        league = league_value
+                        flag = ''
+
+
+
+
                     time = cells[1].get_text(strip=True)
                     adjusted_time = kbt_funtions.adjust_to_gmt(time)
                     fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
@@ -134,7 +151,7 @@ def get_today_prediction(set_date):
                             result = 'N/A'
                             source = 'safertip_over_15'
                             match_date = set_date
-                            flag = ''
+                            
                             match_code = kbt_funtions.get_code(8)
                             final_odd = kbt_funtions.get_random_odd()
 
