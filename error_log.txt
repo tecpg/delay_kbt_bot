@@ -9,3 +9,21 @@
 2024-12-04 21:05:16,109 - ERROR - Failed to fetch the webpage: HTTPSConnectionPool(host='kingsolomonbet.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1006)')))
 2024-12-10 16:17:11,754 - ERROR - Failed to fetch the webpage: HTTPSConnectionPool(host='kingsolomonbet.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1006)')))
 2025-02-26 17:16:22,146 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 08:53:44,335 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 08:57:28,374 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 12:34:01,999 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 12:57:38,098 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:02:17,839 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:03:03,216 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:05:11,583 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:08:01,126 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:08:18,001 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:16:00,294 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:17:45,529 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:18:29,129 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:18:56,886 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:19:46,690 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:23:38,305 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:24:02,592 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:24:23,466 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-04-09 13:27:12,463 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value

@@ -113,15 +113,19 @@ def get_today_prediction(set_date):
 
             # Find all rows in the table
             rows = table.find_all('tr')
+            print(rows)
+         
 
             # Loop through each row and extract specific columns
             for row_index, row in enumerate(rows[:10]):
                 # Find all cells in the current row (both <td> and <th>)
-                cells = row.find_all(['td', 'th'])
+                cells = row.find_all(['td'])
+              
+               
                 
 
                 # Check if the row contains the expected number of cells (at least 7)
-                if len(cells) >= 4:
+                if len(cells) >= 5:
                     
                     # Extract the specific columns by index
                     league_value = cells[0].get_text(strip=True)
@@ -138,7 +142,9 @@ def get_today_prediction(set_date):
    
 
                     time = cells[1].get_text(strip=True)
+                    
                     adjusted_time = kbt_funtions.adjust_to_gmt(time)
+                    
                     fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
                     tip = cells[3].get_text(strip=True)
                     odd_text = cells[4].get_text(strip=True)
@@ -147,6 +153,7 @@ def get_today_prediction(set_date):
                     try:
                         # Convert odd to float and filter by odds >= 1.20
                         odd = float(odd_text)
+                        
                         if odd >= 1.15:
                             score = 'N/A'
                             result = 'N/A'

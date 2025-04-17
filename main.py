@@ -57,8 +57,7 @@ def _kbt():
         venasbet_overgoals_spider.run()
         _time.sleep(_runtime)
         venasbet_o25goals_spider.run()
-        _time.sleep(_runtime)
-        venasbet_u35goals_spider.run()
+       
         _time.sleep(_runtime)
         kbtxtips.run()
         _time.sleep(_runtime)
@@ -81,6 +80,8 @@ def _kbt():
         bet99_draws.run()
         _time.sleep(_runtime)
         bet99_overgoals.run()
+        _time.sleep(_runtime)
+        venasbet_u35goals_spider.run()
        
        
         
