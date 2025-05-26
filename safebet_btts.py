@@ -54,9 +54,7 @@ from csv import writer
 import logging
 
 # Define headers for the request (ensure this is correctly set in your environment)
-MY_HEADER = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
+my_headers = gc.MY_HEARDER
 
 import requests
 from bs4 import BeautifulSoup as soup
@@ -73,7 +71,7 @@ def get_today_prediction(set_date):
 
     try:
         # Fetch the webpage content
-        webpage = requests.get(url, headers=MY_HEADER)
+        webpage = requests.get(url, headers=my_headers)
         webpage.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch the webpage: {e}")

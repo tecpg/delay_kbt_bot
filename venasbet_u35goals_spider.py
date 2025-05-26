@@ -46,7 +46,7 @@ x_date = gc.YESTERDAY_DATE
 
 def get_today_under_3_5_prediction(bs, set_date):
 
-    url ="https://r2bet.com/draws?dt="
+    url ="https://venasbet.com/draws?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -104,7 +104,7 @@ def get_today_under_3_5_prediction(bs, set_date):
 
 def get_previous_under_3_5_prediction(nbs,set_previous_date):
 
-    url ="https://r2bet.com/draws?dt="
+    url ="https://venasbet.com/draws?dt="
    
     webpage = requests.get(url+str(set_previous_date), headers = my_headers)
     nbs = nbs(webpage.content, "html.parser")

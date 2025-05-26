@@ -66,7 +66,7 @@ import logging
 from csv import writer
 
 # Set your headers and CSV file name here
-MY_HEADER = {"User-Agent": "Mozilla/5.0"}
+my_headers = gc.MY_HEARDER
 
 
 def get_today_prediction(set_date):
@@ -75,7 +75,7 @@ def get_today_prediction(set_date):
 
     try:
         # Fetch the webpage content
-        webpage = requests.get(url, headers=MY_HEADER)
+        webpage = requests.get(url, headers=my_headers)
         webpage.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch the webpage: {e}")
