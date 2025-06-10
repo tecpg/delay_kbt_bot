@@ -30,3 +30,21 @@
 2025-05-27 08:07:51,372 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
 2025-05-27 08:10:21,160 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
 2025-05-29 07:45:07,645 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-04 07:56:24,103 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 07:54:49,055 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 07:57:36,997 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
+2025-06-10 08:27:35,082 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 08:45:41,547 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:00:37,567 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:02:51,139 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:04:46,105 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:05:43,004 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:07:49,670 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:11:56,290 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:13:31,566 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:14:04,201 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:19:28,325 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:20:27,005 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:20:33,973 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:20:45,992 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-10 09:21:30,974 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value

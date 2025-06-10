@@ -45,25 +45,21 @@ x_date = gc.YESTERDAY_DATE
 
 country_list = gc.COUNTRIES
 
+print(p_date)
+
 
 
 # Set up logging to capture errors
 logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
-import requests
-from bs4 import BeautifulSoup as soup
-from csv import writer
-import logging
 
 # Define headers for the request (ensure this is correctly set in your environment)
 my_headers = gc.MY_HEARDER
-import requests
-from bs4 import BeautifulSoup as soup
-import logging
-from csv import writer
+
 
 # Set your headers and CSV file name here
 MY_HEADER = {"User-Agent": "Mozilla/5.0"}
+
 
 
 def get_today_prediction(set_date):
@@ -101,7 +97,6 @@ def get_today_prediction(set_date):
 
             # Find the table within the div
             table = table_box.find('table')
-           
 
             # Check if a table is found inside the current div
             if not table:
@@ -110,25 +105,19 @@ def get_today_prediction(set_date):
 
             # Find all rows in the table
             rows = table.find_all('tr')
-            print(rows)
-         
 
             # Loop through each row and extract specific columns
             for row_index, row in enumerate(rows[:10]):
                 # Find all cells in the current row (both <td> and <th>)
-                cells = row.find_all(['td'])
-              
-               
-                
+                cells = row.find_all(['td', 'th'])
 
                 # Check if the row contains the expected number of cells (at least 7)
-                if len(cells) >= 5:
-                    
+                if len(cells) >= 4:
                     # Extract the specific columns by index
+                    
                     league_value = cells[0].get_text(strip=True)
                     league_prefix = league_value [:3].upper()  # Extract first 3 letters and convert to uppercase
                     # Find matching country
-                    
                     matching_country = next((c for c in country_list if c["2_code"] == league_prefix or c["3_code"] == league_prefix), None)
                     if matching_country:
                         league = matching_country["name"] 
@@ -136,21 +125,20 @@ def get_today_prediction(set_date):
 
                     else:
                         league = league_value
-   
+                        flag = ''
+
+
+
 
                     time = cells[1].get_text(strip=True)
-                    
                     adjusted_time = kbt_funtions.adjust_to_gmt(time)
-                    
                     fixtures = cells[2].get_text(strip=True).replace("Vs", " vs ")
                     tip = cells[3].get_text(strip=True)
                     odd_text = cells[4].get_text(strip=True)
-                   
 
                     try:
                         # Convert odd to float and filter by odds >= 1.20
                         odd = float(odd_text)
-                        
                         if odd >= 1.15:
                             score = 'N/A'
                             result = 'N/A'

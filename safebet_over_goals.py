@@ -153,7 +153,7 @@ def get_today_prediction(set_date):
                             match_date = set_date
                             
                             match_code = kbt_funtions.get_code(8)
-                            final_odd = kbt_funtions.get_random_odd()
+                            final_odd = kbt_funtions.get_random_odd_over_15()
 
                             # Append the data to the list
                             prediction = [
