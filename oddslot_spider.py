@@ -60,9 +60,7 @@ def get_today_prediction(bs, set_date):
     tr_count = len(rows)
     print("Table has ",tr_count - 1," rows")
 
-    #open csv file
 
-   
     with open(csv_f, "w", encoding="utf8", newline="") as f:
         thewriter = writer(f)
 
@@ -98,11 +96,9 @@ def get_today_prediction(bs, set_date):
 
         thewriter.writerows(dt)
 
-    print(dt)
-
+    # print(dt)
 
 def get_previous_prediction(nbs,set_previous_date):
-
     url ="https://venasbet.com/double_chance?dt="
    
     webpage = requests.get(url+str(set_previous_date), headers = my_headers)
@@ -164,7 +160,7 @@ def get_previous_prediction(nbs,set_previous_date):
 
         thewriter.writerows(dt)
 
-    print(dt)
+    # print(dt)
         
     
 
