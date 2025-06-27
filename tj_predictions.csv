@@ -1,0 +1,31 @@
+league_name,home_team,away_team,match_tip,odd,match_time,match_date,home_flag,away_flag,league_flag,source
+UEFA U21 Championship,England U21,Netherlands U21,"['Full-Time', '1X']",,,25 Jun,https://tejtips.com/wp-content/uploads/2020/09/england-1.png,https://tejtips.com/wp-content/uploads/2020/09/netherlands-1.png,,tj_tips
+NM Cupen,Lillestrøm SK,Oslo,"['Over', '1.5']",,,25 Jun,https://media.api-sports.io/football/teams/321.png,https://media.api-sports.io/football/teams/2143.png,,tj_tips
+NM Cupen,Stabæk,Kristiansund,"['Over', '1.5']",,,25 Jun,https://media.api-sports.io/football/teams/323.png,https://media.api-sports.io/football/teams/320.png,,tj_tips
+NM Cupen,Rosenborg,Sarpsborg,"['Full-Time', '1X']",,,25 Jun,https://media.api-sports.io/football/teams/331.png,https://media.api-sports.io/football/teams/333.png,,tj_tips
+NM Cupen,Aalesund,Viking,"['Full-Time', 'X2']",,,25 Jun,https://media.api-sports.io/football/teams/757.png,https://media.api-sports.io/football/teams/759.png,,tj_tips
+FIFA Club World Cup,Mamelodi Sundowns,Fluminense,"['Full-Time', 'X2']",,,25 Jun,https://tejtips.com/wp-content/uploads/2025/06/IMG_2855.png,https://media.api-sports.io/football/teams/124.png,,tj_tips
+FIFA Club World Cup,B. Dortmund,Ulsan Hyundai,"['Full-Time', '1']",,,25 Jun,https://media.api-sports.io/football/teams/165.png,https://media.api-sports.io/football/teams/2767.png,,tj_tips
+UEFA U21 Championship,Germany U21,France U21,"['Over', '1.5']",,,25 Jun,https://tejtips.com/wp-content/uploads/2020/09/germany-1.png,https://tejtips.com/wp-content/uploads/2020/09/france-1.png,,tj_tips
+Major League Soccer,Toronto,NY Red Bulls,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1601.png,https://media.api-sports.io/football/teams/1602.png,,tj_tips
+Major League Soccer,New England,Nashville SC,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1609.png,https://media.api-sports.io/football/teams/9569.png,,tj_tips
+Major League Soccer,Montreal,FC Cincinnati,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1614.png,https://media.api-sports.io/football/teams/2242.png,,tj_tips
+Major League Soccer,Columbus,Atlanta Utd,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1613.png,https://media.api-sports.io/football/teams/1608.png,,tj_tips
+Major League Soccer,Chicago Fire,Philadelphia,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1607.png,https://media.api-sports.io/football/teams/1599.png,,tj_tips
+Major League Soccer,Dallas,San Jose,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1597.png,https://media.api-sports.io/football/teams/1596.png,,tj_tips
+Major League Soccer,Kansas City,Charlotte FC,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1611.png,https://media.api-sports.io/football/teams/18310.png,,tj_tips
+Major League Soccer,Minnesota Utd,Houston,"['Full-Time', '1X']",,,26 Jun,https://media.api-sports.io/football/teams/1612.png,https://media.api-sports.io/football/teams/1600.png,,tj_tips
+Major League Soccer,St Louis City,Orlando,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/20787.png,https://media.api-sports.io/football/teams/1598.png,,tj_tips
+FIFA Club World Cup,Inter,River Plate,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/505.png,https://media.api-sports.io/football/teams/435.png,,tj_tips
+FIFA Club World Cup,Urawa,Monterrey,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/287.png,https://media.api-sports.io/football/teams/2282.png,,tj_tips
+Major League Soccer,Colorado,LA Galaxy,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/1610.png,https://media.api-sports.io/football/teams/1605.png,,tj_tips
+FIFA Club World Cup,Juventus,Manchester City,"['Over', '1.5']",,,26 Jun,https://media.api-sports.io/football/teams/496.png,https://media.api-sports.io/football/teams/50.png,,tj_tips
+FIFA Club World Cup,Wydad Casablanca,Al Ain,"['Over', '1.5']",,,26 Jun,https://tejtips.com/wp-content/uploads/2025/06/IMG_2849.png,https://media.api-sports.io/football/teams/2865.png,,tj_tips
+Serie B,CRB,América MG,"['Full-Time', '1X']",,,27 Jun,https://media.api-sports.io/football/teams/146.png,https://media.api-sports.io/football/teams/125.png,,tj_tips
+FIFA Club World Cup,RB Salzburg,Real Madrid,"['Full-Time', 'X2']",,,27 Jun,https://media.api-sports.io/football/teams/571.png,https://media.api-sports.io/football/teams/541.png,,tj_tips
+FIFA Club World Cup,Al-Hilal,Pachuca,"['Full-Time', '1X']",,,27 Jun,https://media.api-sports.io/football/teams/2932.png,https://media.api-sports.io/football/teams/2292.png,,tj_tips
+K League 1,Daejeon,Jeju United,"['Over', '1.5']",,,27 Jun,https://media.api-sports.io/football/teams/2750.png,https://media.api-sports.io/football/teams/2761.png,,tj_tips
+K League 1,Gimcheon Sangmu,Jeonbuk,"['Over', '1.5']",,,27 Jun,https://media.api-sports.io/football/teams/2768.png,https://media.api-sports.io/football/teams/2762.png,,tj_tips
+Veikkausliiga,Gnistan,Inter Turku,"['Over', '1.5']",,,27 Jun,https://media.api-sports.io/football/teams/2082.png,https://media.api-sports.io/football/teams/1164.png,,tj_tips
+Veikkausliiga,KuPS,HJK,"['Over', '1.5']",,,27 Jun,https://media.api-sports.io/football/teams/1165.png,https://media.api-sports.io/football/teams/649.png,,tj_tips
+Úrvalsdeild,Stjarnan,Breidablik,"['Over', '1.5']",,,27 Jun,https://media.api-sports.io/football/teams/275.png,https://media.api-sports.io/football/teams/276.png,,tj_tips

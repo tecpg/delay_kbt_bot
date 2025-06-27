@@ -160,7 +160,7 @@ def get_previous_prediction(nbs,set_previous_date):
 
         thewriter.writerows(dt)
 
-    # print(dt)
+    #print(dt)
         
     
 
@@ -189,7 +189,7 @@ def connect_server():
         
             csv_data = csv.reader(f)
             for row in csv_data:
-                print(row)
+                # print(row)
                 cursor.execute('INSERT INTO soccerpunt(league,fixtures,tip,odd,match_time,score,date,flag,result,code,source)'\
                     'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
             

@@ -6,7 +6,8 @@ import venasbet_overgoals_spider
 import venasbet_spider
 import venasbet_u35goals_spider
 import safe_bet
-import featured_match_app
+# import featured_match_app
+import fetch_tejtips
 import kbtxtips
 import vip_ticket_tips
 
@@ -45,11 +46,12 @@ def _kbt():
         safebet_over_goals.run()
         safebet_dc.run()
         _time.sleep(_runtime)
-        oddslot_spider.run()
-        _time.sleep(_runtime)
+      
         safe_bet.run()
         _time.sleep(_runtime)
-        featured_match_app.run()
+        fetch_tejtips.run()
+        oddslot_spider.run()
+        _time.sleep(_runtime)
         venasbet_spider.run()
         _time.sleep(_runtime)
         tipsbet_big_odds_spider.run()

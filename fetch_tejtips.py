@@ -33,7 +33,7 @@ import logging
 
 
 global csv_data
-csv_f = gc.FEATURED_MATCH
+csv_f = gc.FEATURED_TEJMATCH
 
 session = requests.Session()
 my_headers = gc.MY_HEARDER
@@ -48,92 +48,101 @@ x_date = gc.YESTERDAY_DATE
 # Set up logging to capture errors
 logging.basicConfig(filename='error_log.txt', level=logging.ERROR, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def post(bs):
-    url = "https://kingsolomonbet.com"
-    dt = []
-    
+
+
+import requests
+from bs4 import BeautifulSoup as soup
+from csv import writer
+import logging
+from consts import global_consts as gc
+
+def post():
+    url = "https://tejtips.com/en/upcoming-matches/"
+    csv_f 
+    fixtures = []
+
+     # Step 1: Get today's date in "DD Mon" format
+    today = datetime.today().strftime("%d %b")  # e.g., "25 Jun"
+
 
     try:
         webpage = requests.get(url, headers=gc.MY_HEARDER)
-        webpage.raise_for_status()  # This will raise an HTTPError for bad responses (4xx and 5xx)
+        webpage.raise_for_status()
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to fetch the webpage: {e}")
-        return  # Exit the function if we can't fetch the webpage
-    
+        return
+
     try:
         bs = soup(webpage.content, "html.parser")
     except Exception as e:
         logging.error(f"Failed to parse the webpage content: {e}")
-        return  # Exit the function if parsing fails
+        return
 
-    match_list = []
+    for match in bs.select(".next-match-fixtures"):
+        try:
+            team_tags = match.select(".match-teams-vs .team-logo")
+            if len(team_tags) != 2:
+                continue
 
+            home_team = team_tags[0].select_one("strong").text.strip()
+            home_flag = team_tags[0].select_one("img")["src"]
+
+            away_team = team_tags[1].select_one("strong").text.strip()
+            away_flag = team_tags[1].select_one("img")["src"]
+
+            match_info_tag = match.select_one(".mvs p")
+            league_name = match_info_tag.select_one("strong").text.strip()
+            match_date = match_info_tag.get_text(strip=True).replace(league_name, "").strip()
+
+# ✅ Step 2: Skip if match_date doesn't match today
+            if today != match_date:
+                continue
+
+            tips_list = [li.get_text(strip=True) for li in match.select(".nmf-loc li")]
+            match_tip = " ".join(tips_list)
+
+            odd = ""
+
+            match_time = ""  # not available on the source
+            league_flag = ""  # not provided in HTML
+
+            source = "tj_tips"
+
+            prediction = [
+                league_name,     # league_name
+                home_team,       # home_team
+                away_team,       # away_team
+                match_tip,       # match_tip
+                odd,             # odd
+                match_time,      # match_time
+                match_date,      # match_date
+                home_flag,       # home_flag
+                away_flag,       # away_flag
+                league_flag,     # league_flag
+                source           # source
+            ]
+
+            fixtures.append(prediction)
+
+        except Exception as e:
+            logging.warning(f"Error parsing match: {e}")
+            continue
+
+    # ✅ Write to CSV
     try:
-        matches = bs.find_all('div', class_='single-match')
-    except Exception as e:
-        logging.error(f"Failed to find match elements on the page: {e}")
-        return  # Exit the function if we can't find match elements
-    
-    try:
-        # Open csv file
         with open(csv_f, "w", encoding="utf8", newline="") as f:
             thewriter = writer(f)
-
-            for match in matches:
-                try:
-                    match_title = match.find('h5', class_='match-title').text
-
-                    team_names = match.find_all('span', class_='team-name')
-                    team1_name = team_names[0].text if team_names else None
-                    team2_name = team_names[1].text if len(team_names) > 1 else None
-
-                    flag_links = match.find_all('div', class_='logo')
-
-                    home_flag = flag_links[0].find('img')['src'] if flag_links else None
-                    away_flag = flag_links[1].find('img')['src'] if len(flag_links) > 1 else None
-
-                    match_time = match.find('span', class_='date').text if match.find('span', class_='date') else None
-                    match_tip = match.find('span', class_='time').text if match.find('span', class_='time') else None
-
-                    league_name = match_title
-                    home_team = team1_name
-                    away_team = team2_name
-                    odd = ''
-                    match_date = ''
-                    league_flag = ''
-                    results = ''
-                    source = 'ksb_tips'
-
-                    try:
-                        if 'O 1.5' in match_tip:
-                            match_tip = 'Over 1.5 goals'
-                        elif match_tip.find("1X") != -1:
-                            match_tip = f'{home_team} to win or draw'
-                        elif match_tip.find("1") != -1:
-                            match_tip = f'{home_team} to win'
-                        elif match_tip.find("2X") != -1:
-                            match_tip = f'{away_team} to win or draw'
-                        elif match_tip.find("2") != -1:
-                            match_tip = f'{away_team} to win'
-                        else:
-                            match_tip = match_tip
-                    except Exception as e:
-                        logging.error(f"Error processing match tip: {e}")
-
-                    prediction = [league_name, home_team, away_team, match_tip, odd, match_time, match_date, home_flag, away_flag, league_flag, source]
-                    dt.append(prediction)
-
-                except Exception as e:
-                    logging.error(f"Error processing match data: {e}")
-
-            thewriter.writerows(dt)
+            thewriter.writerow([
+                "league_name", "home_team", "away_team", "match_tip", "odd",
+                "match_time", "match_date", "home_flag", "away_flag", "league_flag", "source"
+            ])
+            for row in fixtures:
+                thewriter.writerow(row)
     except Exception as e:
         logging.error(f"Error writing to CSV file: {e}")
 
-    print(dt)
+    return fixtures
 
-
-#csv_f = "venasbet_data.csv"
 
 def connect_server():
     #NOTE::::::::::::when i experience bad connection: 10458 (28000) in ip i browse my ip address and paste it inside cpanel add host then copy my cpanel sharedhost ip
@@ -156,7 +165,7 @@ def connect_server():
         
             csv_data = csv.reader(f)
             for row in csv_data:
-                print(row)
+                # print(row)
                 cursor.execute('INSERT INTO featured_tips(league, home, away, tip, odd, time, date,home_flag_link, away_flag_link, league_flag_link, source)'\
                     'VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)', row)
             
@@ -197,7 +206,7 @@ def connect_server():
 
     
 def run():
-    post(soup)
+    post()
    
     connect_server()
 

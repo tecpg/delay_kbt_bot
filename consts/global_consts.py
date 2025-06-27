@@ -129,6 +129,7 @@ VENASBET_WAH_CSV = "csv_files/venasbet_wah.csv"
 VENASBET_HANDICAP_CSV = "csv_files/venasbet_handicap.csv"
 VIP_CSV = "csv_files/vip_tips_data.csv"
 FEATURED_MATCH = "csv_files/featured_match.csv"
+FEATURED_TEJMATCH = "csv_files/tej_match.csv"
 
 
 #telegram const

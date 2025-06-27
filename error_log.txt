@@ -48,3 +48,6 @@
 2025-06-10 09:20:33,973 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
 2025-06-10 09:20:45,992 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
 2025-06-10 09:21:30,974 - ERROR - Failed to find match elements on the page: cannot access local variable 'flag' where it is not associated with a value
+2025-06-13 07:22:13,128 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
+2025-06-19 07:38:45,212 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
+2025-06-25 15:16:13,293 - ERROR - Error processing match tip: argument of type 'NoneType' is not iterable
