@@ -59,6 +59,20 @@ def post_tips():
                 timez = timez[0].text
                 picks = dom.xpath(f'/html/body/div[2]/div[4]/div/div/div/div/div[2]/div/table/tbody/tr[{i}]/td[7]/strong')
                 picks = picks[0].text
+                picks_node = dom.xpath(f'/html/body/div[2]/div[4]/div/div/div/div/div[2]/div/table/tbody/tr[{i}]/td[7]/strong')
+
+                if picks_node:
+                    original_text = picks_node[0].text.strip() if picks_node[0].text else ''
+                    
+                    if original_text == 'AWAY WIN':
+                        picks_node[0].text = 'AWAY DC'
+                    elif original_text == 'HOME WIN':
+                        picks_node[0].text = 'HOME DC'
+
+                    picks = picks_node[0].text  # Final text after substitution
+                else:
+                    picks = "N/A"  # Or any fallback
+
                 home_teams = dom.xpath(f'/html/body/div[2]/div[4]/div/div/div/div/div[2]/div/table/tbody/tr[{i}]/td[2]/div/div/a/h4/strong')
                 home_teams = home_teams[0].text
                 away_teams = dom.xpath(f'/html/body/div[2]/div[4]/div/div/div/div/div[2]/div/table/tbody/tr[{i}]/td[3]/div/div/a/h4/strong')
@@ -104,11 +118,11 @@ def post_tips():
             my_list = dt
             random.shuffle(my_list)
             max_sublist = []
-            selected_list = my_list[:12]
+            selected_list = my_list[:15]
             
             for sublist in selected_list:
                 if kbt_funtions.check_odd_range(sublist[3]):
-                    sublist[3] = round(sublist[3] + 0.08, 2)
+                    sublist[3] = round(sublist[3] + 0.06, 2)
                     max_sublist = sublist
                 
                 match_list = [str(value) for value in max_sublist]
