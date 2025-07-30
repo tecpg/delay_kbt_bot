@@ -55,7 +55,7 @@ x_date = gc.YESTERDAY_DATE
 
 def get_today_over_1_5_prediction(bs, set_date):
 
-    url ="https://r2bet.com/2_5_goals?dt="
+    url ="https://venasbet.com/over-2-5-goals-prediction?dt="
    
     webpage = requests.get(url+str(set_date), headers = my_headers)
     bs = bs(webpage.content, "html.parser")
@@ -115,7 +115,7 @@ def get_previous_over_1_5_prediction(nbs,set_previous_date):
 
     try:
 
-        url ="https://r2bet.com/2_5_goals?dt="
+        url ="https://venasbet.com/over-2-5-goals-prediction?dt="
     
         webpage = requests.get(url+str(set_previous_date), headers = my_headers)
         nbs = nbs(webpage.content, "html.parser")
@@ -238,7 +238,7 @@ def connect_server():
 
 
 
-    post_title = 'Daily Betting Tips - Todays Football Prediction'
+    post_title = 'Over 1.5 Betting Tips - Todays Football Prediction'
     tip_category = '186'
     category_note = """ <h4>What is Over 1.5 goals Prediction</h4><br>
             Over 1.5 goals betting is a type of bet that involves predicting that there will be at least 2 goals scored in a football match. This type of bet is sometimes referred to as a "goal line" bet. Over 1.5 goals betting tips refer to recommendations or suggestions for over 1.5 goals bets made by experts or individuals with knowledge of the teams or events being bet on. It is important to note that betting tips and recommendations are not a guarantee of success and that all forms of gambling carry inherent risks and uncertainties. 
@@ -260,7 +260,7 @@ def run():
         get_today_over_1_5_prediction(soup,p_date)
         #time.sleep(6) 
         #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
-        get_previous_over_1_5_prediction(soup,x_date)
+        # get_previous_over_1_5_prediction(soup,x_date)
         #print(get_result("2:2"))
         # #insert into db
         connect_server()

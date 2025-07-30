@@ -59,6 +59,8 @@ def get_today_prediction(bs, set_date):
 
     #get table row count for the tr loop
 
+
+    print(dom)
     tables = bs.findChildren('table')
     web_table = tables[0]
     rows = web_table.findChildren(['tr'])
@@ -247,7 +249,7 @@ def run():
     get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
-    get_previous_prediction(soup,x_date)
+    # get_previous_prediction(soup,x_date)
     #print(get_result("2X","2:2"))
     # #insert into db
     connect_server()

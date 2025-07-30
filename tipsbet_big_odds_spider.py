@@ -342,7 +342,7 @@ def connect_server():
 
 
     #post_title = '1X2 Betting Prediction For Today - Daily Free Betting Tips'
-    post_title = 'Todays Football Betting Tips - Free Prediction Tips'
+    post_title = 'Todays SportyBet Tips - Free Prediction Tips'
     tip_category = '189'
     category_note = """ <h4>What is Combo Betting Tips</h4><br>
                 Combo betting, also known as multiple or accumulator betting, is a type of bet that involves combining several selections into a single wager. To win a combo bet, all of the individual selections included in the bet must be correct. Combo bets are often attractive to bettors because they offer the potential for larger payouts due to the increased risk involved in predicting the outcome of multiple events. 
@@ -358,6 +358,8 @@ def connect_server():
         more_tips_link = more_tips_link)
 
 def run():
+    print (p_date)
+    print(x_date)
     get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
