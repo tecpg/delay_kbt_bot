@@ -358,8 +358,7 @@ def connect_server():
         more_tips_link = more_tips_link)
 
 def run():
-    print (p_date)
-    print(x_date)
+  
     get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  

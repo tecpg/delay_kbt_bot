@@ -246,6 +246,7 @@ def connect_server():
 
 
 def run():
+    print(p_date)
     get_today_prediction(soup,p_date)
     #time.sleep(6) 
     #print("==============Bot is taking a nap... whopps!==================== ", time.ctime())  
