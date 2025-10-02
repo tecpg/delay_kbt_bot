@@ -62,7 +62,7 @@ def post():
     fixtures = []
 
      # Step 1: Get today's date in "DD Mon" format
-    today = datetime.today().strftime("%d %b")  # e.g., "25 Jun"
+    today = datetime.today().strftime("%-d %b")  # e.g., "25 Jun"
 
 
     try:
@@ -77,7 +77,8 @@ def post():
     except Exception as e:
         logging.error(f"Failed to parse the webpage content: {e}")
         return
-
+    
+ 
     for match in bs.select(".next-match-fixtures"):
         try:
             team_tags = match.select(".match-teams-vs .team-logo")
@@ -94,6 +95,8 @@ def post():
             league_name = match_info_tag.select_one("strong").text.strip()
             match_date = match_info_tag.get_text(strip=True).replace(league_name, "").strip()
 
+            print (match_date)
+            print(today)
 # ✅ Step 2: Skip if match_date doesn't match today
             if today != match_date:
                 continue

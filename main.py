@@ -40,21 +40,22 @@ def _kbt():
         
         _time.sleep(_runtime)
         vip_ticket_tips.run()
-        _time.sleep(_runtime)
-        safebet_btts.run()
+       
         _time.sleep(_runtime)
         safebet_over_goals.run()
         safebet_dc.run()
+        _time.sleep(_runtime)     
+        
+        tipsbet_big_odds_spider.run()
         _time.sleep(_runtime)
-      
+        venasbet_spider.run()
+        _time.sleep(_runtime)
         safe_bet.run()
         _time.sleep(_runtime)
         fetch_tejtips.run()
         oddslot_spider.run()
         _time.sleep(_runtime)
-        venasbet_spider.run()
-        _time.sleep(_runtime)
-        tipsbet_big_odds_spider.run()
+        safebet_btts.run()
         _time.sleep(_runtime)
         venasbet_overgoals_spider.run()
         _time.sleep(_runtime)
