@@ -1,16 +1,16 @@
+import time
+import logging
+
 import oddslot_spider
 import tipsbet_big_odds_spider
-
 import venasbet_o25goals_spider
 import venasbet_overgoals_spider
 import venasbet_spider
 import venasbet_u35goals_spider
 import safe_bet
-# import featured_match_app
 import fetch_tejtips
 import kbtxtips
 import vip_ticket_tips
-
 import venabet_handicap
 import venasbet_btts
 import venasbet_dnb
@@ -22,81 +22,64 @@ import bet99_overgoals
 import safebet_btts
 import safebet_dc
 import safebet_over_goals
-# import betnum
 import venasbet_over_35goals
-
 import kbt_telegram_bot
-import time as _time
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+
+_RUNTIME = 5  # seconds between each run
 
 
-_runtime = 5
+def run_daily_tasks():
+    logging.info("📅 Starting daily scraping and automation tasks...")
 
-day_runtime = 86500
-
-def _kbt():
-        
-        print('started for today ')
-        _time.sleep(_runtime)
-        
-        _time.sleep(_runtime)
+    try:
+        time.sleep(_Runtime)
         vip_ticket_tips.run()
-       
-        _time.sleep(_runtime)
+        time.sleep(_Runtime)
+
         safebet_over_goals.run()
         safebet_dc.run()
-        _time.sleep(_runtime)     
-        
+        time.sleep(_Runtime)
+
         tipsbet_big_odds_spider.run()
-        _time.sleep(_runtime)
+        time.sleep(_Runtime)
+
         venasbet_spider.run()
-        _time.sleep(_runtime)
+        time.sleep(_Runtime)
+
         safe_bet.run()
-        _time.sleep(_runtime)
         fetch_tejtips.run()
         oddslot_spider.run()
-        _time.sleep(_runtime)
-        safebet_btts.run()
-        _time.sleep(_runtime)
-        venasbet_overgoals_spider.run()
-        _time.sleep(_runtime)
-        venasbet_o25goals_spider.run()
-       
-        _time.sleep(_runtime)
-        kbtxtips.run()
-        _time.sleep(_runtime)
-        kbt_telegram_bot.run()
+        time.sleep(_Runtime)
 
-        _time.sleep(_runtime)
+        safebet_btts.run()
+        venasbet_overgoals_spider.run()
+        venasbet_o25goals_spider.run()
+        time.sleep(_Runtime)
+
+        kbtxtips.run()
+        kbt_telegram_bot.run()
+        time.sleep(_Runtime)
+
         venabet_handicap.run()
-        _time.sleep(_runtime)
         venasbet_btts.run()
-        _time.sleep(_runtime)
         venasbet_dnb.run()
-        _time.sleep(_runtime)
         venasbet_over_35goals.run()
-        _time.sleep(_runtime)
         venasbet_wah.run()
-        _time.sleep(_runtime)
+        time.sleep(_Runtime)
+
         bet99.run()
         bet99_betday.run()
-        _time.sleep(_runtime)
         bet99_draws.run()
-        _time.sleep(_runtime)
         bet99_overgoals.run()
-        _time.sleep(_runtime)
         venasbet_u35goals_spider.run()
-       
-       
-        
-        print('ended for today ')
-        _time.sleep(day_runtime)
-        print('done')
-  
- 
-def run():
-    while True:
-        _kbt()
-        
-        
+
+        logging.info("✅ All daily tasks completed successfully.")
+
+    except Exception as e:
+        logging.error(f"❌ Error during task execution: {e}")
+
+
 if __name__ == "__main__":
-    run()
+    run_daily_tasks()
