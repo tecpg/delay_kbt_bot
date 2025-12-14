@@ -1,6 +1,7 @@
 import time
 import logging
 
+# Import all your scraping/automation modules
 import oddslot_spider
 import tipsbet_big_odds_spider
 import venasbet_o25goals_spider
@@ -25,60 +26,73 @@ import safebet_over_goals
 import venasbet_over_35goals
 import kbt_telegram_bot
 
+# Logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+_RUNTIME = 5  # seconds between tasks
 
-_RUNTIME = 5  # seconds between each run
+
+def run_task(task, index, total, monitor_duration=True):
+    """Run a single task with logging, print, error handling, and optional duration monitoring."""
+    message = f"▶ Running {task.__name__} ({index}/{total})..."
+    logging.info(message)
+    print(message)
+
+    start_time = time.time()
+    try:
+        task.run()
+    except Exception as e:
+        error_message = f"❌ Error in {task.__name__}: {e}"
+        logging.error(error_message)
+        print(error_message)
+    end_time = time.time()
+
+    if monitor_duration:
+        duration = end_time - start_time
+        duration_msg = f"⏱ {task.__name__} completed in {duration:.2f} seconds."
+        logging.info(duration_msg)
+        print(duration_msg)
+
+    time.sleep(_RUNTIME)
 
 
 def run_daily_tasks():
-    logging.info("📅 Starting daily scraping and automation tasks...")
+    tasks = [
+        vip_ticket_tips,
+        safebet_over_goals,
+        safebet_dc,
+        tipsbet_big_odds_spider,
+        venasbet_spider,
+        safe_bet,
+        fetch_tejtips,
+        oddslot_spider,
+        safebet_btts,
+        venasbet_overgoals_spider,
+        venasbet_o25goals_spider,
+        kbtxtips,
+        kbt_telegram_bot,
+        venabet_handicap,
+        venasbet_btts,
+        venasbet_dnb,
+        venasbet_over_35goals,
+        venasbet_wah,
+        bet99,
+        bet99_betday,
+        bet99_draws,
+        bet99_overgoals,
+        venasbet_u35goals_spider,
+    ]
 
-    try:
-        time.sleep(_Runtime)
-        vip_ticket_tips.run()
-        time.sleep(_Runtime)
+    total_tasks = len(tasks)
+    start_msg = f"📅 Starting daily scraping and automation tasks ({total_tasks} tasks)..."
+    logging.info(start_msg)
+    print(start_msg)
 
-        safebet_over_goals.run()
-        safebet_dc.run()
-        time.sleep(_Runtime)
+    for idx, task in enumerate(tasks, start=1):
+        run_task(task, idx, total_tasks)
 
-        tipsbet_big_odds_spider.run()
-        time.sleep(_Runtime)
-
-        venasbet_spider.run()
-        time.sleep(_Runtime)
-
-        safe_bet.run()
-        fetch_tejtips.run()
-        oddslot_spider.run()
-        time.sleep(_Runtime)
-
-        safebet_btts.run()
-        venasbet_overgoals_spider.run()
-        venasbet_o25goals_spider.run()
-        time.sleep(_Runtime)
-
-        kbtxtips.run()
-        kbt_telegram_bot.run()
-        time.sleep(_Runtime)
-
-        venabet_handicap.run()
-        venasbet_btts.run()
-        venasbet_dnb.run()
-        venasbet_over_35goals.run()
-        venasbet_wah.run()
-        time.sleep(_Runtime)
-
-        bet99.run()
-        bet99_betday.run()
-        bet99_draws.run()
-        bet99_overgoals.run()
-        venasbet_u35goals_spider.run()
-
-        logging.info("✅ All daily tasks completed successfully.")
-
-    except Exception as e:
-        logging.error(f"❌ Error during task execution: {e}")
+    success_msg = "✅ All daily tasks completed successfully."
+    logging.info(success_msg)
+    print(success_msg)
 
 
 if __name__ == "__main__":
