@@ -28,7 +28,23 @@ import kbt_telegram_bot
 
 # Logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
-_RUNTIME = 5  # seconds between tasks
+_RUNTIME = 5           # seconds between tasks
+_START_DELAY_HOURS = 4 # initial delay in hours
+
+
+def countdown(hours: int):
+    """Countdown with minutes only, logging once per minute."""
+    total_minutes = hours * 60
+    logging.info(f"⏳ Delaying start for {total_minutes} minutes")
+    while total_minutes > 0:
+        hrs = total_minutes // 60
+        mins = total_minutes % 60
+        message = f"⏳ Starting in {hrs}h {mins}m"
+        logging.info(message)
+        print(message)
+        time.sleep(60)
+        total_minutes -= 1
+    print()
 
 
 def run_task(task, index, total, monitor_duration=True):
@@ -56,6 +72,12 @@ def run_task(task, index, total, monitor_duration=True):
 
 
 def run_daily_tasks():
+    # Delay before starting tasks
+    logging.info(f"⏳ Waiting for {_START_DELAY_HOURS} hours before starting tasks...")
+    print(f"⏳ Waiting for {_START_DELAY_HOURS} hours before starting tasks...")
+    countdown(_START_DELAY_HOURS)
+
+    # List of tasks
     tasks = [
         vip_ticket_tips,
         safebet_over_goals,
