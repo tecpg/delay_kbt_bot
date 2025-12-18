@@ -47,21 +47,21 @@ def countdown(hours: int):
 import time
 import logging
 
-def countdown_min(minutes: int):
-    """Countdown using minutes only, logging once per minute."""
-    logging.info(f"⏳ Delaying start for {minutes} minute(s)")
-    print(f"⏳ Delaying start for {minutes} minute(s)")
+# def countdown_min(minutes: int):
+#     """Countdown using minutes only, logging once per minute."""
+#     logging.info(f"⏳ Delaying start for {minutes} minute(s)")
+#     print(f"⏳ Delaying start for {minutes} minute(s)")
 
-    while minutes > 0:
-        message = f"⏳ Starting in {minutes} minute(s)"
-        logging.info(message)
-        print(message)
+#     while minutes > 0:
+#         message = f"⏳ Starting in {minutes} minute(s)"
+#         logging.info(message)
+#         print(message)
 
-        time.sleep(60)
-        minutes -= 1
+#         time.sleep(60)
+#         minutes -= 1
 
-    logging.info("🚀 Delay complete. Starting tasks...")
-    print("🚀 Delay complete. Starting tasks...")
+#     logging.info("🚀 Delay complete. Starting tasks...")
+#     print("🚀 Delay complete. Starting tasks...")
 
 
 def run_task(task, index, total, monitor_duration=True):
@@ -92,8 +92,8 @@ def run_daily_tasks():
     # Delay before starting tasks
     logging.info(f"⏳ Waiting for {_START_DELAY_HOURS} hours before starting tasks...")
     print(f"⏳ Waiting for {_START_DELAY_HOURS} hours before starting tasks...")
-   #countdown(_START_DELAY_HOURS)
-    countdown_min(1)
+    countdown(_START_DELAY_HOURS)
+    #countdown(1)
 
     # List of tasks
     tasks = [
